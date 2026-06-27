@@ -9,7 +9,8 @@
     "start": "node src/server.js",
     "build": "node src/buildAppData.js",
     "once": "node src/once.js",
-    "scheduler": "node src/scheduler.js"
+    "scheduler": "node src/scheduler.js",
+    "sync-predictions": "node src/sync-predictions.js"
   },
   "dependencies": {
     "dotenv": "^16.4.5",

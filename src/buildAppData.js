@@ -18,17 +18,30 @@ export function buildAppData() {
   const r32tbd = readOr('r32_tbd.json', []);
   const scoringLedger = readOr('scoring_ledger.json', []);
 
+  const KO_ROUNDS = ['r32', 'r16', 'qf', 'sf', 'final'];
+
   const publicPredictions = {};
   for (const [pid, pred] of Object.entries(predictions)) {
-    publicPredictions[pid] = {
-      locked: pred.locked || false,
-      submittedAtMs: pred.submittedAtMs || null,
-      ...(pred.locked ? {
-        finalists: pred.finalists,
-        champion: pred.champion,
-        ko: pred.ko
-      } : {})
-    };
+    const locked = typeof pred.locked === 'boolean'
+      ? { r32: pred.locked }  // backwards compat
+      : (pred.locked || {});
+
+    const entry = { locked, submittedAtMs: pred.submittedAtMs || {} };
+
+    // Only expose picks after the round is locked
+    for (const rk of KO_ROUNDS) {
+      if (locked[rk]) {
+        const picks = pred[rk] || (rk === 'r32' ? pred.ko : null);
+        if (picks) entry[rk] = picks;
+      }
+    }
+    // Expose bonus picks after r32 locks
+    if (locked.r32 || locked.r16) {
+      if (pred.finalists) entry.finalists = pred.finalists;
+      if (pred.champion) entry.champion = pred.champion;
+    }
+
+    publicPredictions[pid] = entry;
   }
 
   const appData = {
@@ -45,7 +58,8 @@ export function buildAppData() {
       status: f.status,
       home: { code: f.home.code, goals: f.home.goals },
       away: { code: f.away.code, goals: f.away.goals },
-      finished: f.finished
+      finished: f.finished,
+      venue: f.venue
     })),
     standings,
     bracket,
@@ -57,7 +71,8 @@ export function buildAppData() {
     participants: participants.map(p => ({
       id: p.id,
       name: p.name,
-      picks: p.picks
+      picks: p.picks,
+      email: p.email   // needed for login matching in frontend
     })),
     _scoringLog: (() => {
       const byParticipant = {};

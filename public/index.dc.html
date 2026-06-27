@@ -391,33 +391,52 @@
           </sc-for>
         </div>
 
-        <!-- R32 progress -->
+        <!-- KO round progress (active round) -->
+        <sc-if value="{{ isKoLocked }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top:16px;padding:18px;border-radius:18px;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.022));border:1px solid rgba(255,69,58,.28);text-align:center">
+            <div style="font-size:28px;margin-bottom:10px">🔒</div>
+            <div style="color:#F5F5F7;font-size:16px;font-weight:600;margin-bottom:4px">{{ koRoundName }} predictions locked</div>
+            <div style="color:#8E8E93;font-size:12.5px;font-weight:500;margin-bottom:14px">{{ koNextRoundMsg }}</div>
+            <sc-if value="{{ koHasLocked }}" hint-placeholder-val="{{ false }}">
+              <div style="color:#636366;font-size:10.5px;font-weight:600;letter-spacing:.5px;margin-bottom:8px">YOUR PICKS</div>
+              <sc-for list="{{ koLockedSummary }}" as="t" hint-placeholder-count="4">
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 10px;margin-bottom:4px;border-radius:10px;background:rgba(255,255,255,.04)">
+                  <div style="display:flex;align-items:center;gap:7px;flex:1;min-width:0"><img src="{{ t.hFu }}" style="width:18px;height:12px;border-radius:2px;object-fit:cover;flex:none"/><span style="color:#F5F5F7;font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ t.hName }}</span></div>
+                  <span style="color:#636366;font-size:12px;font-weight:600;flex:none;padding:0 8px">{{ t.score }}</span>
+                  <div style="display:flex;align-items:center;gap:7px;flex:1;min-width:0;justify-content:flex-end"><span style="color:#F5F5F7;font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ t.aName }}</span><img src="{{ t.aFu }}" style="width:18px;height:12px;border-radius:2px;object-fit:cover;flex:none"/></div>
+                </div>
+              </sc-for>
+            </sc-if>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isKoOpen }}" hint-placeholder-val="{{ true }}">
         <div style="margin-top:16px;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.022));backdrop-filter:blur(16px) saturate(1.25);-webkit-backdrop-filter:blur(16px) saturate(1.25);border:1px solid rgba(255,255,255,.09);box-shadow:inset 0 1px 0 0 rgba(255,255,255,.08),0 14px 32px -12px rgba(0,0,0,.62);border-radius:18px;padding:15px">
           <div style="display:flex;align-items:center;justify-content:space-between">
-            <span style="color:#F5F5F7;font-size:16px;font-weight:600">Round of 32</span>
-            <span style="color:#A98BFF;font-size:12.5px;font-weight:600;font-variant-numeric:tabular-nums">{{ r32donestr }}</span>
+            <span style="color:#F5F5F7;font-size:16px;font-weight:600">{{ koRoundName }}</span>
+            <span style="color:#A98BFF;font-size:12.5px;font-weight:600;font-variant-numeric:tabular-nums">{{ koDoneStr }}</span>
           </div>
           <div style="margin-top:11px;height:7px;border-radius:4px;background:rgba(255,255,255,.08);overflow:hidden">
-            <div style="height:100%;width:{{ r32pct }};border-radius:4px;background:linear-gradient(90deg,#FF2D78,#7A3CFF,#1FA2FF);transition:width .4s ease"></div>
+            <div style="height:100%;width:{{ koPct }};border-radius:4px;background:linear-gradient(90deg,#FF2D78,#7A3CFF,#1FA2FF);transition:width .4s ease"></div>
           </div>
           <div style="display:flex;align-items:center;gap:14px;margin-top:12px;color:#7C7C82;font-size:10.5px;font-weight:500">
             <span style="display:flex;align-items:center;gap:5px"><span style="width:6px;height:6px;border-radius:2px;background:#5BE584"></span>Exact score = 2× pts</span>
             <span style="display:flex;align-items:center;gap:5px"><span style="width:6px;height:6px;border-radius:2px;background:#A98BFF"></span>Correct winner</span>
           </div>
           <div style="display:flex;gap:6px;margin-top:13px">
-            <div onClick="{{ setR32Remaining }}" style-active="transform:scale(.96)" style="flex:1;text-align:center;padding:9px 0;border-radius:11px;font-size:12.5px;font-weight:600;cursor:pointer;transition:.2s;background:{{ r32remChipBg }};color:{{ r32remChipC }}">Remaining · {{ r32remCount }}</div>
-            <div onClick="{{ setR32All }}" style-active="transform:scale(.96)" style="flex:1;text-align:center;padding:9px 0;border-radius:11px;font-size:12.5px;font-weight:600;cursor:pointer;transition:.2s;background:{{ r32allChipBg }};color:{{ r32allChipC }}">All · {{ r32total }}</div>
+            <div onClick="{{ setKoRemaining }}" style-active="transform:scale(.96)" style="flex:1;text-align:center;padding:9px 0;border-radius:11px;font-size:12.5px;font-weight:600;cursor:pointer;transition:.2s;background:{{ koRemChipBg }};color:{{ koRemChipC }}">Remaining · {{ koRemCount }}</div>
+            <div onClick="{{ setKoAll }}" style-active="transform:scale(.96)" style="flex:1;text-align:center;padding:9px 0;border-radius:11px;font-size:12.5px;font-weight:600;cursor:pointer;transition:.2s;background:{{ koAllChipBg }};color:{{ koAllChipC }}">All · {{ koTotal }}</div>
           </div>
         </div>
 
-        <sc-if value="{{ r32allDone }}" hint-placeholder-val="{{ false }}">
+        <sc-if value="{{ koAllDone }}" hint-placeholder-val="{{ false }}">
           <div style="margin-top:10px;display:flex;align-items:center;justify-content:center;gap:8px;padding:11px;border-radius:14px;background:rgba(52,199,89,.12);border:1px solid rgba(52,199,89,.28);color:#5BE584;font-size:12.5px;font-weight:600">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#5BE584" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
-            All 16 matches predicted — tap any to edit
+            {{ koAllDoneMsg }}
           </div>
         </sc-if>
 
-        <sc-for list="{{ r32visible }}" as="t" hint-placeholder-count="4">
+        <sc-for list="{{ koCards }}" as="t" hint-placeholder-count="4">
           <div style="background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.022));backdrop-filter:blur(16px) saturate(1.25);-webkit-backdrop-filter:blur(16px) saturate(1.25);border:1px solid {{ t.cardBd }};box-shadow:inset 0 1px 0 0 rgba(255,255,255,.08),0 14px 32px -12px rgba(0,0,0,.62);border-radius:18px;margin-top:9px;overflow:hidden;transition:border-color .3s ease">
             <!-- header / toggle -->
             <div onClick="{{ t.toggle }}" style-active="background:rgba(255,255,255,.04)" style="display:flex;align-items:center;gap:9px;padding:12px 14px;cursor:pointer;transition:background .2s">
@@ -492,6 +511,7 @@
           </div>
         </sc-for>
 
+        </sc-if><!-- end isKoOpen -->
         <sc-if value="{{ showSubmitHint }}" hint-placeholder-val="{{ false }}">
           <div style="margin-top:14px;display:flex;align-items:center;gap:8px;padding:11px 13px;border-radius:13px;background:rgba(255,159,10,.1);border:1px solid rgba(255,159,10,.28)">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#FFB44C" stroke-width="2" style="flex:none"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/></svg>
@@ -822,6 +842,37 @@
   </div>
   </sc-if>
 
+  <!-- ===== LOGIN OVERLAY ===== -->
+  <sc-if value="{{ showLogin }}" hint-placeholder-val="{{ true }}">
+  <div style="position:absolute;inset:0;z-index:28;background:#0A0A0B;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px;animation:fadeIn .3s ease">
+    <div style="text-align:center;margin-bottom:36px">
+      <div style="font-size:44px;margin-bottom:14px">⚽</div>
+      <div class="disp" style="color:#F5F5F7;font-size:28px;font-weight:700;letter-spacing:-.5px">FIFA Fantasy</div>
+      <div style="color:#636366;font-size:14px;font-weight:500;margin-top:4px">World Cup 2026</div>
+    </div>
+    <div style="width:100%;max-width:340px;display:flex;flex-direction:column;gap:12px">
+      <div style="background:#1A1A1E;border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:14px 16px">
+        <div style="color:#636366;font-size:10.5px;font-weight:600;letter-spacing:.5px;margin-bottom:6px">YOUR EMAIL</div>
+        <input id="loginEmailInput" type="email" placeholder="your@work.com" autocomplete="email" inputmode="email"
+          style="background:none;border:none;outline:none;color:#F5F5F7;font-size:16px;font-weight:500;width:100%;font-family:inherit" />
+      </div>
+      <div style="background:#1A1A1E;border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:14px 16px">
+        <div style="color:#636366;font-size:10.5px;font-weight:600;letter-spacing:.5px;margin-bottom:6px">PIN</div>
+        <input id="loginPinInput" type="password" placeholder="••••" maxlength="4"
+          style="background:none;border:none;outline:none;color:#F5F5F7;font-size:18px;font-weight:600;width:100%;font-family:inherit;letter-spacing:6px" />
+      </div>
+      <sc-if value="{{ loginError }}" hint-placeholder-val="{{ false }}">
+      <div style="color:#FF453A;font-size:12.5px;font-weight:600;text-align:center;padding:4px 0">{{ loginError }}</div>
+      </sc-if>
+      <div onClick="{{ doLogin }}" style-active="transform:scale(.97)"
+        style="text-align:center;padding:16px;border-radius:14px;cursor:pointer;font-size:16px;font-weight:600;background:linear-gradient(135deg,#FF2D78,#7A3CFF,#1FA2FF);color:#fff;box-shadow:0 8px 24px rgba(122,60,255,.35)">
+        {{ loginBtnLabel }}
+      </div>
+      <div style="text-align:center;color:#48484A;font-size:11.5px;font-weight:500;margin-top:4px">Ask Nived for your PIN</div>
+    </div>
+  </div>
+  </sc-if>
+
 </div>
 </div>
 </x-dc>
@@ -880,11 +931,15 @@ class Component extends DCLogic {
       ['Ranjit Nambiar',['ESP','ARG','POR','BEL'],5,'-1']
     ];
     this.USER = 8; // Nived (0-indexed, updated by applyLiveData)
+    this._userParticipantId = null;
+    this._userPin = null;
+    this._userName = null;
     this.state = {
       tab:'fantasy', fantSeg:'group', matchSub:'standings', dateTab:'today',
       statSeg:'league', detailIdx:null, matchObj:null, profile:false,
-      heroPts:0, champ:null, finalists:[], r32:{}, submitted:false,
-      r32open:0, r32filter:'remaining',
+      heroPts:0, champ:null, finalists:[], r32:{}, r16:{}, qf:{}, sf:{}, final:{},
+      submitted:false, koRoundOpen:0, koFilter:'remaining',
+      loggedIn:false, loginError:'', loginLoading:false,
       expandedPick:{}, rulesOpen:false,
       lockMs:(2*86400+14*3600+9*60)*1000,
       toast:null
@@ -898,8 +953,112 @@ class Component extends DCLogic {
     this.toastT=setTimeout(()=>this.setState({toast:null}),2600);
   }
   componentDidMount(){
+    this.checkStoredLogin();
     this.timer = setInterval(()=>this.setState(s=>({lockMs:Math.max(0,s.lockMs-1000)})),1000);
     this.fetchLiveData();
+  }
+  determineActiveRound(){
+    return this._apiData?.meta?.activeRound || 'r32';
+  }
+  getRoundMatchList(roundKey){
+    if(roundKey==='r32') return this.R32LIST();
+    const roundNames={r16:'Round of 16',qf:'Quarter-finals',sf:'Semi-finals',final:'Final'};
+    const roundName=roundNames[roundKey];
+    const bracketMatches=this._apiData?.bracket?.[roundName]||[];
+    return bracketMatches.map(m=>{
+      const hCode=m.home?.code||null, aCode=m.away?.code||null;
+      const h=hCode?(this.teams[hCode]||{n:m.home?.name||'TBD',f:this._CODE_EMOJI[hCode]||''}):{n:m.home?.name||'TBD',f:''};
+      const a=aCode?(this.teams[aCode]||{n:m.away?.name||'TBD',f:this._CODE_EMOJI[aCode]||''}):{n:m.away?.name||'TBD',f:''};
+      return [h.n,h.f,a.n,a.f,hCode||'',aCode||''];
+    });
+  }
+  getRoundKickoffs(roundKey){
+    if(roundKey==='r32') return this._apiData?._r32tbd||[];
+    const roundNames={r16:'Round of 16',qf:'Quarter-finals',sf:'Semi-finals',final:'Final'};
+    return this._apiData?.bracket?.[roundNames[roundKey]]||[];
+  }
+  updKo(roundKey,i,fn){
+    this.setState(st=>{ const cur=(st[roundKey]||{})[i]||{h:0,a:0,adv:null}; return {[roundKey]:{...(st[roundKey]||{}),[i]:{...cur,...fn(cur)}}}; });
+  }
+  updR32(i,fn){ this.updKo('r32',i,fn); }
+  async loginUser(email,pin){
+    if(!email){ this.setState({loginError:'Enter your email address'}); return; }
+    if(!pin){ this.setState({loginError:'Enter your PIN'}); return; }
+    this.setState({loginLoading:true,loginError:''});
+    const appsScriptUrl=this._apiData?.meta?.appsScriptUrl;
+    if(appsScriptUrl){
+      try{
+        const res=await fetch(appsScriptUrl,{method:'POST',headers:{'Content-Type':'text/plain'},
+          body:JSON.stringify({action:'auth',email:email.toLowerCase().trim(),pin})});
+        const data=await res.json();
+        if(data.ok){ this.setLoggedIn({id:data.participantId,name:data.name,email}); }
+        else{ this.setState({loginLoading:false,loginError:data.error||'Login failed'}); }
+      }catch(e){ this.setState({loginLoading:false,loginError:'Connection error — try again'}); }
+    } else {
+      // Offline fallback: match email against participants list
+      const part=this._apiData?.participants?.find(p=>p.email?.toLowerCase()===email.toLowerCase().trim());
+      if(part && pin==='5555'){ this.setLoggedIn(part); }
+      else{ this.setState({loginLoading:false,loginError:'Email not found or wrong PIN'}); }
+    }
+  }
+  setLoggedIn(participant){
+    this._userParticipantId=participant.id;
+    this._userPin='5555';
+    this._userName=participant.name;
+    try{ localStorage.setItem('fifa_auth',JSON.stringify({participantId:participant.id,name:participant.name,email:participant.email})); }catch(e){}
+    const idx=this.P.findIndex(([n])=>n===participant.name);
+    if(idx>=0) this.USER=idx;
+    this.setState({loggedIn:true,loginLoading:false,loginError:''});
+    this.showToast('Welcome '+participant.name+'!','ok');
+    this.loadStoredPredictions(participant.id);
+  }
+  checkStoredLogin(){
+    try{
+      const stored=localStorage.getItem('fifa_auth');
+      if(!stored) return;
+      const auth=JSON.parse(stored);
+      if(!auth.participantId||!auth.name) return;
+      this._userParticipantId=auth.participantId;
+      this._userPin='5555';
+      this._userName=auth.name;
+      const idx=this.P.findIndex(([n])=>n===auth.name);
+      if(idx>=0) this.USER=idx;
+      this.setState({loggedIn:true});
+      this.loadStoredPredictions(auth.participantId);
+    }catch(e){}
+  }
+  async loadStoredPredictions(participantId){
+    // First load from public app-data (locked picks)
+    const preds=this._apiData?.predictions?.[participantId];
+    if(preds){
+      const ns={};
+      if(preds.r32||preds.ko) ns.r32=preds.r32||preds.ko||{};
+      if(preds.r16) ns.r16=preds.r16;
+      if(preds.qf) ns.qf=preds.qf;
+      if(preds.sf) ns.sf=preds.sf;
+      if(preds.final) ns.final=preds.final;
+      if(preds.finalists) ns.finalists=preds.finalists;
+      if(preds.champion) ns.champ=preds.champion;
+      if(Object.keys(ns).length) this.setState(ns);
+    }
+    // Then fetch live picks from Apps Script (more current)
+    const appsScriptUrl=this._apiData?.meta?.appsScriptUrl;
+    if(!appsScriptUrl||!participantId) return;
+    try{
+      const res=await fetch(`${appsScriptUrl}?action=load&participantId=${encodeURIComponent(participantId)}`);
+      const data=await res.json();
+      if(!data.ok||!data.predictions) return;
+      const p=data.predictions;
+      const ns={};
+      if(p.r32) ns.r32=p.r32;
+      if(p.r16) ns.r16=p.r16;
+      if(p.qf) ns.qf=p.qf;
+      if(p.sf) ns.sf=p.sf;
+      if(p.final) ns.final=p.final;
+      if(p.finalists) ns.finalists=p.finalists;
+      if(p.champion) ns.champ=p.champion;
+      if(Object.keys(ns).length) this.setState(ns);
+    }catch(e){}
   }
   async fetchLiveData(){
     try {
@@ -932,8 +1091,14 @@ class Component extends DCLogic {
     }
     if(d.leaderboard?.length){
       this.P=d.leaderboard.map(p=>[p.name,p.picks,p.total,(p.delta>=0?'+':'')+p.delta]);
-      const ui=this.P.findIndex(([n])=>n===this._userName||n==='Nived');
-      if(ui>=0) this.USER=ui;
+      if(this._userParticipantId){
+        const partName=(d.participants||[]).find(p=>p.id===this._userParticipantId)?.name;
+        const ui=partName?this.P.findIndex(([n])=>n===partName):-1;
+        if(ui>=0) this.USER=ui;
+      } else {
+        const ui=this.P.findIndex(([n])=>n===this._userName||n==='Nived');
+        if(ui>=0) this.USER=ui;
+      }
     }
     if(d.fixtures?.length){
       const form={}, sched={};
@@ -961,13 +1126,22 @@ class Component extends DCLogic {
       }
       this.form=form; this.sched=sched;
     }
-    if(d.meta?.lockAtMs){
-      const rem=Math.max(0,d.meta.lockAtMs-Date.now());
+    // Use active round's lock time for countdown
+    const activeKey=d.meta?.activeRound||'r32';
+    const activeLockMs=d.meta?.koLockTimes?.[activeKey]||d.meta?.lockAtMs;
+    if(activeLockMs){
+      const rem=Math.max(0,activeLockMs-Date.now());
       this.setState({lockMs:rem});
     }
     const pts=this.P[this.USER]?.[2]||0;
     this.animHero(pts);
     this.setState({loaded:true});
+    // Reload predictions now that live data is available
+    if(this.state.loggedIn && this._userParticipantId){
+      this.loadStoredPredictions(this._userParticipantId);
+    } else if(!this.state.loggedIn){
+      this.checkStoredLogin();
+    }
   }
   componentWillUnmount(){ clearInterval(this.timer); if(this._refreshTimer) clearInterval(this._refreshTimer); if(this.raf) cancelAnimationFrame(this.raf); if(this.toastT) clearTimeout(this.toastT); }
   flagUrl(e){
@@ -1270,13 +1444,21 @@ class Component extends DCLogic {
       bg: s.champ===c?'rgba(122,60,255,.24)':'#1A1A1E', bd: s.champ===c?'#7A3CFF':'rgba(255,255,255,.05)',
       pick:()=>this.setState({champ:c})})));
     const finalCountStr = fin.length+'/2';
-    const rounds=[['R32',4,true],['R16',5,false],['QF',10,false],['SF',15,false],['3rd',20,false],['Final',30,false]].map(([name,pts,on])=>({
-      name,pts, op:on?'1':'.45',
-      bg:on?'rgba(122,60,255,.16)':'#1A1A1E', bd:on?'#7A3CFF':'rgba(255,255,255,.05)', tc:on?'#F5F5F7':'#8E8E93'}));
-    const r32defs=this.R32LIST();
-    const r32tbd = this._apiData?._r32tbd || [];
-    const r32meta = r32defs.map((_,i)=>{
-      const src = r32tbd[i];
+    const activeKey = this.determineActiveRound();
+    const ROUND_LABELS = {r32:'Round of 32',r16:'Round of 16',qf:'Quarter-finals',sf:'Semi-finals',final:'Final'};
+    const ROUND_DISPLAY = {r32:'R32',r16:'R16',qf:'QF',sf:'SF',final:'Final'};
+    const ROUND_PTS = {r32:4,r16:5,qf:10,sf:15,final:20};
+    const NEXT_ROUND_MSG = {r32:'R16 predictions open when all R32 matches finish',r16:'QF predictions open when all R16 matches finish',qf:'SF predictions open when all QF matches finish',sf:'Final predictions open when both SF matches finish',final:'Tournament complete!'};
+    const koRoundName = ROUND_LABELS[activeKey]||'Round of 32';
+    const koNextRoundMsg = NEXT_ROUND_MSG[activeKey]||'';
+    const activeLockMs = this._apiData?.meta?.koLockTimes?.[activeKey]||this._apiData?.meta?.lockAtMs;
+    const isKoLocked = !!(activeLockMs && Date.now()>=activeLockMs);
+    const isKoOpen = !isKoLocked;
+
+    const koMatchDefs = this.getRoundMatchList(activeKey);
+    const koKickoffs = this.getRoundKickoffs(activeKey);
+    const koKickoffMeta = koMatchDefs.map((_,i)=>{
+      const src=koKickoffs[i];
       if(src?.kickoffMs){
         const dt=new Date(src.kickoffMs);
         const day=dt.toLocaleDateString('en-US',{day:'numeric',month:'short',timeZone:'Asia/Kolkata'});
@@ -1285,74 +1467,92 @@ class Component extends DCLogic {
       }
       return 'TBD · TBD · TBD';
     });
-    let r32done=0;
-    const allR32=r32defs.map(([hn,hf,an,af,hCode,aCode],i)=>{
-      const tie = s.r32[i] || {h:0,a:0,adv:null};
-      const has = !!s.r32[i];
-      const isDraw = tie.h===tie.a;
-      const winSide = tie.h>tie.a?'a':(tie.a>tie.h?'b':null);
-      const advSel = isDraw ? tie.adv : winSide;
-      const done = has && (!isDraw || tie.adv);
-      if(done) r32done++;
-      const winName = advSel==='a'?hn:(advSel==='b'?an:'');
-      const winF = advSel==='a'?hf:(advSel==='b'?af:'');
-      const meta=(r32meta[i]||'').split(' · ');
+    const roundPicks = s[activeKey]||{};
+    let koDone=0;
+    const allKoCards = koMatchDefs.map(([hn,hf,an,af,hCode,aCode],i)=>{
+      const tie=roundPicks[i]||{h:0,a:0,adv:null};
+      const has=!!roundPicks[i];
+      const isDraw=tie.h===tie.a;
+      const winSide=tie.h>tie.a?'a':(tie.a>tie.h?'b':null);
+      const advSel=isDraw?tie.adv:winSide;
+      const done=has&&(!isDraw||tie.adv);
+      if(done) koDone++;
+      const winName=advSel==='a'?hn:(advSel==='b'?an:'');
+      const winF=advSel==='a'?hf:(advSel==='b'?af:'');
+      const meta=(koKickoffMeta[i]||'').split(' · ');
       return {
-        no:i+1, idx:i, kick:meta.slice(0,2).join(' · '), venue:meta[2]||'', isDraw, notDraw:!isDraw, has, done,
+        no:i+1,idx:i,kick:meta.slice(0,2).join(' · '),venue:meta[2]||'',isDraw,notDraw:!isDraw,has,done,
         h:{n:hn,f:hf,score:tie.h,form:this.codeForm(hCode)},
         b:{n:an,f:af,score:tie.a,form:this.codeForm(aCode)},
-        advSel, winName, winFu:this.flagUrl(winF), scoreStr: tie.h+' – '+tie.a,
-        hPlus:()=>this.updR32(i,t=>({h:Math.min(9,t.h+1)})),
-        hMinus:()=>this.updR32(i,t=>({h:Math.max(0,t.h-1)})),
-        aPlus:()=>this.updR32(i,t=>({a:Math.min(9,t.a+1)})),
-        aMinus:()=>this.updR32(i,t=>({a:Math.max(0,t.a-1)})),
-        advA:()=>this.updR32(i,()=>({adv:'a'})),
-        advB:()=>this.updR32(i,()=>({adv:'b'})),
-        advABg: tie.adv==='a'?'rgba(52,199,89,.16)':'#1A1A1E', advABd: tie.adv==='a'?'#34C759':'rgba(255,255,255,.06)', advAC: tie.adv==='a'?'#5BE584':'#F5F5F7',
-        advBBg: tie.adv==='b'?'rgba(52,199,89,.16)':'#1A1A1E', advBBd: tie.adv==='b'?'#34C759':'rgba(255,255,255,.06)', advBC: tie.adv==='b'?'#5BE584':'#F5F5F7'
+        advSel,winName,winFu:this.flagUrl(winF),scoreStr:tie.h+' – '+tie.a,
+        hPlus:()=>this.updKo(activeKey,i,t=>({h:Math.min(9,t.h+1)})),
+        hMinus:()=>this.updKo(activeKey,i,t=>({h:Math.max(0,t.h-1)})),
+        aPlus:()=>this.updKo(activeKey,i,t=>({a:Math.min(9,t.a+1)})),
+        aMinus:()=>this.updKo(activeKey,i,t=>({a:Math.max(0,t.a-1)})),
+        advA:()=>this.updKo(activeKey,i,()=>({adv:'a'})),
+        advB:()=>this.updKo(activeKey,i,()=>({adv:'b'})),
+        advABg:tie.adv==='a'?'rgba(52,199,89,.16)':'#1A1A1E',advABd:tie.adv==='a'?'#34C759':'rgba(255,255,255,.06)',advAC:tie.adv==='a'?'#5BE584':'#F5F5F7',
+        advBBg:tie.adv==='b'?'rgba(52,199,89,.16)':'#1A1A1E',advBBd:tie.adv==='b'?'#34C759':'rgba(255,255,255,.06)',advBC:tie.adv==='b'?'#5BE584':'#F5F5F7'
       };
     });
-    const r32total=allR32.length;
-    allR32.forEach((t,k)=>{ let nx=-1; for(let d=1;d<=allR32.length;d++){ const j=(k+d)%allR32.length; if(!allR32[j].done){ nx=allR32[j].idx; break; } } t._next=nx; });
-    const r32remCount = r32total - r32done;
-    const r32allDone = r32done===r32total;
-    const openIdx = s.r32open;
-    const showAllR32 = s.r32filter==='all' || r32allDone;
-    const r32visible = this.deepFlags(allR32.filter(t=> showAllR32 || !t.done || t.idx===openIdx ).map(t=>{
-      const open = t.idx===openIdx;
+    const koTotal=allKoCards.length;
+    allKoCards.forEach((t,k)=>{ let nx=-1; for(let d=1;d<=allKoCards.length;d++){ const j=(k+d)%allKoCards.length; if(!allKoCards[j].done){ nx=allKoCards[j].idx; break; } } t._next=nx; });
+    const koRemCount=koTotal-koDone;
+    const koAllDone=koDone===koTotal&&koTotal>0;
+    const koAllDoneMsg='All '+koTotal+' '+koRoundName+' matches predicted — tap any to edit';
+    const openIdx=s.koRoundOpen;
+    const showAllKo=s.koFilter==='all'||koAllDone;
+    const koCards=this.deepFlags(allKoCards.filter(t=>showAllKo||!t.done||t.idx===openIdx).map(t=>{
+      const open=t.idx===openIdx;
       let hpText,hpBg,hpC,statusText,statusColor;
-      if(t.done){ hpText=t.scoreStr; hpBg='rgba(52,199,89,.16)'; hpC='#5BE584';
-        statusText=t.isDraw?(t.winName+' on penalties'):(t.winName+' advances'); statusColor='#5BE584'; }
-      else if(t.has && t.isDraw){ hpText=t.scoreStr; hpBg='rgba(255,159,10,.18)'; hpC='#FFB44C';
-        statusText='Draw — pick who advances'; statusColor='#FFB44C'; }
-      else { hpText='vs'; hpBg='rgba(255,255,255,.06)'; hpC='#636366';
-        statusText='Tap to set the scoreline'; statusColor='#7C7C82'; }
-      const ready = !t.isDraw || !!t.advSel;
-      return {...t, open, chev: open?'rotate(90deg)':'rotate(0deg)',
-        cardBd: t.done?'rgba(52,199,89,.32)':(open?'rgba(122,60,255,.45)':'rgba(255,255,255,.09)'),
-        hpText,hpBg,hpC,statusText,statusColor,
-        nextReady: ready,
-        nextText: !ready ? 'Pick who advances to save'
-                  : (t._next>=0?'Save & next match  →':'Done — collapse'),
-        nextBg: ready ? 'linear-gradient(135deg,#7A3CFF,#1FA2FF)' : '#19191D',
-        nextC: ready ? '#fff' : '#5E5E63',
-        nextShadow: ready ? '0 6px 18px -6px rgba(122,60,255,.5)' : 'none',
-        toggle:()=>this.setState(st=>({r32open: st.r32open===t.idx? -1 : t.idx})),
-        next:()=>{ if(!ready){ this.showToast('This match is a draw — pick who advances on penalties','warn'); return; }
-          if(t._next>=0) this.setState({r32open:t._next}); else { this.setState({r32open:-1}); this.showToast('All 16 matches predicted','ok'); } }
+      if(t.done){hpText=t.scoreStr;hpBg='rgba(52,199,89,.16)';hpC='#5BE584';
+        statusText=t.isDraw?(t.winName+' on penalties'):(t.winName+' advances');statusColor='#5BE584';}
+      else if(t.has&&t.isDraw){hpText=t.scoreStr;hpBg='rgba(255,159,10,.18)';hpC='#FFB44C';
+        statusText='Draw — pick who advances';statusColor='#FFB44C';}
+      else{hpText='vs';hpBg='rgba(255,255,255,.06)';hpC='#636366';
+        statusText='Tap to set the scoreline';statusColor='#7C7C82';}
+      const ready=!t.isDraw||!!t.advSel;
+      return {...t,open,chev:open?'rotate(90deg)':'rotate(0deg)',
+        cardBd:t.done?'rgba(52,199,89,.32)':(open?'rgba(122,60,255,.45)':'rgba(255,255,255,.09)'),
+        hpText,hpBg,hpC,statusText,statusColor,nextReady:ready,
+        nextText:!ready?'Pick who advances to save':(t._next>=0?'Save & next match  →':'Done — collapse'),
+        nextBg:ready?'linear-gradient(135deg,#7A3CFF,#1FA2FF)':'#19191D',
+        nextC:ready?'#fff':'#5E5E63',
+        nextShadow:ready?'0 6px 18px -6px rgba(122,60,255,.5)':'none',
+        toggle:()=>this.setState(st=>({koRoundOpen:st.koRoundOpen===t.idx?-1:t.idx})),
+        next:()=>{ if(!ready){this.showToast('This match is a draw — pick who advances on penalties','warn');return;}
+          if(t._next>=0) this.setState({koRoundOpen:t._next}); else{this.setState({koRoundOpen:-1});this.showToast('All '+koTotal+' matches predicted','ok');} }
       };
     }));
-    const r32pct = Math.round(r32done/r32total*100)+'%';
-    const r32donestr = r32done+' / '+r32total+' predicted';
+    const koPct=Math.round(koDone/Math.max(koTotal,1)*100)+'%';
+    const koDoneStr=koDone+' / '+koTotal+' predicted';
+    // Locked picks summary for lock screen
+    const koHasLocked=Object.keys(roundPicks).length>0;
+    const koLockedSummary=this.deepFlags(koMatchDefs.slice(0,8).map(([hn,hf,an,af],i)=>{
+      const tie=roundPicks[i]||{};
+      return{hName:hn,hFu:this.flagUrl(hf),aName:an,aFu:this.flagUrl(af),
+        score:tie.h!=null?(tie.h+' – '+tie.a):'? – ?'};
+    }));
+
+    const rounds=[['R32','r32',4],['R16','r16',5],['QF','qf',10],['SF','sf',15],['Final','final',20]].map(([name,key,pts])=>({
+      name,pts,op:'1',
+      bg:key===activeKey?'rgba(122,60,255,.16)':'#1A1A1E',
+      bd:key===activeKey?'#7A3CFF':'rgba(255,255,255,.05)',
+      tc:key===activeKey?'#F5F5F7':'#8E8E93'}));
+
+    // backwards compat aliases for submit logic
+    const r32done=activeKey==='r32'?koDone:0;
+    const r32total=activeKey==='r32'?koTotal:0;
 
     // ---- prediction completeness gates ----
-    const incompleteR32 = allR32.filter(t=> t.has && t.isDraw && !t.advSel);
+    const incompleteKo = allKoCards.filter(t=> t.has && t.isDraw && !t.advSel);
+    const incompleteR32 = incompleteKo; // alias for backwards compat
     const finPartial = fin.length===1;
     const champMissing = fin.length===2 && !s.champ;
-    const totalLocked = r32done + fin.length + (s.champ?1:0);
-    const predBlocked = incompleteR32.length>0 || finPartial || champMissing;
-    const blockMsg = incompleteR32.length>0
-        ? (incompleteR32.length+' drawn match'+(incompleteR32.length===1?'':'es')+' still need a penalty winner')
+    const totalLocked = koDone + fin.length + (s.champ?1:0);
+    const predBlocked = incompleteKo.length>0 || finPartial || champMissing;
+    const blockMsg = incompleteKo.length>0
+        ? (incompleteKo.length+' drawn match'+(incompleteKo.length===1?'':'es')+' still need a penalty winner')
       : finPartial ? 'Pick your second finalist, or remove the first'
       : champMissing ? 'Crown a champion to complete your bonus'
       : '';
@@ -1385,7 +1585,7 @@ class Component extends DCLogic {
     ]);
     const userP=lb[this.USER];
     const userPicks=this.deepFlags(userP.picksX.map(pk=>({flag:pk.flag,pts:pk.pts})));
-    const userId=this._apiData?.participants?.[this.USER]?.id;
+    const userId=this._userParticipantId;
     const rawLog=(this._apiData?._scoringLog?.[userId]||[]).slice().reverse();
     const userMatchLog=rawLog.slice(0,8).map(e=>({
       pts:e.points, reason:e.reason,
@@ -1428,17 +1628,26 @@ class Component extends DCLogic {
       detailOpen:detail!=null, detail, closeDetail:()=>this.setState({detailIdx:null,expandedPick:{}}),
       matchOpen:mdet!=null, mdet, closeMatch:()=>this.setState({matchObj:null}),
       lockStr, bonusPts:100, finalistPicks, hasFinalists, noFinalists:!hasFinalists, champFinalists, finalCountStr, rounds,
-      r32visible, r32done, r32total, r32pct, r32donestr, r32remCount, r32allDone,
-      r32remChipBg: s.r32filter!=='all'?'rgba(122,60,255,.22)':'#1A1A1E', r32remChipC: s.r32filter!=='all'?'#F5F5F7':'#8E8E93',
-      r32allChipBg: s.r32filter==='all'?'rgba(122,60,255,.22)':'#1A1A1E', r32allChipC: s.r32filter==='all'?'#F5F5F7':'#8E8E93',
-      setR32Remaining:()=>this.setState({r32filter:'remaining'}), setR32All:()=>this.setState({r32filter:'all'}),
+      koCards, koDone, koTotal, koPct, koDoneStr, koRemCount, koAllDone, koAllDoneMsg,
+      koLockedSummary, koHasLocked, isKoLocked, isKoOpen, koRoundName, koNextRoundMsg,
+      koRemChipBg:s.koFilter!=='all'?'rgba(122,60,255,.22)':'#1A1A1E', koRemChipC:s.koFilter!=='all'?'#F5F5F7':'#8E8E93',
+      koAllChipBg:s.koFilter==='all'?'rgba(122,60,255,.22)':'#1A1A1E', koAllChipC:s.koFilter==='all'?'#F5F5F7':'#8E8E93',
+      setKoRemaining:()=>this.setState({koFilter:'remaining'}), setKoAll:()=>this.setState({koFilter:'all'}),
+      showLogin:!s.loggedIn,
+      loginBtnLabel:s.loginLoading?'Signing in…':'Sign in',
+      loginError:s.loginError,
+      doLogin:()=>{
+        const email=document.getElementById('loginEmailInput')?.value||'';
+        const pin=document.getElementById('loginPinInput')?.value||'';
+        this.loginUser(email,pin);
+      },
       submitBg: (s.submitted && !predBlocked) ? 'linear-gradient(135deg,#34C759,#0A84FF)'
         : (predBlocked || totalLocked===0) ? '#1B1B1F'
         : 'linear-gradient(135deg,#FF2D78,#7A3CFF,#1FA2FF)',
       submitC: ((predBlocked || totalLocked===0) && !(s.submitted && !predBlocked)) ? '#7C7C82' : '#fff',
       submitShadow: ((s.submitted && !predBlocked) || !(predBlocked || totalLocked===0)) ? '0 8px 24px rgba(122,60,255,.35)' : 'none',
       submitLabel: (s.submitted && !predBlocked) ? '✓ Predictions saved · you can still edit'
-        : incompleteR32.length ? ('Resolve '+incompleteR32.length+' drawn match'+(incompleteR32.length===1?'':'es'))
+        : incompleteKo.length ? ('Resolve '+incompleteKo.length+' drawn match'+(incompleteKo.length===1?'':'es'))
         : finPartial ? 'Pick your second finalist'
         : champMissing ? 'Crown your champion'
         : totalLocked===0 ? 'Make a pick to save'
@@ -1446,22 +1655,25 @@ class Component extends DCLogic {
       submitHint: blockMsg,
       showSubmitHint: predBlocked,
       submit:async()=>{
-        if(incompleteR32.length){
-          const first=incompleteR32[0];
-          this.setState({r32filter:'all', r32open:first.idx, submitted:false});
+        if(incompleteKo.length){
+          const first=incompleteKo[0];
+          this.setState({koFilter:'all', koRoundOpen:first.idx, submitted:false});
           this.showToast(blockMsg,'warn'); return;
         }
         if(finPartial){ this.showToast(blockMsg,'warn'); return; }
         if(champMissing){ this.showToast(blockMsg,'warn'); return; }
         if(totalLocked===0){ this.showToast('Make at least one pick first','warn'); return; }
-        const userId=this._apiData?.participants?.[this.USER]?.id;
-        if(userId&&this._userPin){
+        const appsScriptUrl=this._apiData?.meta?.appsScriptUrl;
+        const participantId=this._userParticipantId;
+        const payload={action:'save',participantId,pin:'5555',round:activeKey,
+          picks:s[activeKey]||{},finalists:fin,champion:s.champ};
+        if(appsScriptUrl && participantId){
           try{
-            const res=await fetch('/api/predictions',{method:'POST',headers:{'Content-Type':'application/json'},
-              body:JSON.stringify({participantId:userId,pin:this._userPin,finalists:fin,champion:s.champ,ko:s.r32})});
+            const res=await fetch(appsScriptUrl,{method:'POST',headers:{'Content-Type':'text/plain'},
+              body:JSON.stringify(payload)});
             const j=await res.json();
-            if(!res.ok){ this.showToast(j.error||'Save failed','warn'); return; }
-          }catch(e){ this.showToast('Network error','warn'); return; }
+            if(!j.ok){ this.showToast(j.error||'Save failed — try again','warn'); return; }
+          }catch(e){ this.showToast('Network error — predictions saved locally','warn'); }
         }
         this.setState({submitted:true});
         this.showToast('Predictions saved · '+totalLocked+' pick'+(totalLocked===1?'':'s')+' locked in','ok');
@@ -1486,7 +1698,12 @@ class Component extends DCLogic {
       toastDot: s.toast&&s.toast.tone==='warn'?'#FF9F0A':'#34C759',
       toastMsg: s.toast?s.toast.msg:'',
       openSettings:()=>this.showToast('Settings open in the full build','ok'),
-      signOut:()=>{ this.setState({profile:false}); this.showToast('Signed out','ok'); }
+      signOut:()=>{
+        try{ localStorage.removeItem('fifa_auth'); }catch(e){}
+        this._userParticipantId=null; this._userPin=null; this._userName=null;
+        this.setState({profile:false,loggedIn:false,r32:{},r16:{},qf:{},sf:{},final:{},submitted:false,champ:null,finalists:[]});
+        this.showToast('Signed out','ok');
+      }
     };
   }
 }

@@ -1,9 +1,10 @@
 import 'dotenv/config';
 import { read, write, readOr } from './store.js';
-import { computeScores, getLockTime } from './scoring.js';
+import { computeScores, getLockTime, getKoLockTimes, determineActiveRound } from './scoring.js';
 import { computeStandings } from './standings.js';
 import { updateBracket } from './bracket.js';
 import { buildAppData } from './buildAppData.js';
+import { syncPredictions } from './sync-predictions.js';
 
 const API_BASE = 'https://worldcup26.ir';
 
@@ -125,6 +126,9 @@ async function run() {
 
   await pollFixtures();
 
+  // Sync predictions from Google Apps Script (if configured)
+  await syncPredictions();
+
   const standings = computeStandings();
   console.log(`[once] Standings for ${Object.keys(standings).length} groups`);
 
@@ -132,23 +136,41 @@ async function run() {
   const koRounds = Object.keys(bracket).filter(k => bracket[k].length > 0);
   console.log(`[once] Bracket (${koRounds.length} rounds)`);
 
-  const lockTime = getLockTime();
-  if (lockTime && Date.now() >= lockTime) {
-    const predictions = readOr('predictions.json', {});
-    let locked = 0;
+  const fixtures = read('fixtures.json') || [];
+  const koLockTimes = getKoLockTimes();
+  const activeRound = determineActiveRound(fixtures);
+
+  // Auto-lock predictions per round
+  const predictions = readOr('predictions.json', {});
+  let locked = 0;
+  for (const [roundKey, lockMs] of Object.entries(koLockTimes)) {
+    if (!lockMs || Date.now() < lockMs) continue;
     for (const [, pred] of Object.entries(predictions)) {
-      if (pred.submittedAtMs && !pred.locked) { pred.locked = true; locked++; }
+      // Support both old (pred.locked=bool) and new (pred.locked={r32:true}) format
+      const alreadyLocked = typeof pred.locked === 'boolean'
+        ? pred.locked
+        : !!(pred.locked?.[roundKey]);
+      if (!alreadyLocked && (pred[roundKey] || (roundKey === 'r32' && pred.ko))) {
+        if (typeof pred.locked !== 'object' || pred.locked === null) pred.locked = {};
+        pred.locked[roundKey] = true;
+        locked++;
+      }
     }
-    if (locked > 0) {
-      write('predictions.json', predictions);
-      console.log(`[once] Auto-locked ${locked} prediction(s)`);
-    }
+  }
+  if (locked > 0) {
+    write('predictions.json', predictions);
+    console.log(`[once] Auto-locked ${locked} prediction(s)`);
   }
 
   const meta = readOr('meta.json', {});
   meta.lastUpdated = Date.now();
   meta.phase = koRounds.length > 0 ? 'ko' : 'group';
-  if (lockTime) meta.lockAtMs = lockTime;
+  meta.activeRound = activeRound;
+  meta.koLockTimes = koLockTimes;
+  // Keep legacy lockAtMs for backwards compat
+  const r32LockMs = koLockTimes.r32;
+  if (r32LockMs) meta.lockAtMs = r32LockMs;
+  if (process.env.APPS_SCRIPT_URL) meta.appsScriptUrl = process.env.APPS_SCRIPT_URL;
   write('meta.json', meta);
 
   const leaderboard = computeScores();
