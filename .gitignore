@@ -1,0 +1,9 @@
+.env
+node_modules/
+*.tmp
+frontend-logic.js
+
+# Data directory — ignore generated files, keep the two source-of-truth files
+data/*
+!data/participants.json
+!data/predictions.json

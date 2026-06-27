@@ -1,0 +1,136 @@
+[
+  {
+    "id": "praveen_kumar",
+    "name": "Praveen Kumar",
+    "picks": [
+      "GER",
+      "FRA",
+      "POR",
+      "ARG"
+    ],
+    "email": "praveen.kumar@loylty.com"
+  },
+  {
+    "id": "rushabh_jha",
+    "name": "Rushabh Jha",
+    "picks": [
+      "ESP",
+      "GER",
+      "ENG",
+      "ARG"
+    ],
+    "email": "rushabh.jha@loylty.com"
+  },
+  {
+    "id": "avdhut_pure",
+    "name": "Avdhut Pure",
+    "picks": [
+      "ARG",
+      "BRA",
+      "POR",
+      "ESP"
+    ],
+    "email": "avdhut.pure@loylty.com"
+  },
+  {
+    "id": "dhruv_shah",
+    "name": "Dhruv Shah",
+    "picks": [
+      "ARG",
+      "GER",
+      "BRA",
+      "ESP"
+    ],
+    "email": "dhruv.shah@loylty.com"
+  },
+  {
+    "id": "sagar_vatkar",
+    "name": "Sagar Vatkar",
+    "picks": [
+      "GER",
+      "BRA",
+      "POR",
+      "ARG"
+    ],
+    "email": "sagar.vatkar@loylty.com"
+  },
+  {
+    "id": "ranjit_nambiar",
+    "name": "Ranjit Nambiar",
+    "picks": [
+      "ESP",
+      "ARG",
+      "POR",
+      "BEL"
+    ],
+    "email": "ranjit.nambiar@loylty.com"
+  },
+  {
+    "id": "anurag_saxena",
+    "name": "Anurag Saxena",
+    "picks": [
+      "POR",
+      "BRA",
+      "ARG",
+      "ESP"
+    ],
+    "email": "anurag.saxena@loylty.com"
+  },
+  {
+    "id": "renu_verma",
+    "name": "Renu Verma",
+    "picks": [
+      "ESP",
+      "FRA",
+      "ARG",
+      "BRA"
+    ],
+    "email": "renu.verma@loylty.com"
+  },
+  {
+    "id": "nived",
+    "name": "Nived",
+    "picks": [
+      "FRA",
+      "ARG",
+      "ESP",
+      "POR"
+    ],
+    "email": "nived.lal@loylty.com",
+    "pinSalt": "0a019c73695e239b66625c1ca40f5204",
+    "pinHash": "bf3825f30151bc661103f93ed996fe7c4a485040030d92feaf95d23ccf35399d"
+  },
+  {
+    "id": "fananio",
+    "name": "Fananio",
+    "picks": [
+      "ARG",
+      "ESP",
+      "FRA",
+      "POR"
+    ],
+    "email": "amrinder.singh@loylty.com"
+  },
+  {
+    "id": "neelkanth_vyas",
+    "name": "Neelkanth Vyas",
+    "picks": [
+      "ESP",
+      "FRA",
+      "BRA",
+      "POR"
+    ],
+    "email": "neelkanth.vyas@loylty.com"
+  },
+  {
+    "id": "neerav_tipnis",
+    "name": "Neerav Tipnis",
+    "picks": [
+      "GER",
+      "NED",
+      "FRA",
+      "ARG"
+    ],
+    "email": "neerav.tipnis@loylty.com"
+  }
+]

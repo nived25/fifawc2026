@@ -1,0 +1,87 @@
+import { read, readOr } from './store.js';
+import { writeFileSync, mkdirSync, existsSync } from 'fs';
+import { join, dirname } from 'path';
+
+const PUBLIC_DIR = join(dirname(new URL(import.meta.url).pathname), '..', 'public');
+
+export function buildAppData() {
+  if (!existsSync(PUBLIC_DIR)) mkdirSync(PUBLIC_DIR, { recursive: true });
+
+  const leaderboard = readOr('leaderboard.json', []);
+  const fixtures = readOr('fixtures.json', []);
+  const standings = readOr('standings.json', {});
+  const bracket = readOr('bracket.json', {});
+  const predictions = readOr('predictions.json', {});
+  const meta = readOr('meta.json', { phase: 'group', lastUpdated: Date.now() });
+  const teams = readOr('teams.json', {});
+  const participants = readOr('participants.json', []);
+  const r32tbd = readOr('r32_tbd.json', []);
+  const scoringLedger = readOr('scoring_ledger.json', []);
+
+  const publicPredictions = {};
+  for (const [pid, pred] of Object.entries(predictions)) {
+    publicPredictions[pid] = {
+      locked: pred.locked || false,
+      submittedAtMs: pred.submittedAtMs || null,
+      ...(pred.locked ? {
+        finalists: pred.finalists,
+        champion: pred.champion,
+        ko: pred.ko
+      } : {})
+    };
+  }
+
+  const appData = {
+    meta: {
+      ...meta,
+      generatedAt: Date.now()
+    },
+    leaderboard,
+    fixtures: fixtures.map(f => ({
+      id: f.id,
+      round: f.round,
+      group: f.group,
+      kickoffMs: f.kickoffMs,
+      status: f.status,
+      home: { code: f.home.code, goals: f.home.goals },
+      away: { code: f.away.code, goals: f.away.goals },
+      finished: f.finished
+    })),
+    standings,
+    bracket,
+    _r32tbd: r32tbd,
+    predictions: publicPredictions,
+    teams: Object.fromEntries(
+      Object.entries(teams).map(([code, t]) => [code, { name: t.name, flag: t.flag, logo: t.logo }])
+    ),
+    participants: participants.map(p => ({
+      id: p.id,
+      name: p.name,
+      picks: p.picks
+    })),
+    _scoringLog: (() => {
+      const byParticipant = {};
+      for (const entry of scoringLedger) {
+        if (!byParticipant[entry.participantId]) byParticipant[entry.participantId] = [];
+        byParticipant[entry.participantId].push({
+          points: entry.points,
+          reason: entry.reason,
+          matchId: entry.matchId,
+          ts: entry.ts
+        });
+      }
+      return byParticipant;
+    })()
+  };
+
+  const outPath = join(PUBLIC_DIR, 'app-data.json');
+  writeFileSync(outPath, JSON.stringify(appData));
+  console.log(`[build] app-data.json written (${(JSON.stringify(appData).length / 1024).toFixed(1)} KB)`);
+  return appData;
+}
+
+if (import.meta.url === `file://${process.argv[1]}`) {
+  import('dotenv/config').then(() => {
+    buildAppData();
+  });
+}

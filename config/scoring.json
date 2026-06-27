@@ -1,0 +1,19 @@
+{
+  "group": {
+    "win": 3,
+    "draw": 1,
+    "loss": 0
+  },
+  "prediction": {
+    "correctFinalist": 25,
+    "correctChampion": 50
+  },
+  "knockout": {
+    "R32": 4,
+    "R16": 5,
+    "QF": 10,
+    "SF": 15,
+    "FINAL": 20,
+    "CHAMPION": 30
+  }
+}

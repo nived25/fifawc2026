@@ -1,0 +1,19 @@
+{
+  "name": "fifa-fantasy",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "bootstrap": "node src/bootstrap.js",
+    "refresh": "node src/bootstrap.js && node src/once.js",
+    "sync": "node src/sync-participants.js",
+    "start": "node src/server.js",
+    "build": "node src/buildAppData.js",
+    "once": "node src/once.js",
+    "scheduler": "node src/scheduler.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "node-cron": "^3.0.3"
+  }
+}

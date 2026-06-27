@@ -1,0 +1,164 @@
+import 'dotenv/config';
+import { read, write, readOr } from './store.js';
+import { computeScores, getLockTime } from './scoring.js';
+import { computeStandings } from './standings.js';
+import { updateBracket } from './bracket.js';
+import { buildAppData } from './buildAppData.js';
+
+const API_BASE = 'https://worldcup26.ir';
+
+const STADIUM_UTC_OFFSET = {
+  '1': -6, '2': -6, '3': -6,
+  '4': -5, '5': -5, '6': -5,
+  '7': -4, '8': -4, '9': -4,
+  '10': -4, '11': -4, '12': -4,
+  '13': -7, '14': -7, '15': -7, '16': -7
+};
+
+const ROUND_NAMES = {
+  group: 'Group Stage', r32: 'Round of 32', r16: 'Round of 16',
+  qf: 'Quarter-finals', sf: 'Semi-finals', third: '3rd Place', final: 'Final'
+};
+
+function localToUtcMs(localDate, stadiumId) {
+  const [datePart, timePart] = localDate.split(' ');
+  const [month, day, year] = datePart.split('/');
+  const [hour, min] = timePart.split(':');
+  const offsetH = STADIUM_UTC_OFFSET[String(stadiumId)] ?? -5;
+  return Date.UTC(+year, +month - 1, +day, +hour - offsetH, +min);
+}
+
+function parseScorers(raw, teamCode) {
+  if (!raw || raw === 'null') return [];
+  const inner = raw.replace(/^\{/, '').replace(/\}$/, '');
+  if (!inner) return [];
+  const entries = inner.match(/"[^"]*"/g) || [];
+  return entries.map(e => {
+    const s = e.replace(/^"|"$/g, '').trim();
+    const m = s.match(/^(.+?)\s+(\d+(?:\+\d+)?)'?$/);
+    return { name: m ? m[1].trim() : s, minute: m ? parseInt(m[2]) : null, team: teamCode };
+  });
+}
+
+async function pollFixtures() {
+  console.log('[once] Fetching latest games from worldcup26.ir...');
+  try {
+    const res = await fetch(`${API_BASE}/get/games`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const gamesRaw = await res.json();
+    const gameList = Array.isArray(gamesRaw) ? gamesRaw : (gamesRaw.games || []);
+
+    const teamIdMap = readOr('team_id_map.json', {});
+    const stadiumIdMap = readOr('stadium_id_map.json', {});
+
+    const fixtures = [];
+    const r32tbd = [];
+
+    for (const g of gameList) {
+      const round = ROUND_NAMES[g.type] || g.type;
+      const kickoffMs = localToUtcMs(g.local_date, g.stadium_id);
+      const isGroup = g.type === 'group';
+      const homeResolved = g.home_team_id && g.home_team_id !== '0';
+      const awayResolved = g.away_team_id && g.away_team_id !== '0';
+      const finished = g.finished === 'TRUE';
+      const homeCode = homeResolved ? (teamIdMap[String(g.home_team_id)] || null) : null;
+      const awayCode = awayResolved ? (teamIdMap[String(g.away_team_id)] || null) : null;
+      const homeName = homeResolved
+        ? (g.home_team_name_en || homeCode)
+        : (g.home_team_label || 'TBD');
+      const awayName = awayResolved
+        ? (g.away_team_name_en || awayCode)
+        : (g.away_team_label || 'TBD');
+      const homeGoals = finished ? parseInt(g.home_score) : null;
+      const awayGoals = finished ? parseInt(g.away_score) : null;
+      const venue = stadiumIdMap[String(g.stadium_id)] || null;
+      const group = isGroup ? `Group ${g.group}` : null;
+
+      if (homeCode && awayCode) {
+        fixtures.push({
+          id: parseInt(g.id),
+          apiId: parseInt(g.id),
+          round,
+          group,
+          kickoffMs,
+          status: finished ? 'FT' : (g.time_elapsed === 'live' ? 'LIVE' : 'NS'),
+          home: { code: homeCode, name: homeName, goals: homeGoals },
+          away: { code: awayCode, name: awayName, goals: awayGoals },
+          finished,
+          venue,
+          scorers: [
+            ...parseScorers(g.home_scorers, homeCode),
+            ...parseScorers(g.away_scorers, awayCode)
+          ].sort((a, b) => (a.minute || 0) - (b.minute || 0))
+        });
+      }
+
+      if (g.type === 'r32') {
+        r32tbd.push({
+          apiId: parseInt(g.id),
+          home: { code: homeCode, name: homeName, resolved: !!homeResolved },
+          away: { code: awayCode, name: awayName, resolved: !!awayResolved },
+          kickoffMs,
+          venue,
+          finished,
+          homeGoals,
+          awayGoals
+        });
+      }
+    }
+
+    fixtures.sort((a, b) => a.kickoffMs - b.kickoffMs);
+    r32tbd.sort((a, b) => a.kickoffMs - b.kickoffMs);
+
+    write('fixtures.json', fixtures);
+    write('r32_tbd.json', r32tbd);
+    console.log(`[once] ${fixtures.length} fixtures updated (${fixtures.filter(f => f.finished).length} finished), ${r32tbd.length} R32`);
+    return true;
+  } catch (err) {
+    console.error('[once] Poll error:', err.message);
+    return false;
+  }
+}
+
+async function run() {
+  console.log('=== FIFA Fantasy — Poll + Score + Build ===\n');
+
+  await pollFixtures();
+
+  const standings = computeStandings();
+  console.log(`[once] Standings for ${Object.keys(standings).length} groups`);
+
+  const bracket = updateBracket();
+  const koRounds = Object.keys(bracket).filter(k => bracket[k].length > 0);
+  console.log(`[once] Bracket (${koRounds.length} rounds)`);
+
+  const lockTime = getLockTime();
+  if (lockTime && Date.now() >= lockTime) {
+    const predictions = readOr('predictions.json', {});
+    let locked = 0;
+    for (const [, pred] of Object.entries(predictions)) {
+      if (pred.submittedAtMs && !pred.locked) { pred.locked = true; locked++; }
+    }
+    if (locked > 0) {
+      write('predictions.json', predictions);
+      console.log(`[once] Auto-locked ${locked} prediction(s)`);
+    }
+  }
+
+  const meta = readOr('meta.json', {});
+  meta.lastUpdated = Date.now();
+  meta.phase = koRounds.length > 0 ? 'ko' : 'group';
+  if (lockTime) meta.lockAtMs = lockTime;
+  write('meta.json', meta);
+
+  const leaderboard = computeScores();
+  console.log('\n--- Leaderboard ---');
+  for (const row of leaderboard) {
+    const delta = row.delta > 0 ? `+${row.delta}` : String(row.delta);
+    console.log(`  ${row.rank}. ${row.name.padEnd(18)} ${String(row.total).padStart(3)} pts  (${delta})`);
+  }
+
+  buildAppData();
+}
+
+run().catch(err => { console.error(err); process.exit(1); });
