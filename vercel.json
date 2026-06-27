@@ -1,4 +1,5 @@
 {
+  "framework": null,
   "outputDirectory": "public",
   "installCommand": "npm ci",
   "buildCommand": "node src/bootstrap.js && node src/once.js",
