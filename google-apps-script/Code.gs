@@ -22,7 +22,8 @@ function doGet(e) {
     const action = e.parameter.action;
     if (action === 'load') return jsonResponse(handleLoad(e.parameter));
     if (action === 'export') return jsonResponse(handleExport());
-    return jsonResponse({ ok: false, error: 'Use action=load or action=export' });
+    if (action === 'clear') return jsonResponse(handleClear(e.parameter));
+    return jsonResponse({ ok: false, error: 'Use action=load, action=export, or action=clear&participantId=...' });
   } catch(err) {
     return jsonResponse({ ok: false, error: err.toString() });
   }
@@ -154,6 +155,20 @@ function handleLoad(params) {
   }
 
   return { ok: true, predictions: result };
+}
+
+function handleClear(params) {
+  const { participantId } = params;
+  const sheet = getOrCreatePredSheet();
+  const allData = sheet.getDataRange().getValues();
+  const rowsToDelete = [];
+  for (let i = allData.length - 1; i >= 1; i--) {
+    if (!participantId || String(allData[i][0]) === participantId) {
+      rowsToDelete.push(i + 1);
+    }
+  }
+  rowsToDelete.forEach(r => sheet.deleteRow(r));
+  return { ok: true, deleted: rowsToDelete.length, participantId: participantId || 'ALL' };
 }
 
 function handleExport() {
