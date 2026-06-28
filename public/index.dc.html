@@ -1455,7 +1455,7 @@ class Component extends DCLogic {
         const aCode = t.away?.code || null;
         const h = hCode ? (this.teams[hCode]||{n:t.home?.name||hCode,f:this._CODE_EMOJI[hCode]||''}) : {n:t.home?.name||'TBD',f:''};
         const a = aCode ? (this.teams[aCode]||{n:t.away?.name||aCode,f:this._CODE_EMOJI[aCode]||''}) : {n:t.away?.name||'TBD',f:''};
-        return [h.n,h.f,a.n,a.f,hCode||'',aCode||''];
+        return [h.n,h.f,a.n,a.f,hCode||'',aCode||'',t.apiId||0];
       });
     }
     return [
@@ -1480,7 +1480,12 @@ class Component extends DCLogic {
   bracketData(){
     const colH=900, colW=120;
     const T=(n,f)=>({n,f}); const tbd=()=>T('TBD','');
-    const r32=this.R32LIST().map(([hn,hf,an,af])=>[T(hn,hf),T(an,af)]); // 6-tuple, only first 4 used here
+    const BRACKET_ORDER=[74,77,73,75,83,84,81,82,76,78,79,80,86,88,85,87];
+    const raw32=this.R32LIST();
+    const byId={};
+    raw32.forEach(m=>{byId[m[6]]=m});
+    const ordered=BRACKET_ORDER.map(id=>byId[id]).filter(Boolean);
+    const r32=(ordered.length===16?ordered:raw32).map(([hn,hf,an,af])=>[T(hn,hf),T(an,af)]);
     const mkTBD=n=>Array.from({length:n},()=>[tbd(),tbd()]);
     const raw=[
       {title:'Round of 32',pairs:r32},
