@@ -1018,7 +1018,8 @@ class Component extends DCLogic {
     return this._apiData?.bracket?.[roundNames[roundKey]]||[];
   }
   updKo(roundKey,i,fn){
-    this.setState(st=>{ const cur=(st[roundKey]||{})[i]||{h:0,a:0,adv:null}; return {[roundKey]:{...(st[roundKey]||{}),[i]:{...cur,...fn(cur)}}}; });
+    this.setState(st=>{ const cur=(st[roundKey]||{})[i]||{h:0,a:0,adv:null}; return {[roundKey]:{...(st[roundKey]||{}),[i]:{...cur,...fn(cur)}}, submitted:false}; });
+    this._savePredictionsToLocal();
   }
   updR32(i,fn){ this.updKo('r32',i,fn); }
   async loginUser(email,pin){
@@ -1081,7 +1082,7 @@ class Component extends DCLogic {
       if(preds.champion) ns.champ=preds.champion;
       if(Object.keys(ns).length){ ns.submitted=true; this.setState(ns); }
     }
-    // Tier 2: live picks from Apps Script (more current than app-data)
+    // Tier 2: live picks from Apps Script — fill blanks only (don't overwrite locked)
     const appsScriptUrl=this._apiData?.meta?.appsScriptUrl;
     if(appsScriptUrl && participantId){
       try{
@@ -1089,14 +1090,16 @@ class Component extends DCLogic {
         const data=await res.json();
         if(data.ok && data.predictions){
           const p=data.predictions;
+          const cur=this.state;
           const ns={};
-          if(p.r32) ns.r32=p.r32;
-          if(p.r16) ns.r16=p.r16;
-          if(p.qf) ns.qf=p.qf;
-          if(p.sf) ns.sf=p.sf;
-          if(p.final) ns.final=p.final;
-          if(p.finalists) ns.finalists=p.finalists;
-          if(p.champion) ns.champ=p.champion;
+          const hasKeys=o=>o&&Object.keys(o).length>0;
+          if(p.r32 && !hasKeys(cur.r32)) ns.r32=p.r32;
+          if(p.r16 && !hasKeys(cur.r16)) ns.r16=p.r16;
+          if(p.qf && !hasKeys(cur.qf)) ns.qf=p.qf;
+          if(p.sf && !hasKeys(cur.sf)) ns.sf=p.sf;
+          if(p.final && !hasKeys(cur.final)) ns.final=p.final;
+          if((p.finalists||[]).length && !(cur.finalists||[]).length) ns.finalists=p.finalists;
+          if(p.champion && !cur.champ) ns.champ=p.champion;
           if(Object.keys(ns).length){ ns.submitted=true; this.setState(ns); this._savePredictionsToLocal(); }
         }
       }catch(e){}
@@ -1270,10 +1273,11 @@ class Component extends DCLogic {
   toggleFinalist(c){
     this.setState(st=>{
       const cur=st.finalists||[];
-      if(cur.includes(c)){ const nf=cur.filter(x=>x!==c); return {finalists:nf, champ: st.champ===c?null:st.champ}; }
+      if(cur.includes(c)){ const nf=cur.filter(x=>x!==c); return {finalists:nf, champ: st.champ===c?null:st.champ, submitted:false}; }
       if(cur.length>=2) return {};
-      return {finalists:[...cur,c]};
+      return {finalists:[...cur,c], submitted:false};
     });
+    this._savePredictionsToLocal();
   }
   buildParticipants(){
     return this.P.map((p,i)=>{
@@ -1517,7 +1521,7 @@ class Component extends DCLogic {
     const hasFinalists = fin.length===2;
     const champFinalists=this.deepFlags(fin.map(c=>{const t=this.teams[c]||{n:c,f:''};return{code:c,n:t.n,f:t.f,
       bg: s.champ===c?'rgba(122,60,255,.24)':'#1A1A1E', bd: s.champ===c?'#7A3CFF':'rgba(255,255,255,.05)',
-      pick:()=>this.setState({champ:c})};}));
+      pick:()=>{this.setState({champ:c, submitted:false}); this._savePredictionsToLocal();}};}));
     const finalCountStr = fin.length+'/2';
     const activeKey = this.determineActiveRound();
     const ROUND_LABELS = {r32:'Round of 32',r16:'Round of 16',qf:'Quarter-finals',sf:'Semi-finals',final:'Final'};
@@ -1600,7 +1604,7 @@ class Component extends DCLogic {
       return {...t,open,chev:open?'rotate(90deg)':'rotate(0deg)',
         cardBd:t.done?'rgba(52,199,89,.32)':(open?'rgba(122,60,255,.45)':'rgba(255,255,255,.09)'),
         hpText,hpBg,hpC,statusText,statusColor,nextReady:ready,
-        nextText:!ready?'Pick who advances to save':(t._next>=0?'Save & next match  →':'Done — collapse'),
+        nextText:!ready?'Pick who advances':(t._next>=0?'Next match  →':'Done — all set'),
         nextBg:ready?'linear-gradient(135deg,#7A3CFF,#1FA2FF)':'#19191D',
         nextC:ready?'#fff':'#5E5E63',
         nextShadow:ready?'0 6px 18px -6px rgba(122,60,255,.5)':'none',
@@ -1743,13 +1747,8 @@ class Component extends DCLogic {
       submitHint: blockMsg,
       showSubmitHint: predBlocked,
       submit:async()=>{
-        if(incompleteKo.length){
-          const first=incompleteKo[0];
-          this.setState({koFilter:'all', koRoundOpen:first.idx, submitted:false});
-          this.showToast(blockMsg,'warn'); return;
-        }
-        if(finPartial){ this.showToast(blockMsg,'warn'); return; }
-        if(champMissing){ this.showToast(blockMsg,'warn'); return; }
+        if(finPartial){ this.showToast('Pick your second finalist, or remove the first','warn'); return; }
+        if(champMissing){ this.showToast('Crown a champion to complete your bonus','warn'); return; }
         if(totalLocked===0){ this.showToast('Make at least one pick first','warn'); return; }
         this._savePredictionsToLocal();
         const appsScriptUrl=this._apiData?.meta?.appsScriptUrl;
@@ -1765,7 +1764,11 @@ class Component extends DCLogic {
           }catch(e){ this.showToast('Sheet unavailable — predictions saved to your device','warn'); }
         }
         this.setState({submitted:true});
-        this.showToast(koAllDone?'All '+koTotal+' predictions saved!':(koDone+' of '+koTotal+' predictions saved · keep going'),koAllDone?'ok':'warn');
+        if(incompleteKo.length){
+          this.showToast(koDone+' of '+koTotal+' saved · '+incompleteKo.length+' draw'+(incompleteKo.length>1?'s':'')+' still need a penalty winner','warn');
+        } else {
+          this.showToast(koAllDone?'All '+koTotal+' predictions saved!':(koDone+' of '+koTotal+' predictions saved · keep going'),koAllDone?'ok':'warn');
+        }
       },
       predStatusText: predBlocked ? 'Action needed' : (s.submitted?(koAllDone?'All saved':koDone+'/'+koTotal+' saved'):'Not submitted'),
       predStatusColor: predBlocked ? '#FF9F0A' : (s.submitted?(koAllDone?'#34C759':'#FFB44C'):'#FF9F0A'),
