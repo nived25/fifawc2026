@@ -1,7 +1,7 @@
 {
   "nived": {
     "submittedAtMs": {
-      "r32": 1782618546653
+      "r32": 1782619665942
     },
     "r32": {
       "0": {
@@ -80,7 +80,7 @@
         "adv": null
       },
       "15": {
-        "h": 1,
+        "h": 2,
         "a": 0,
         "adv": null
       }
@@ -89,7 +89,35 @@
       "BRA",
       "FRA"
     ],
-    "champion": "BRA",
+    "champion": "FRA",
+    "locked": {}
+  },
+  "praveen_kumar": {
+    "submittedAtMs": {
+      "r32": 1782620866030
+    },
+    "r32": {
+      "0": {
+        "h": 1,
+        "a": 0,
+        "adv": null
+      },
+      "1": {
+        "h": 2,
+        "a": 0,
+        "adv": null
+      },
+      "2": {
+        "h": 1,
+        "a": 0,
+        "adv": null
+      },
+      "3": {
+        "h": 2,
+        "a": 0,
+        "adv": null
+      }
+    },
     "locked": {}
   }
 }
