@@ -104,7 +104,7 @@
     <div data-screen-label="Fantasy" style="padding:0 0 110px">
       <!-- header -->
       <div style="position:sticky;top:0;z-index:4;padding:6px 20px 12px;background:rgba(10,10,11,.72);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);display:flex;align-items:center;justify-content:space-between">
-        <div><div class="disp" style="color:#F5F5F7;font-size:27px;font-weight:600;letter-spacing:-.6px;line-height:1">Fantasy</div><div style="color:#636366;font-size:12.5px;font-weight:500;margin-top:3px;white-space:nowrap">Office World Cup League</div></div>
+        <div><div class="disp" style="color:#F5F5F7;font-size:27px;font-weight:600;letter-spacing:-.6px;line-height:1">LR World Cup</div><div style="color:#636366;font-size:12.5px;font-weight:500;margin-top:3px;white-space:nowrap">Office World Cup League</div></div>
         <div onClick="{{ openProfile }}" style-active="transform:scale(.9)" style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#FF2D78,#7A3CFF);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:14px;cursor:pointer;box-shadow:0 4px 14px rgba(122,60,255,.4)">{{ userInitials }}</div>
       </div>
 
@@ -342,9 +342,15 @@
 
         <!-- bonus OPEN: editable before R32 locks -->
         <sc-if value="{{ isBonusOpen }}" hint-placeholder-val="{{ true }}">
-        <div style="background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.022));backdrop-filter:blur(16px) saturate(1.25);-webkit-backdrop-filter:blur(16px) saturate(1.25);border:1px solid rgba(255,255,255,.09);box-shadow:inset 0 1px 0 0 rgba(255,255,255,.08),0 14px 32px -12px rgba(0,0,0,.62);border-radius:18px;padding:15px;margin-top:12px">
-          <div style="display:flex;align-items:center;justify-content:space-between"><span style="color:#F5F5F7;font-size:16px;font-weight:600">Pre-Knockout Bonus</span><span style="color:#A98BFF;font-size:12px;font-weight:600">+{{ bonusPts }} pts potential</span></div>
-          <div style="color:#8E8E93;font-size:12.5px;font-weight:500;margin:4px 0 13px">Pick 2 finalists (25 each) &amp; a champion (50)</div>
+        <div style="background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.022));backdrop-filter:blur(16px) saturate(1.25);-webkit-backdrop-filter:blur(16px) saturate(1.25);border:{{ bonusBorder }};box-shadow:inset 0 1px 0 0 rgba(255,255,255,.08),0 14px 32px -12px rgba(0,0,0,.62);border-radius:18px;padding:15px;margin-top:12px">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <div style="display:flex;align-items:center;gap:8px">
+              <span style="color:#F5F5F7;font-size:16px;font-weight:600">Pre-Knockout Bonus</span>
+              <sc-if value="{{ bonusIncomplete }}" hint-placeholder-val="{{ false }}"><span style="background:rgba(255,159,10,.18);border:1px solid rgba(255,159,10,.35);border-radius:6px;color:#FFB44C;font-size:10px;font-weight:700;padding:2px 6px;letter-spacing:.3px">REQUIRED</span></sc-if>
+            </div>
+            <span style="color:#A98BFF;font-size:12px;font-weight:600">+{{ bonusPts }} pts potential</span>
+          </div>
+          <div style="color:#8E8E93;font-size:12.5px;font-weight:500;margin:4px 0 13px">Pick 2 finalists (25 each) &amp; a champion (50) — do this before saving!</div>
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><span style="color:#636366;font-size:11px;font-weight:600;letter-spacing:.4px">FINALISTS · 25 PTS EACH</span><span style="color:#48484A;font-size:10.5px;font-weight:600;font-variant-numeric:tabular-nums">{{ finalCountStr }}</span></div>
           <div style="display:flex;gap:8px;overflow-x:auto;padding-bottom:4px">
             <sc-for list="{{ finalistPicks }}" as="t" hint-placeholder-count="8">
@@ -658,7 +664,7 @@
   <div style="position:absolute;left:0;right:0;bottom:0;height:88px;background:rgba(10,10,11,.72);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-top:1px solid rgba(255,255,255,.07);display:flex;padding:10px 8px 22px;z-index:8">
     <div onClick="{{ tabFantasy }}" style-active="transform:scale(.85)" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;transition:transform .22s cubic-bezier(.34,1.56,.64,1);color:{{ cFantasy }}">
       <svg width="25" height="25" viewBox="0 0 24 24" fill="currentColor"><path d="M6 4h12v3a4 4 0 0 1-4 4h-.2A3 3 0 0 1 13 12.9V15h2a1 1 0 0 1 1 1v2H8v-2a1 1 0 0 1 1-1h2v-2.1A3 3 0 0 1 10.2 11H10a4 4 0 0 1-4-4V4Zm-3 1h2v2a3 3 0 0 1-2-2.8V5Zm16 0h2v.2A3 3 0 0 1 19 7V5Z"/></svg>
-      <span style="font-size:10.5px;font-weight:600">Fantasy</span>
+      <span style="font-size:10.5px;font-weight:600">Leaderboard</span>
     </div>
     <div onClick="{{ tabMatches }}" style-active="transform:scale(.85)" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;transition:transform .22s cubic-bezier(.34,1.56,.64,1);color:{{ cMatches }}">
       <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18" stroke-width="1.6"/></svg>
@@ -887,8 +893,8 @@
   <div style="position:absolute;inset:0;z-index:28;background:#0A0A0B;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px;animation:fadeIn .3s ease">
     <div style="text-align:center;margin-bottom:36px">
       <div style="font-size:44px;margin-bottom:14px">⚽</div>
-      <div class="disp" style="color:#F5F5F7;font-size:28px;font-weight:700;letter-spacing:-.5px">FIFA Fantasy</div>
-      <div style="color:#636366;font-size:14px;font-weight:500;margin-top:4px">World Cup 2026</div>
+      <div class="disp" style="color:#F5F5F7;font-size:28px;font-weight:700;letter-spacing:-.5px">LR World Cup</div>
+      <div style="color:#636366;font-size:14px;font-weight:500;margin-top:4px">2026 · Office League</div>
     </div>
     <div style="width:100%;max-width:340px;display:flex;flex-direction:column;gap:12px">
       <div style="background:#1A1A1E;border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:14px 16px">
@@ -1639,12 +1645,13 @@ class Component extends DCLogic {
     const finPartial = fin.length===1;
     const champMissing = fin.length===2 && !s.champ;
     const totalLocked = koDone + fin.length + (s.champ?1:0);
-    const predBlocked = incompleteKo.length>0 || finPartial || champMissing;
-    const blockMsg = incompleteKo.length>0
-        ? (incompleteKo.length+' drawn match'+(incompleteKo.length===1?'':'es')+' still need a penalty winner')
-      : finPartial ? 'Pick your second finalist, or remove the first'
+    const bonusIncomplete = isBonusOpen && (fin.length < 2 || !s.champ);
+    const predBlocked = finPartial || champMissing;
+    const blockMsg = finPartial ? 'Pick your second finalist, or remove the first'
       : champMissing ? 'Crown a champion to complete your bonus'
       : '';
+    const bonusBorder = bonusIncomplete
+      ? '1px solid rgba(255,159,10,.55)' : '1px solid rgba(255,255,255,.09)';
 
     const counts={};
     lb.forEach(p=>p.picks.forEach(c=>{counts[c]=(counts[c]||0)+1;}));
@@ -1733,23 +1740,24 @@ class Component extends DCLogic {
       },
       submitBg: (s.submitted && !predBlocked)
         ? (koAllDone ? 'linear-gradient(135deg,#34C759,#0A84FF)' : 'linear-gradient(135deg,#34C759,#FFB44C)')
-        : (predBlocked || totalLocked===0) ? '#1B1B1F'
+        : predBlocked ? '#1B1B1F'
         : 'linear-gradient(135deg,#FF2D78,#7A3CFF,#1FA2FF)',
-      submitC: ((predBlocked || totalLocked===0) && !(s.submitted && !predBlocked)) ? '#7C7C82' : '#fff',
-      submitShadow: ((s.submitted && !predBlocked) || !(predBlocked || totalLocked===0)) ? '0 8px 24px rgba(122,60,255,.35)' : 'none',
+      submitC: (predBlocked && !(s.submitted && !predBlocked)) ? '#7C7C82' : '#fff',
+      submitShadow: ((s.submitted && !predBlocked) || !predBlocked) ? '0 8px 24px rgba(122,60,255,.35)' : 'none',
       submitLabel: (s.submitted && !predBlocked)
         ? (koAllDone ? '✓ All '+koTotal+' predictions saved' : '✓ '+koDone+' of '+koTotal+' saved · keep going')
-        : incompleteKo.length ? ('Resolve '+incompleteKo.length+' drawn match'+(incompleteKo.length===1?'':'es'))
         : finPartial ? 'Pick your second finalist'
         : champMissing ? 'Crown your champion'
-        : totalLocked===0 ? 'Make a pick to save'
+        : totalLocked===0 ? 'Start with the bonus picks above ↑'
         : (koAllDone ? 'Save all '+koTotal+' predictions' : 'Save '+koDone+' of '+koTotal+' predictions'),
+      bonusIncomplete, bonusBorder,
       submitHint: blockMsg,
       showSubmitHint: predBlocked,
       submit:async()=>{
         if(finPartial){ this.showToast('Pick your second finalist, or remove the first','warn'); return; }
         if(champMissing){ this.showToast('Crown a champion to complete your bonus','warn'); return; }
         if(totalLocked===0){ this.showToast('Make at least one pick first','warn'); return; }
+        if(bonusIncomplete){ this.scrollTop(); this.showToast('Complete the Pre-Knockout Bonus picks first — they lock when R32 starts!','warn'); return; }
         this._savePredictionsToLocal();
         const appsScriptUrl=this._apiData?.meta?.appsScriptUrl;
         const participantId=this._userParticipantId;
@@ -1816,7 +1824,7 @@ class Component extends DCLogic {
       <path d="M0 -78 L62 -42 L62 42 L0 78 L-62 42 L-62 -42 Z" fill="url(#tg)" opacity="0.18"/>
       <circle cx="0" cy="0" r="30" fill="url(#tg)"/>
     </g>
-    <text x="600" y="600" font-family="Space Grotesk, sans-serif" font-size="64" font-weight="600" letter-spacing="-2" fill="#F5F5F7" text-anchor="middle">Fantasy</text>
+    <text x="600" y="600" font-family="Space Grotesk, sans-serif" font-size="64" font-weight="600" letter-spacing="-2" fill="#F5F5F7" text-anchor="middle">LR World Cup</text>
     <text x="600" y="650" font-family="Hanken Grotesk, sans-serif" font-size="26" font-weight="500" fill="#636366" text-anchor="middle">Office World Cup League</text>
   </svg>
 </template>

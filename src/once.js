@@ -5,6 +5,7 @@ import { computeStandings } from './standings.js';
 import { updateBracket } from './bracket.js';
 import { buildAppData } from './buildAppData.js';
 import { syncPredictions } from './sync-predictions.js';
+import { resolveR32Teams } from './resolveR32.js';
 
 const API_BASE = 'https://worldcup26.ir';
 
@@ -131,6 +132,8 @@ async function run() {
 
   const standings = computeStandings();
   console.log(`[once] Standings for ${Object.keys(standings).length} groups`);
+
+  resolveR32Teams(standings);
 
   const bracket = updateBracket();
   const koRounds = Object.keys(bracket).filter(k => bracket[k].length > 0);
