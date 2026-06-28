@@ -67,8 +67,15 @@ export function buildAppData() {
       for (const f of fixtures) {
         if (!f.finished || !f.scorers) continue;
         for (const s of f.scorers) {
-          const key = s.name + '|' + s.team;
-          if (!map[key]) map[key] = { name: s.name, team: s.team, goals: 0 };
+          // Normalize abbreviated names ("K. Mbappé") with full names ("Kylian Mbappé")
+          // by keying on last word (surname) + team
+          const lastName = s.name.split(' ').pop();
+          const key = lastName + '|' + s.team;
+          if (!map[key]) {
+            map[key] = { name: s.name, team: s.team, goals: 0 };
+          } else if (s.name.length > map[key].name.length) {
+            map[key].name = s.name; // prefer the fuller name for display
+          }
           map[key].goals++;
         }
       }
