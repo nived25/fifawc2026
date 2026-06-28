@@ -74,6 +74,25 @@ export function resolveR32Teams(standings) {
   const thirdAssignment = {};
   match(thirdSlots, availQualByGroup, thirdAssignment);
 
+  // Fallback: if any 3rd-place slot still unassigned, assign remaining available qualifiers
+  // (handles cases where qualifier's group letter isn't in the pre-tournament slot label)
+  const unassignedSlots = thirdSlots.filter(s => !thirdAssignment[`${s.matchIdx}:${s.side}`]);
+  const assignedCodes = new Set(Object.values(thirdAssignment).map(t => t.code));
+  const remainingQuals = Object.values(availQualByGroup)
+    .filter(q => !assignedCodes.has(q.code))
+    .sort((a, b) => b.pts - a.pts || b.gd - a.gd || b.gf - a.gf);
+  for (let i = 0; i < unassignedSlots.length && i < remainingQuals.length; i++) {
+    const s = unassignedSlots[i];
+    thirdAssignment[`${s.matchIdx}:${s.side}`] = remainingQuals[i];
+  }
+
+  // Build set of all top-2 teams across all groups for fallback lookup
+  const allTop2 = [];
+  for (const [letter, teams] of Object.entries(groupByLetter)) {
+    if (teams[0]) allTop2.push({ ...teams[0], group: letter, pos: 0 });
+    if (teams[1]) allTop2.push({ ...teams[1], group: letter, pos: 1 });
+  }
+
   // Apply resolutions to r32tbd
   const updated = r32tbd.map((m, i) => {
     const entry = { ...m, home: { ...m.home }, away: { ...m.away } };
@@ -81,20 +100,22 @@ export function resolveR32Teams(standings) {
       if (entry[side].resolved) continue;
       const label = entry[side].name || '';
 
-      // Winner / Runner-up — skip if team is already placed in another resolved slot
-      let wm = label.match(/^Winner Group ([A-L])$/i);
-      if (wm) {
-        const team = groupByLetter[wm[1].toUpperCase()]?.[0];
+      // Winner / Runner-up — try label first, fall back to only unplaced top-2 team
+      const wm = label.match(/^Winner Group ([A-L])$/i);
+      const rm = label.match(/^Runner-?up Group ([A-L])$/i);
+      if (wm || rm) {
+        const pos = wm ? 0 : 1;
+        const letter = (wm || rm)[1].toUpperCase();
+        let team = groupByLetter[letter]?.[pos];
         if (team && !alreadyPlaced.has(team.code)) {
           entry[side] = { code: team.code, name: team.name, resolved: true };
           alreadyPlaced.add(team.code);
           continue;
         }
-      }
-      let rm = label.match(/^Runner-?up Group ([A-L])$/i);
-      if (rm) {
-        const team = groupByLetter[rm[1].toUpperCase()]?.[1];
-        if (team && !alreadyPlaced.has(team.code)) {
+        // Label team is wrong/already placed — find the only remaining unplaced top-2 team
+        const unplaced = allTop2.filter(t => !alreadyPlaced.has(t.code));
+        if (unplaced.length === 1) {
+          team = unplaced[0];
           entry[side] = { code: team.code, name: team.name, resolved: true };
           alreadyPlaced.add(team.code);
           continue;
