@@ -82,13 +82,19 @@ Participant emails follow `[firstname].[lastname]@loylty.com`.
 
 ## Data flow for KO predictions
 
-1. User enters scores in Predict tab → state stored locally
-2. User taps "Save predictions" → POST to Apps Script (if configured) + localStorage
-3. GitHub Actions runs `sync-predictions.js` → pulls from Apps Script → writes `data/predictions.json`
-4. `once.js` scores predictions against real results → `data/leaderboard.json`
-5. `buildAppData.js` bundles into `public/app-data.json`
-6. Git commits + pushes with `[skip vercel]` (data-only, no redeploy)
-7. Browser re-fetches `app-data.json` every 60 seconds
+1. User enters scores in Predict tab → state stored locally in component state
+2. User taps "Save predictions" → saved to `localStorage` (always) + POST to Apps Script (if URL set)
+3. On page load, predictions are loaded from 3 tiers in priority order:
+   - **Tier 1**: `app-data.json` (locked/scored rounds, always wins)
+   - **Tier 2**: Apps Script `?action=load` (live unlocked picks)
+   - **Tier 3**: `localStorage` (device fallback — fills any remaining blanks)
+4. GitHub Actions runs `sync-predictions.js` → pulls from Apps Script → writes `data/predictions.json`
+5. `once.js` scores predictions against real results → `data/leaderboard.json`
+6. `buildAppData.js` bundles into `public/app-data.json`
+7. Git commits + pushes with `[skip vercel]` (data-only, no redeploy)
+8. Browser re-fetches `app-data.json` every 60 seconds
+
+The `submitted` flag is restored when predictions are loaded from any tier, so the CTA button correctly shows saved state on page refresh.
 
 ## Environment variables
 
@@ -127,6 +133,17 @@ The local server at `localhost:3000` serves `public/index.dc.html` directly. All
 ## Active KO round logic
 
 `data/meta.json` contains `activeRound` (one of `r32`, `r16`, `qf`, `sf`, `final`) and `koLockTimes` (ms timestamps per round). `once.js` computes these from the fixture schedule. The frontend reads `meta.activeRound` to know which round to show in the Predict tab, and locks submissions 5 minutes before the first match of that round.
+
+## Predict tab behavior
+
+- **CTA label is progress-aware**: "Save K of N predictions" (not yet saved), "✓ K of N saved · keep going" (partial, amber), "✓ All N predictions saved" (complete, green)
+- **`submitted` flag**: In-memory only; restored from any loading tier so the button correctly reflects saved state on page refresh
+- **Pre-Knockout Bonus section**:
+  - Shown as editable UI (finalist picker, champion picker) until R32 lock time
+  - After R32 starts (`isBonusLocked = activeKey !== 'r32' || isKoLocked`), becomes a read-only locked summary showing the user's finalist and champion picks persistently
+  - The countdown-to-lock banner is also hidden once `isBonusLocked` is true
+  - The finalist picker shows **all R32 teams** from live data (`_r32tbd` in app-data.json), sorted alphabetically — not a hardcoded list
+- **Apps Script POST**: Google redirects POST → GET before responding; this works in the browser and Node.js `fetch` but fails in `curl -L`. Use `npm run refresh` to verify sheet sync, not curl POST.
 
 ## Do not
 
