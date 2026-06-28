@@ -86,15 +86,6 @@
     <div style="position:absolute;bottom:40px;left:-70px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(31,162,255,.34),transparent 64%);filter:blur(72px)"></div>
   </div>
 
-  <!-- status bar -->
-  <div style="height:48px;flex:none;display:flex;align-items:flex-end;justify-content:space-between;padding:0 26px 8px;position:relative;z-index:5">
-    <span style="color:#F5F5F7;font-size:16px;font-weight:600;letter-spacing:.3px">9:41</span>
-    <div style="display:flex;align-items:center;gap:7px">
-      <svg width="18" height="12" viewBox="0 0 18 12"><g fill="#F5F5F7"><rect x="0" y="7" width="3" height="5" rx="1"/><rect x="5" y="4.5" width="3" height="7.5" rx="1"/><rect x="10" y="2" width="3" height="10" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></g></svg>
-      <svg width="17" height="12" viewBox="0 0 17 12" fill="none"><path d="M8.5 2.3c2.3 0 4.4.9 6 2.4l-1.4 1.5A6.6 6.6 0 0 0 8.5 4.3 6.6 6.6 0 0 0 3.9 6.2L2.5 4.7A8.6 8.6 0 0 1 8.5 2.3Zm0 3.7c1.3 0 2.5.5 3.4 1.4L8.5 11 5.1 7.4A4.8 4.8 0 0 1 8.5 6Z" fill="#F5F5F7"/></svg>
-      <div style="display:flex;align-items:center;gap:3px"><div style="width:23px;height:12px;border:1px solid rgba(245,245,247,.45);border-radius:3px;padding:1.5px;display:flex"><div style="width:70%;background:#F5F5F7;border-radius:1.5px"></div></div><div style="width:2px;height:5px;background:rgba(245,245,247,.45);border-radius:0 1px 1px 0"></div></div>
-    </div>
-  </div>
 
   <!-- ===== MAIN SCROLL ===== -->
   <div ref="{{ mainScrollRef }}" style="flex:1;overflow-y:auto;overflow-x:hidden;position:relative">
@@ -104,7 +95,10 @@
     <div data-screen-label="Fantasy" style="padding:0 0 110px">
       <!-- header -->
       <div style="position:sticky;top:0;z-index:4;padding:6px 20px 12px;background:rgba(10,10,11,.72);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);display:flex;align-items:center;justify-content:space-between">
-        <div><div class="disp" style="color:#F5F5F7;font-size:27px;font-weight:600;letter-spacing:-.6px;line-height:1">LR World Cup</div><div style="color:#636366;font-size:12.5px;font-weight:500;margin-top:3px;white-space:nowrap">Office World Cup League</div></div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <img src="./wc2026-logo.png" style="width:44px;height:auto;mix-blend-mode:screen;opacity:.92"/>
+          <div><div class="disp" style="color:#F5F5F7;font-size:24px;font-weight:600;letter-spacing:-.6px;line-height:1">LR World Cup</div><div style="color:#636366;font-size:12px;font-weight:500;margin-top:2px;white-space:nowrap">Office World Cup League</div></div>
+        </div>
         <div onClick="{{ openProfile }}" style-active="transform:scale(.9)" style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#FF2D78,#7A3CFF);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:14px;cursor:pointer;box-shadow:0 4px 14px rgba(122,60,255,.4)">{{ userInitials }}</div>
       </div>
 
@@ -892,9 +886,9 @@
   <sc-if value="{{ showLogin }}" hint-placeholder-val="{{ true }}">
   <div style="position:absolute;inset:0;z-index:28;background:#0A0A0B;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px;animation:fadeIn .3s ease">
     <div style="text-align:center;margin-bottom:36px">
-      <div style="font-size:44px;margin-bottom:14px">⚽</div>
-      <div class="disp" style="color:#F5F5F7;font-size:28px;font-weight:700;letter-spacing:-.5px">LR World Cup</div>
-      <div style="color:#636366;font-size:14px;font-weight:500;margin-top:4px">2026 · Office League</div>
+      <img src="./wc2026-logo.png" style="width:130px;height:auto;mix-blend-mode:screen;opacity:.95;margin-bottom:8px"/>
+      <div class="disp" style="color:#F5F5F7;font-size:22px;font-weight:700;letter-spacing:-.5px;margin-top:6px">LR World Cup</div>
+      <div style="color:#636366;font-size:13px;font-weight:500;margin-top:3px">2026 · Office League</div>
     </div>
     <div style="width:100%;max-width:340px;display:flex;flex-direction:column;gap:12px">
       <div style="background:#1A1A1E;border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:14px 16px">
