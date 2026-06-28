@@ -331,20 +331,23 @@
       </div>
 
       <div style="padding:6px 16px 0">
-        <!-- lock banner -->
+        <!-- lock banner — only while bonus is still open -->
+        <sc-if value="{{ isBonusOpen }}" hint-placeholder-val="{{ true }}">
         <div style="background:linear-gradient(135deg,rgba(255,45,120,.16),rgba(31,162,255,.16));border:1px solid rgba(255,45,120,.3);border-radius:18px;padding:15px;text-align:center">
           <div style="display:flex;align-items:center;justify-content:center;gap:7px;color:#FF6FA0;font-size:12px;font-weight:600;letter-spacing:.4px"><span style="width:7px;height:7px;border-radius:50%;background:#FF2D78;animation:livePulse 1.4s infinite"></span>PREDICTIONS LOCK IN</div>
           <div class="disp" style="color:#F5F5F7;font-size:34px;font-weight:600;letter-spacing:-1px;font-variant-numeric:tabular-nums;margin-top:6px">{{ lockStr }}</div>
           <div style="color:#8E8E93;font-size:12px;font-weight:500;margin-top:4px">5 minutes before the first knockout match</div>
         </div>
+        </sc-if>
 
-        <!-- bonus -->
+        <!-- bonus OPEN: editable before R32 locks -->
+        <sc-if value="{{ isBonusOpen }}" hint-placeholder-val="{{ true }}">
         <div style="background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.022));backdrop-filter:blur(16px) saturate(1.25);-webkit-backdrop-filter:blur(16px) saturate(1.25);border:1px solid rgba(255,255,255,.09);box-shadow:inset 0 1px 0 0 rgba(255,255,255,.08),0 14px 32px -12px rgba(0,0,0,.62);border-radius:18px;padding:15px;margin-top:12px">
           <div style="display:flex;align-items:center;justify-content:space-between"><span style="color:#F5F5F7;font-size:16px;font-weight:600">Pre-Knockout Bonus</span><span style="color:#A98BFF;font-size:12px;font-weight:600">+{{ bonusPts }} pts potential</span></div>
           <div style="color:#8E8E93;font-size:12.5px;font-weight:500;margin:4px 0 13px">Pick 2 finalists (25 each) &amp; a champion (50)</div>
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><span style="color:#636366;font-size:11px;font-weight:600;letter-spacing:.4px">FINALISTS · 25 PTS EACH</span><span style="color:#48484A;font-size:10.5px;font-weight:600;font-variant-numeric:tabular-nums">{{ finalCountStr }}</span></div>
           <div style="display:flex;gap:8px;overflow-x:auto;padding-bottom:4px">
-            <sc-for list="{{ finalistPicks }}" as="t" hint-placeholder-count="5">
+            <sc-for list="{{ finalistPicks }}" as="t" hint-placeholder-count="8">
               <div onClick="{{ t.pick }}" title="Pick {{ t.n }} to reach the final" style="position:relative;flex:none;display:flex;flex-direction:column;align-items:center;gap:5px;padding:8px 6px 7px;width:64px;border-radius:13px;cursor:pointer;transition:transform .18s ease,background .25s ease,opacity .25s ease;background:{{ t.bg }};border:1px solid {{ t.bd }};opacity:{{ t.op }}" style-active="transform:scale(.92)">
                 <sc-if value="{{ t.showBadge }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;top:5px;right:5px;width:15px;height:15px;border-radius:50%;background:#34C759;display:flex;align-items:center;justify-content:center;color:#0A0A0B;font-size:9px;font-weight:700;line-height:1">✓</span></sc-if>
                 <img loading="lazy" decoding="async" src="{{ t.fu }}" style="width:34px;height:23px;border-radius:3px;object-fit:cover;display:block;box-shadow:0 0 0 1px rgba(255,255,255,.14),0 3px 9px -2px rgba(0,0,0,.5)"/>
@@ -352,13 +355,11 @@
               </div>
             </sc-for>
           </div>
-
           <div style="height:1px;background:rgba(255,255,255,.06);margin:13px 0"></div>
-
           <div style="color:#636366;font-size:11px;font-weight:600;letter-spacing:.4px;margin-bottom:8px">CHAMPION · 50 PTS</div>
           <sc-if value="{{ hasFinalists }}" hint-placeholder-val="{{ false }}">
             <div style="display:flex;gap:8px">
-              <sc-for list="{{ champFinalists }}" as="t" hint-placeholder-count="4">
+              <sc-for list="{{ champFinalists }}" as="t" hint-placeholder-count="2">
                 <div onClick="{{ t.pick }}" title="Crown {{ t.n }} as champion" style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:11px 8px;border-radius:13px;cursor:pointer;transition:transform .18s ease,background .25s ease;background:{{ t.bg }};border:1px solid {{ t.bd }}" style-active="transform:scale(.96)">
                   <img loading="lazy" decoding="async" src="{{ t.fu }}" style="width:28px;height:19px;border-radius:3px;object-fit:cover;box-shadow:0 0 0 1px rgba(255,255,255,.14)"/>
                   <span style="color:#F5F5F7;font-size:13px;font-weight:600">{{ t.n }}</span>
@@ -373,6 +374,45 @@
             </div>
           </sc-if>
         </div>
+        </sc-if>
+
+        <!-- bonus LOCKED: read-only summary after R32 starts -->
+        <sc-if value="{{ isBonusLocked }}" hint-placeholder-val="{{ false }}">
+        <div style="background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.022));backdrop-filter:blur(16px) saturate(1.25);-webkit-backdrop-filter:blur(16px) saturate(1.25);border:1px solid rgba(255,69,58,.22);box-shadow:inset 0 1px 0 0 rgba(255,255,255,.08),0 14px 32px -12px rgba(0,0,0,.62);border-radius:18px;padding:15px;margin-top:12px">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+            <div style="display:flex;align-items:center;gap:7px"><span style="font-size:16px">🔒</span><span style="color:#F5F5F7;font-size:16px;font-weight:600">Pre-Knockout Bonus</span></div>
+            <span style="color:#636366;font-size:11px;font-weight:600;letter-spacing:.4px">LOCKED</span>
+          </div>
+          <sc-if value="{{ bonusNoPicks }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;align-items:center;gap:9px;padding:13px;border-radius:13px;background:#161618;border:1px dashed rgba(255,255,255,.08)">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#636366" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/></svg>
+              <span style="color:#636366;font-size:12.5px;font-weight:500">No bonus picks were submitted</span>
+            </div>
+          </sc-if>
+          <sc-if value="{{ bonusHasPicks }}" hint-placeholder-val="{{ false }}">
+            <div style="color:#636366;font-size:10.5px;font-weight:600;letter-spacing:.4px;margin-bottom:7px">YOUR FINALISTS</div>
+            <div style="display:flex;gap:8px;margin-bottom:12px">
+              <sc-for list="{{ bonusFinalistCards }}" as="t" hint-placeholder-count="2">
+                <div style="flex:1;display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:13px;background:rgba(52,199,89,.08);border:1px solid rgba(52,199,89,.22)">
+                  <img loading="lazy" decoding="async" src="{{ t.fu }}" style="width:26px;height:17px;border-radius:2px;object-fit:cover;box-shadow:0 0 0 1px rgba(255,255,255,.14);flex:none"/>
+                  <span style="color:#5BE584;font-size:13px;font-weight:600">{{ t.n }}</span>
+                </div>
+              </sc-for>
+            </div>
+            <div style="color:#636366;font-size:10.5px;font-weight:600;letter-spacing:.4px;margin-bottom:7px">YOUR CHAMPION</div>
+            <sc-if value="{{ bonusHasChamp }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;align-items:center;gap:9px;padding:11px 14px;border-radius:13px;background:rgba(122,60,255,.12);border:1px solid rgba(122,60,255,.3)">
+                <img loading="lazy" decoding="async" src="{{ bonusChampCard.fu }}" style="width:28px;height:19px;border-radius:3px;object-fit:cover;box-shadow:0 0 0 1px rgba(255,255,255,.14)"/>
+                <span style="color:#A98BFF;font-size:14px;font-weight:600">{{ bonusChampCard.n }}</span>
+                <span style="margin-left:auto;color:#7A3CFF;font-size:11px;font-weight:600">+50 pts if correct</span>
+              </div>
+            </sc-if>
+            <sc-if value="{{ bonusNoChamp }}" hint-placeholder-val="{{ false }}">
+              <div style="color:#48484A;font-size:12px;font-weight:500;padding:10px 0">No champion picked</div>
+            </sc-if>
+          </sc-if>
+        </div>
+        </sc-if>
 
         <!-- round by round -->
         <div style="margin-top:15px;display:flex;align-items:center;justify-content:space-between;padding:0 2px">
@@ -1458,19 +1498,26 @@ class Component extends DCLogic {
     const lockTotal=s.lockMs; const dd=Math.floor(lockTotal/86400000); const hh=Math.floor(lockTotal%86400000/3600000); const mm=Math.floor(lockTotal%3600000/60000); const ss=Math.floor(lockTotal%60000/1000);
     const pad=n=>String(n).padStart(2,'0');
     const lockStr = dd+'d '+pad(hh)+'h '+pad(mm)+'m '+pad(ss)+'s';
-    const champTeams=['ARG','BRA','FRA','ESP','GER','POR'];
+    // All resolved R32 teams from live data, sorted by name
+    const r32tbd=this._apiData?._r32tbd||[];
+    const r32Codes=[...new Set([
+      ...r32tbd.map(m=>m.home?.code).filter(Boolean),
+      ...r32tbd.map(m=>m.away?.code).filter(Boolean)
+    ])].sort((a,b)=>(this.teams[a]?.n||a).localeCompare(this.teams[b]?.n||b));
+    const champTeams=r32Codes.length>=4?r32Codes:['ARG','BRA','FRA','ESP','GER','POR'];
     const fin=s.finalists||[];
     const finalistPicks=this.deepFlags(champTeams.map(c=>{
+      const t=this.teams[c]||{n:c,f:''};
       const sel=fin.includes(c);
-      return {code:c,n:this.teams[c].n,f:this.teams[c].f,
+      return {code:c,n:t.n,f:t.f,
         bg: sel?'rgba(52,199,89,.18)':'#1A1A1E', bd: sel?'#34C759':'rgba(255,255,255,.05)',
         op: (!sel && fin.length>=2)?'.4':'1', showBadge: sel,
         pick:()=>this.toggleFinalist(c)};
     }));
     const hasFinalists = fin.length===2;
-    const champFinalists=this.deepFlags(fin.map(c=>({code:c,n:this.teams[c].n,f:this.teams[c].f,
+    const champFinalists=this.deepFlags(fin.map(c=>{const t=this.teams[c]||{n:c,f:''};return{code:c,n:t.n,f:t.f,
       bg: s.champ===c?'rgba(122,60,255,.24)':'#1A1A1E', bd: s.champ===c?'#7A3CFF':'rgba(255,255,255,.05)',
-      pick:()=>this.setState({champ:c})})));
+      pick:()=>this.setState({champ:c})};}));
     const finalCountStr = fin.length+'/2';
     const activeKey = this.determineActiveRound();
     const ROUND_LABELS = {r32:'Round of 32',r16:'Round of 16',qf:'Quarter-finals',sf:'Semi-finals',final:'Final'};
@@ -1482,6 +1529,16 @@ class Component extends DCLogic {
     const activeLockMs = this._apiData?.meta?.koLockTimes?.[activeKey]||this._apiData?.meta?.lockAtMs;
     const isKoLocked = !!(activeLockMs && Date.now()>=activeLockMs);
     const isKoOpen = !isKoLocked;
+    // Bonus (finalists + champion) locks when R32 locks or once we move past R32
+    const isBonusLocked = activeKey!=='r32' || isKoLocked;
+    const isBonusOpen = !isBonusLocked;
+    // Locked bonus summary data
+    const bonusHasPicks = fin.length>0 || !!s.champ;
+    const bonusNoPicks = !bonusHasPicks;
+    const bonusFinalistCards=this.deepFlags(fin.map(c=>{const t=this.teams[c]||{n:c,f:''};return{n:t.n,f:t.f};}));
+    const bonusChampCard=s.champ?this.deepFlags([{n:(this.teams[s.champ]||{n:s.champ}).n,f:(this.teams[s.champ]||{f:''}).f}])[0]:null;
+    const bonusHasChamp=!!s.champ;
+    const bonusNoChamp=!s.champ;
 
     const koMatchDefs = this.getRoundMatchList(activeKey);
     const koKickoffs = this.getRoundKickoffs(activeKey);
@@ -1656,6 +1713,7 @@ class Component extends DCLogic {
       detailOpen:detail!=null, detail, closeDetail:()=>this.setState({detailIdx:null,expandedPick:{}}),
       matchOpen:mdet!=null, mdet, closeMatch:()=>this.setState({matchObj:null}),
       lockStr, bonusPts:100, finalistPicks, hasFinalists, noFinalists:!hasFinalists, champFinalists, finalCountStr, rounds,
+      isBonusLocked, isBonusOpen, bonusHasPicks, bonusNoPicks, bonusFinalistCards, bonusChampCard, bonusHasChamp, bonusNoChamp,
       koCards, koDone, koTotal, koPct, koDoneStr, koRemCount, koAllDone, koAllDoneMsg,
       koLockedSummary, koHasLocked, isKoLocked, isKoOpen, koRoundName, koNextRoundMsg,
       koRemChipBg:s.koFilter!=='all'?'rgba(122,60,255,.22)':'#1A1A1E', koRemChipC:s.koFilter!=='all'?'#F5F5F7':'#8E8E93',
