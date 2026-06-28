@@ -635,18 +635,7 @@
             </div>
           </sc-for>
         </div>
-        <div style="background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.022));backdrop-filter:blur(16px) saturate(1.25);-webkit-backdrop-filter:blur(16px) saturate(1.25);border:1px solid rgba(255,255,255,.09);box-shadow:inset 0 1px 0 0 rgba(255,255,255,.08),0 14px 32px -12px rgba(0,0,0,.62);border-radius:18px;padding:15px;margin-top:12px">
-          <div style="display:flex;align-items:center;gap:8px;margin-bottom:13px"><span style="color:#F5F5F7;font-size:15px;font-weight:600">Top Assists</span></div>
-          <sc-for list="{{ assists }}" as="s" hint-placeholder-count="3">
-            <div style="display:flex;align-items:center;gap:11px;padding:8px 0;border-top:1px solid rgba(255,255,255,.05)">
-              <span class="disp" style="width:16px;color:#636366;font-size:13px;font-weight:600">{{ s.rank }}</span>
-              <img loading="lazy" decoding="async" src="{{ s.fu }}" style="width:26px;height:17px;border-radius:3px;object-fit:cover;display:block;flex:none;box-shadow:0 0 0 1px rgba(255,255,255,.14)"/>
-              <div style="flex:1"><div style="color:#F5F5F7;font-size:14px;font-weight:600">{{ s.name }}</div><div style="color:#636366;font-size:11.5px;font-weight:500">{{ s.team }}</div></div>
-              <span class="disp" style="color:#F5F5F7;font-size:19px;font-weight:600;font-variant-numeric:tabular-nums">{{ s.goals }}</span>
-            </div>
-          </sc-for>
-        </div>
-        <div style="text-align:center;color:#48484A;font-size:11px;font-weight:500;margin-top:14px">Sample data · live feed connects via football API</div>
+        <div style="text-align:center;color:#48484A;font-size:11px;font-weight:500;margin-top:14px">Live from worldcup26.ir · updated every 10 min</div>
       </div>
       </sc-if>
     </div>
@@ -789,57 +778,113 @@
 
   <!-- ===================== POINTS RULES MODAL ===================== -->
   <sc-if value="{{ rulesOpen }}" hint-placeholder-val="{{ false }}">
-  <div onClick="{{ closeRules }}" style="position:absolute;inset:0;z-index:20;background:rgba(0,0,0,.6);animation:fadeIn .2s ease;display:flex;flex-direction:column;justify-content:flex-end">
-    <div onClick="event.stopPropagation()" style="background:linear-gradient(180deg,rgba(28,28,34,.94),rgba(16,16,20,.97));backdrop-filter:blur(30px) saturate(1.3);-webkit-backdrop-filter:blur(30px) saturate(1.3);border-radius:28px 28px 0 0;border-top:1px solid rgba(255,255,255,.14);padding:10px 20px 36px;animation:sheetUp .38s cubic-bezier(.22,1,.36,1)">
+  <div onClick="{{ closeRules }}" style="position:absolute;inset:0;z-index:20;background:rgba(0,0,0,.65);animation:fadeIn .2s ease;display:flex;flex-direction:column;justify-content:flex-end">
+    <div onClick="event.stopPropagation()" style="background:linear-gradient(180deg,rgba(20,20,26,.98),rgba(14,14,18,.99));backdrop-filter:blur(40px) saturate(1.4);-webkit-backdrop-filter:blur(40px) saturate(1.4);border-radius:28px 28px 0 0;border-top:1px solid rgba(255,255,255,.12);padding:10px 20px 40px;animation:sheetUp .38s cubic-bezier(.22,1,.36,1);max-height:90vh;overflow-y:auto;-webkit-overflow-scrolling:touch">
       <div style="width:38px;height:5px;border-radius:3px;background:#3A3A3C;margin:0 auto 18px"></div>
-      <div style="color:#F5F5F7;font-size:18px;font-weight:700;margin-bottom:4px">Points rules</div>
-      <div style="color:#636366;font-size:12.5px;font-weight:500;margin-bottom:18px">How to earn points in this league</div>
-      <!-- Group stage -->
-      <div style="color:#636366;font-size:10.5px;font-weight:600;letter-spacing:.6px;margin-bottom:8px">GROUP STAGE (per team you picked)</div>
-      <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:18px">
-        <div style="display:flex;justify-content:space-between;padding:10px 14px;border-radius:11px;background:#1A1A1E">
-          <span style="color:#F5F5F7;font-size:13.5px;font-weight:600">Win</span><span style="color:#30D158;font-size:13.5px;font-weight:700">+3 pts</span>
+
+      <!-- Header -->
+      <div style="margin-bottom:22px">
+        <div style="color:#F5F5F7;font-size:19px;font-weight:700;letter-spacing:-.3px">Points guide</div>
+        <div style="color:#636366;font-size:12.5px;font-weight:500;margin-top:3px">How to earn points in this league</div>
+      </div>
+
+      <!-- GROUP STAGE -->
+      <div style="color:#8E8E93;font-size:10px;font-weight:700;letter-spacing:.8px;margin-bottom:10px">GROUP STAGE · PER TEAM YOU PICKED</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:24px">
+        <div style="background:rgba(48,209,88,.08);border:1px solid rgba(48,209,88,.2);border-radius:14px;padding:13px 10px;text-align:center">
+          <svg style="display:block;margin:0 auto 6px" width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9.5" stroke="#30D158" stroke-width="1.8"/><path d="M8 12l3 3 5-5" stroke="#30D158" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div style="color:#30D158;font-size:22px;font-weight:800;line-height:1">+3</div>
+          <div style="color:#30D158;font-size:10.5px;font-weight:600;opacity:.85;margin-top:3px">Win</div>
         </div>
-        <div style="display:flex;justify-content:space-between;padding:10px 14px;border-radius:11px;background:#1A1A1E">
-          <span style="color:#F5F5F7;font-size:13.5px;font-weight:600">Draw</span><span style="color:#0A84FF;font-size:13.5px;font-weight:700">+1 pt</span>
+        <div style="background:rgba(10,132,255,.08);border:1px solid rgba(10,132,255,.2);border-radius:14px;padding:13px 10px;text-align:center">
+          <svg style="display:block;margin:0 auto 6px" width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9.5" stroke="#0A84FF" stroke-width="1.8"/><path d="M8 12h8" stroke="#0A84FF" stroke-width="2.2" stroke-linecap="round"/></svg>
+          <div style="color:#0A84FF;font-size:22px;font-weight:800;line-height:1">+1</div>
+          <div style="color:#0A84FF;font-size:10.5px;font-weight:600;opacity:.85;margin-top:3px">Draw</div>
         </div>
-        <div style="display:flex;justify-content:space-between;padding:10px 14px;border-radius:11px;background:#1A1A1E">
-          <span style="color:#F5F5F7;font-size:13.5px;font-weight:600">Loss</span><span style="color:#636366;font-size:13.5px;font-weight:700">0 pts</span>
+        <div style="background:rgba(142,142,147,.05);border:1px solid rgba(142,142,147,.12);border-radius:14px;padding:13px 10px;text-align:center">
+          <svg style="display:block;margin:0 auto 6px" width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9.5" stroke="#3A3A3C" stroke-width="1.8"/><path d="M9 9l6 6M15 9l-6 6" stroke="#48484A" stroke-width="2.2" stroke-linecap="round"/></svg>
+          <div style="color:#48484A;font-size:22px;font-weight:800;line-height:1">0</div>
+          <div style="color:#636366;font-size:10.5px;font-weight:600;margin-top:3px">Loss</div>
         </div>
       </div>
-      <!-- Knockout -->
-      <div style="color:#636366;font-size:10.5px;font-weight:600;letter-spacing:.6px;margin-bottom:8px">KNOCKOUT BRACKET PREDICTIONS</div>
-      <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:18px">
-        <div style="display:flex;justify-content:space-between;padding:9px 14px;border-radius:11px;background:#1A1A1E">
-          <span style="color:#F5F5F7;font-size:13px;font-weight:600">Correct R32 winner</span><span style="color:#A98BFF;font-size:13px;font-weight:700">+4 pts</span>
+
+      <!-- KNOCKOUT PREDICTIONS -->
+      <div style="color:#8E8E93;font-size:10px;font-weight:700;letter-spacing:.8px;margin-bottom:10px">KNOCKOUT PREDICTIONS</div>
+      <!-- Exact score callout -->
+      <div style="background:rgba(91,229,132,.06);border:1px solid rgba(91,229,132,.18);border-radius:12px;padding:10px 13px;margin-bottom:10px;display:flex;align-items:center;gap:10px">
+        <div style="background:rgba(91,229,132,.15);width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#5BE584" stroke-width="2.4"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.86L12 17.77l-6.18 3.23L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
         </div>
-        <div style="display:flex;justify-content:space-between;padding:9px 14px;border-radius:11px;background:rgba(122,60,255,.1);border:1px solid rgba(122,60,255,.2)">
-          <span style="color:#F5F5F7;font-size:13px;font-weight:600">R32 + exact score</span><span style="color:#5BE584;font-size:13px;font-weight:700">+8 pts</span>
-        </div>
-        <div style="display:flex;justify-content:space-between;padding:9px 14px;border-radius:11px;background:#1A1A1E">
-          <span style="color:#F5F5F7;font-size:13px;font-weight:600">Correct R16 winner</span><span style="color:#A98BFF;font-size:13px;font-weight:700">+5 pts</span>
-        </div>
-        <div style="display:flex;justify-content:space-between;padding:9px 14px;border-radius:11px;background:#1A1A1E">
-          <span style="color:#F5F5F7;font-size:13px;font-weight:600">Quarter-final</span><span style="color:#A98BFF;font-size:13px;font-weight:700">+10 pts</span>
-        </div>
-        <div style="display:flex;justify-content:space-between;padding:9px 14px;border-radius:11px;background:#1A1A1E">
-          <span style="color:#F5F5F7;font-size:13px;font-weight:600">Semi-final</span><span style="color:#A98BFF;font-size:13px;font-weight:700">+15 pts</span>
-        </div>
-        <div style="display:flex;justify-content:space-between;padding:9px 14px;border-radius:11px;background:#1A1A1E">
-          <span style="color:#F5F5F7;font-size:13px;font-weight:600">Final winner</span><span style="color:#A98BFF;font-size:13px;font-weight:700">+20 pts</span>
+        <div>
+          <div style="color:#5BE584;font-size:12.5px;font-weight:700">Exact score bonus = ×2 pts</div>
+          <div style="color:#636366;font-size:11px;font-weight:500;margin-top:1px">Predict the exact scoreline to double your round points</div>
         </div>
       </div>
-      <!-- Bonus -->
-      <div style="color:#636366;font-size:10.5px;font-weight:600;letter-spacing:.6px;margin-bottom:8px">BONUS PICKS</div>
-      <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:20px">
-        <div style="display:flex;justify-content:space-between;padding:9px 14px;border-radius:11px;background:#1A1A1E">
-          <span style="color:#F5F5F7;font-size:13px;font-weight:600">Correct finalist</span><span style="color:#FFD93D;font-size:13px;font-weight:700">+25 pts</span>
+      <!-- KO rounds — each row shows base pts and exact score pts -->
+      <div style="background:#1A1A1E;border-radius:14px;overflow:hidden;margin-bottom:24px">
+        <div style="display:grid;grid-template-columns:1fr auto auto;align-items:center;padding:8px 14px 6px;border-bottom:1px solid rgba(255,255,255,.05)">
+          <span style="color:#636366;font-size:10px;font-weight:600;letter-spacing:.4px">ROUND</span>
+          <span style="color:#A98BFF;font-size:10px;font-weight:600;letter-spacing:.4px;text-align:right;padding-right:14px">WINNER</span>
+          <span style="color:#5BE584;font-size:10px;font-weight:600;letter-spacing:.4px;text-align:right;min-width:54px">EXACT</span>
         </div>
-        <div style="display:flex;justify-content:space-between;padding:9px 14px;border-radius:11px;background:#1A1A1E">
-          <span style="color:#F5F5F7;font-size:13px;font-weight:600">Correct champion</span><span style="color:#FFD93D;font-size:13px;font-weight:700">+50 pts</span>
+        <div style="display:grid;grid-template-columns:1fr auto auto;align-items:center;padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.04)">
+          <span style="color:#F5F5F7;font-size:13px;font-weight:600">Round of 32</span>
+          <span style="color:#A98BFF;font-size:13.5px;font-weight:700;padding-right:14px;text-align:right">4 pts</span>
+          <span style="color:#5BE584;font-size:13.5px;font-weight:700;text-align:right;min-width:54px">8 pts</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr auto auto;align-items:center;padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.04)">
+          <span style="color:#F5F5F7;font-size:13px;font-weight:600">Round of 16</span>
+          <span style="color:#A98BFF;font-size:13.5px;font-weight:700;padding-right:14px;text-align:right">5 pts</span>
+          <span style="color:#5BE584;font-size:13.5px;font-weight:700;text-align:right;min-width:54px">10 pts</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr auto auto;align-items:center;padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.04)">
+          <span style="color:#F5F5F7;font-size:13px;font-weight:600">Quarter-final</span>
+          <span style="color:#A98BFF;font-size:13.5px;font-weight:700;padding-right:14px;text-align:right">10 pts</span>
+          <span style="color:#5BE584;font-size:13.5px;font-weight:700;text-align:right;min-width:54px">20 pts</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr auto auto;align-items:center;padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.04)">
+          <span style="color:#F5F5F7;font-size:13px;font-weight:600">Semi-final</span>
+          <span style="color:#A98BFF;font-size:13.5px;font-weight:700;padding-right:14px;text-align:right">15 pts</span>
+          <span style="color:#5BE584;font-size:13.5px;font-weight:700;text-align:right;min-width:54px">30 pts</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr auto auto;align-items:center;padding:10px 14px;background:rgba(169,139,255,.06)">
+          <div>
+            <div style="color:#F5F5F7;font-size:13px;font-weight:700">Final</div>
+            <div style="color:#636366;font-size:10.5px;font-weight:500;margin-top:1px">Highest stakes</div>
+          </div>
+          <span style="color:#C4A8FF;font-size:13.5px;font-weight:700;padding-right:14px;text-align:right">20 pts</span>
+          <span style="color:#5BE584;font-size:13.5px;font-weight:700;text-align:right;min-width:54px">40 pts</span>
         </div>
       </div>
-      <div onClick="{{ closeRules }}" style-active="transform:scale(.97)" style="text-align:center;padding:13px;border-radius:14px;background:rgba(255,255,255,.08);color:#F5F5F7;font-size:15px;font-weight:600;cursor:pointer">Close</div>
+
+      <!-- BONUS PICKS -->
+      <div style="color:#8E8E93;font-size:10px;font-weight:700;letter-spacing:.8px;margin-bottom:10px">BONUS PICKS · LOCKED AT R32 KICK-OFF</div>
+      <div style="background:linear-gradient(135deg,rgba(255,190,0,.1) 0%,rgba(255,140,0,.06) 100%);border:1px solid rgba(255,190,0,.22);border-radius:16px;padding:16px;margin-bottom:20px">
+        <div style="display:flex;align-items:center;gap:9px;margin-bottom:14px">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="rgba(255,200,0,.2)" stroke="#FFD93D" stroke-width="2.2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.86L12 17.77l-6.18 3.23L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <span style="color:#FFD93D;font-size:13px;font-weight:700">Pre-tournament predictions</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+          <div style="background:rgba(0,0,0,.3);border-radius:12px;padding:14px 12px;text-align:center">
+            <div style="color:#FFD93D;font-size:28px;font-weight:800;line-height:1;letter-spacing:-1px">25</div>
+            <div style="color:#F5F5F7;font-size:11.5px;font-weight:600;margin-top:5px">pts each</div>
+            <div style="color:#8E8E93;font-size:10.5px;font-weight:500;margin-top:3px">Correct finalist</div>
+            <div style="color:#636366;font-size:9.5px;font-weight:500;margin-top:2px">Pick 2 finalists</div>
+          </div>
+          <div style="background:rgba(0,0,0,.3);border:1px solid rgba(255,190,0,.18);border-radius:12px;padding:14px 12px;text-align:center">
+            <div style="color:#FFD93D;font-size:28px;font-weight:800;line-height:1;letter-spacing:-1px">50</div>
+            <div style="color:#F5F5F7;font-size:11.5px;font-weight:600;margin-top:5px">pts</div>
+            <div style="color:#8E8E93;font-size:10.5px;font-weight:500;margin-top:3px">Correct champion</div>
+            <div style="color:#636366;font-size:9.5px;font-weight:500;margin-top:2px">Pick 1 winner</div>
+          </div>
+        </div>
+        <div style="margin-top:11px;padding-top:11px;border-top:1px solid rgba(255,190,0,.12);display:flex;align-items:center;justify-content:center;gap:6px">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#636366" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span style="color:#636366;font-size:11px;font-weight:500">These lock when R32 begins · up to 100 bonus pts possible</span>
+        </div>
+      </div>
+
+      <div onClick="{{ closeRules }}" style-active="transform:scale(.97)" style="text-align:center;padding:14px;border-radius:14px;background:rgba(255,255,255,.08);color:#F5F5F7;font-size:15px;font-weight:600;cursor:pointer;touch-action:manipulation">Got it</div>
     </div>
   </div>
   </sc-if>
@@ -1308,38 +1353,12 @@ class Component extends DCLogic {
         const a=this.teams[f.away.code]||{n:f.away.code,f:''};
         let affects=0;
         this.P.forEach(([,picks])=>{if(picks.includes(f.home.code)||picks.includes(f.away.code))affects++;});
+        const matchScorers = (f.scorers||[]).map(s=>({name:s.name,min:s.minute?s.minute+"'":null}));
         return {group:f.group||f.round||'',live,statusLabel:live?('LIVE '+f.status):(f.finished?'Full Time':f.status),
-          h:{n:h.n,f:h.f},a:{n:a.n,f:a.f},hs:f.home.goals??0,as:f.away.goals??0,affects,scorers:[],stats:[]};
+          h:{n:h.n,f:h.f},a:{n:a.n,f:a.f},hs:f.home.goals??0,as:f.away.goals??0,affects,scorers:matchScorers,stats:[]};
       });
     }
-    const T=this.mk.bind(this);
-    if(this.state.dateTab==='today'){
-      return [
-        {group:'Group H',live:true,statusLabel:"LIVE 58'",h:T('Spain','🇪🇸'),a:T('Saudi Arabia','🇸🇦'),hs:1,as:0,affects:9,
-          scorers:[{name:'Oyarzabal',min:"34'"}],stats:[['Possession %',80,20],['Shots',12,3],['Shots on Target',5,1],['Corners',7,1],['xG',2.4,0.3]]},
-        {group:'Group E',statusLabel:'Full Time',h:T('Germany','🇩🇪'),a:T('Ivory Coast','🇨🇮'),hs:2,as:1,affects:5,
-          scorers:[{name:'Wirtz',min:"12'"},{name:'Havertz',min:"58'"},{name:'Pépé',min:"73'"}],stats:[['Possession %',64,36],['Shots',16,9],['Shots on Target',7,4],['Corners',6,3],['xG',2.1,1.2]]},
-        {group:'Group E',statusLabel:'Full Time',h:T('Ecuador','🇪🇨'),a:T('Curaçao','🇨🇼'),hs:0,as:0,affects:0,stats:[['Possession %',58,42],['Shots',8,6],['Shots on Target',2,1],['Corners',4,3],['xG',0.8,0.6]]},
-        {group:'Group F',statusLabel:'Full Time',h:T('Tunisia','🇹🇳'),a:T('Japan','🇯🇵'),hs:0,as:4,affects:0,
-          scorers:[{name:'Mitoma',min:"22'"},{name:'Kubo',min:"40'"},{name:'Mitoma',min:"66'"},{name:'Ueda',min:"81'"}],stats:[['Possession %',38,62],['Shots',5,18],['Shots on Target',1,9],['Corners',2,8],['xG',0.4,3.2]]},
-        {group:'Group C',statusLabel:'Full Time',h:T('Brazil','🇧🇷'),a:T('Morocco','🇲🇦'),hs:1,as:1,affects:8,
-          scorers:[{name:'Vinícius Jr',min:"29'"},{name:'En-Nesyri',min:"71'"}],stats:[['Possession %',61,39],['Shots',14,7],['Shots on Target',5,3],['Corners',5,4],['xG',1.6,1.1]]},
-        {group:'Group K',statusLabel:'Full Time',h:T('Portugal','🇵🇹'),a:T('DR Congo','🇨🇩'),hs:1,as:1,affects:8,
-          scorers:[{name:'B. Fernandes',min:"54'"},{name:'Wissa',min:"88'"}],stats:[['Possession %',67,33],['Shots',15,6],['Shots on Target',4,2],['Corners',8,2],['xG',1.9,0.7]]}
-      ];
-    }
-    return [
-      {group:'Group D',statusLabel:'Full Time',h:T('USA','🇺🇸'),a:T('Australia','🇦🇺'),hs:2,as:0,affects:0,
-        scorers:[{name:'Pulisic',min:"18'"},{name:'Balogun',min:"63'"}],stats:[['Possession %',57,43],['Shots',13,8],['Shots on Target',6,2],['Corners',6,3],['xG',1.8,0.6]]},
-      {group:'Group C',statusLabel:'Full Time',h:T('Scotland','🏴󠁧󠁢󠁳󠁣󠁴󠁿'),a:T('Morocco','🇲🇦'),hs:0,as:1,affects:8,
-        scorers:[{name:'Ziyech',min:"77'"}],stats:[['Possession %',46,54],['Shots',7,11],['Shots on Target',2,4],['Corners',3,6],['xG',0.7,1.5]]},
-      {group:'Group C',statusLabel:'Full Time',h:T('Brazil','🇧🇷'),a:T('Haiti','🇭🇹'),hs:3,as:0,affects:8,
-        scorers:[{name:'Rodrygo',min:"21'"},{name:'Raphinha',min:"49'"},{name:'Endrick',min:"84'"}],stats:[['Possession %',72,28],['Shots',19,4],['Shots on Target',9,1],['Corners',9,1],['xG',3.1,0.3]]},
-      {group:'Group D',statusLabel:'Full Time',h:T('Türkiye','🇹🇷'),a:T('Paraguay','🇵🇾'),hs:0,as:1,affects:0,
-        scorers:[{name:'Almirón',min:"59'"}],stats:[['Possession %',55,45],['Shots',10,7],['Shots on Target',3,3],['Corners',5,4],['xG',1.1,0.9]]},
-      {group:'Group F',statusLabel:'Full Time',h:T('Netherlands','🇳🇱'),a:T('Sweden','🇸🇪'),hs:5,as:1,affects:1,
-        scorers:[{name:'Gakpo',min:"9'"},{name:'Depay',min:"24'"},{name:'Gakpo',min:"38'"},{name:'Simons',min:"61'"},{name:'Malen',min:"79'"}],stats:[['Possession %',63,37],['Shots',21,6],['Shots on Target',11,2],['Corners',10,2],['xG',3.8,0.8]]}
-    ];
+    return [];
   }
   upcoming(){
     if(this._apiData?.fixtures?.length){
@@ -1660,19 +1679,16 @@ class Component extends DCLogic {
     const minPts=Math.min(...ptsArr,0);
     const range=maxPts-minPts||1;
     const distribution=ptsArr.map(v=>({h:Math.round((v-minPts)/range*100)+'%', bg: v>=maxPts*0.75?'linear-gradient(180deg,#FF2D78,#7A3CFF)':'#2C2C2E'}));
-    const scorers=this.deepFlags([
-      {rank:1,f:'🇩🇪',name:'F. Wirtz',team:'Germany',goals:4},
-      {rank:2,f:'🇳🇱',name:'C. Gakpo',team:'Netherlands',goals:4},
-      {rank:3,f:'🇯🇵',name:'K. Mitoma',team:'Japan',goals:3},
-      {rank:4,f:'🇧🇷',name:'Vinícius Jr',team:'Brazil',goals:3},
-      {rank:5,f:'🇦🇷',name:'J. Álvarez',team:'Argentina',goals:2}
-    ]);
-    const assists=this.deepFlags([
-      {rank:1,f:'🇦🇷',name:'L. Messi',team:'Argentina',goals:3},
-      {rank:2,f:'🇩🇪',name:'J. Musiala',team:'Germany',goals:2},
-      {rank:3,f:'🇫🇷',name:'K. Mbappé',team:'France',goals:2},
-      {rank:4,f:'🇵🇹',name:'B. Fernandes',team:'Portugal',goals:2}
-    ]);
+    const rawTopScorers = this._apiData?.topScorers || [];
+    const teamData = this._apiData?.teams || {};
+    const scorers = this.deepFlags(rawTopScorers.slice(0, 8).map((s, i) => ({
+      rank: i + 1,
+      f: teamData[s.team]?.flag || s.team,
+      name: s.name,
+      team: teamData[s.team]?.name || s.team,
+      goals: s.goals
+    })));
+    const assists = [];
     const userP=lb[this.USER];
     const userPicks=this.deepFlags(userP.picksX.map(pk=>({flag:pk.flag,pts:pk.pts})));
     const userId=this._userParticipantId;

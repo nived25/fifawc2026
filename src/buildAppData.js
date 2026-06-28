@@ -59,8 +59,21 @@ export function buildAppData() {
       home: { code: f.home.code, goals: f.home.goals },
       away: { code: f.away.code, goals: f.away.goals },
       finished: f.finished,
-      venue: f.venue
+      venue: f.venue,
+      scorers: f.scorers || []
     })),
+    topScorers: (() => {
+      const map = {};
+      for (const f of fixtures) {
+        if (!f.finished || !f.scorers) continue;
+        for (const s of f.scorers) {
+          const key = s.name + '|' + s.team;
+          if (!map[key]) map[key] = { name: s.name, team: s.team, goals: 0 };
+          map[key].goals++;
+        }
+      }
+      return Object.values(map).sort((a, b) => b.goals - a.goals).slice(0, 10);
+    })(),
     standings,
     bracket,
     _r32tbd: r32tbd,
