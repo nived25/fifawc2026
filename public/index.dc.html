@@ -76,8 +76,8 @@
 </style>
 </helmet>
 
-<div style="min-height:100vh;width:100%;background:radial-gradient(120% 60% at 50% 0%, #161620 0%, #050506 60%);display:flex;align-items:center;justify-content:center;padding:0">
-<div style="position:relative;width:390px;max-width:100vw;height:844px;max-height:100vh;background:#0A0A0B;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 40px 120px rgba(0,0,0,.6)">
+<div style="min-height:100dvh;width:100%;background:radial-gradient(120% 60% at 50% 0%, #161620 0%, #050506 60%);display:flex;align-items:center;justify-content:center;padding:0">
+<div style="position:relative;width:390px;max-width:100vw;height:844px;max-height:100dvh;background:#0A0A0B;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 40px 120px rgba(0,0,0,.6)">
 
   <!-- ambient depth -->
   <div style="position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden">
@@ -195,9 +195,9 @@
               </div>
             </div>
             <div style="display:flex;align-items:center;gap:0;flex:none">
-              <div style="width:30px;text-align:center;font-size:15px;font-weight:700;font-variant-numeric:tabular-nums;color:{{ p.correctPicks ? '#30D158' : '#48484A' }}">{{ p.correctPicks }}</div>
-              <div style="width:44px;text-align:center;font-size:15px;font-weight:700;font-variant-numeric:tabular-nums;color:{{ p.exactScores ? '#FFD60A' : '#48484A' }}">{{ p.exactScores }}</div>
-              <div style="width:36px;text-align:right;font-size:18px;font-weight:600;letter-spacing:-.5px;font-variant-numeric:tabular-nums;color:{{ p.koPts ? '#F5F5F7' : '#48484A' }}">{{ p.koPts }}</div>
+              <div style="width:30px;text-align:center;font-size:15px;font-weight:700;font-variant-numeric:tabular-nums;color:{{ p.correctPicks ? '#30D158' : '#636366' }}">{{ p.correctPicks }}</div>
+              <div style="width:44px;text-align:center;font-size:15px;font-weight:700;font-variant-numeric:tabular-nums;color:{{ p.exactScores ? '#FFD60A' : '#636366' }}">{{ p.exactScores }}</div>
+              <div style="width:36px;text-align:right;font-size:18px;font-weight:600;letter-spacing:-.5px;font-variant-numeric:tabular-nums;color:{{ p.koPts ? '#F5F5F7' : '#636366' }}">{{ p.koPts }}</div>
             </div>
           </div>
         </sc-for>
@@ -761,7 +761,7 @@
   </div>
 
   <!-- ===================== TAB BAR ===================== -->
-  <div style="position:absolute;left:0;right:0;bottom:0;height:88px;background:rgba(10,10,11,.72);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-top:1px solid rgba(255,255,255,.07);display:flex;padding:10px 8px 22px;z-index:8">
+  <div style="flex:none;width:100%;height:calc(64px + env(safe-area-inset-bottom,0px));background:rgba(10,10,11,.85);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-top:1px solid rgba(255,255,255,.07);display:flex;padding:10px 8px env(safe-area-inset-bottom,18px);z-index:8;box-sizing:border-box">
     <div onClick="{{ tabFantasy }}" style-active="transform:scale(.85)" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;transition:transform .22s cubic-bezier(.34,1.56,.64,1);color:{{ cFantasy }}">
       <svg width="25" height="25" viewBox="0 0 24 24" fill="currentColor"><path d="M6 4h12v3a4 4 0 0 1-4 4h-.2A3 3 0 0 1 13 12.9V15h2a1 1 0 0 1 1 1v2H8v-2a1 1 0 0 1 1-1h2v-2.1A3 3 0 0 1 10.2 11H10a4 4 0 0 1-4-4V4Zm-3 1h2v2a3 3 0 0 1-2-2.8V5Zm16 0h2v.2A3 3 0 0 1 19 7V5Z"/></svg>
       <span style="font-size:10.5px;font-weight:600">Leaderboard</span>
@@ -1880,7 +1880,7 @@ class Component extends DCLogic {
             rank:p.rank||i+1, name:p.name, you:p.id===uid, pts:p.total||0,
             groupPts:p.breakdown?.group||0,
             koBonusPts:ko,
-            koBonusC: ko>0?'#A98BFF':'#48484A',
+            koBonusC: ko>0?'#A98BFF':'#636366',
             rowBg:p.id===uid?'linear-gradient(90deg,rgba(255,45,120,.1),rgba(31,162,255,.06))':'transparent',
             rankC:(p.rank||i+1)===1?'#FFD93D':((p.rank||i+1)<=3?'#F5F5F7':'#636366')
           };
