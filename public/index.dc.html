@@ -72,9 +72,6 @@
   @keyframes sheetUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
   @keyframes fadeIn{from{opacity:0}to{opacity:1}}
   @keyframes rowIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-  @keyframes tickerScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-  .ticker-track{display:inline-flex;white-space:nowrap;will-change:transform;animation:tickerScroll 18s linear infinite}
-  @media (prefers-reduced-motion:reduce){.ticker-track{animation:none}}
   .disp{font-family:"Space Grotesk","Hanken Grotesk",sans-serif;letter-spacing:-.02em}
 </style>
 </helmet>
@@ -388,16 +385,6 @@
         <div style="padding:6px 20px 10px;display:flex;align-items:center;justify-content:space-between">
           <div><div class="disp" style="color:#F5F5F7;font-size:27px;font-weight:600;letter-spacing:-.6px;line-height:1">Picks</div><div style="color:#636366;font-size:12.5px;font-weight:500;margin-top:3px;white-space:nowrap">See what everyone predicted</div></div>
           <div onClick="{{ openProfile }}" style-active="transform:scale(.9)" style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#FF2D78,#7A3CFF);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:14px;cursor:pointer">{{ userInitials }}</div>
-        </div>
-        <!-- newly-released ticker -->
-        <div style="margin:0 16px 10px;border-radius:11px;overflow:hidden;display:flex;align-items:stretch;background:linear-gradient(90deg,rgba(255,45,120,.14),rgba(122,60,255,.14));border:1px solid rgba(255,45,120,.28)">
-          <span style="flex:none;display:flex;align-items:center;gap:5px;padding:6px 11px;font-size:10px;font-weight:800;letter-spacing:.6px;color:#fff;background:linear-gradient(135deg,#FF2D78,#7A3CFF)"><span style="width:6px;height:6px;border-radius:50%;background:#fff;animation:livePulse 1.4s infinite"></span>NEW</span>
-          <div style="flex:1;min-width:0;overflow:hidden;display:flex;align-items:center">
-            <div class="ticker-track">
-              <span style="padding:0 22px;font-size:12px;font-weight:600;color:#F7B8CE">✨ Just launched — see everyone's predictions · crowd picks per match · live ✓ / ✗ results · tap any name on the Knockouts board for their full card</span>
-              <span style="padding:0 22px;font-size:12px;font-weight:600;color:#F7B8CE" aria-hidden="true">✨ Just launched — see everyone's predictions · crowd picks per match · live ✓ / ✗ results · tap any name on the Knockouts board for their full card</span>
-            </div>
-          </div>
         </div>
         <div style="display:flex;gap:6px;padding:2px 16px 12px">
           <div onClick="{{ pickDateY }}" style-active="transform:scale(.94)" style="flex:1;text-align:center;padding:8px 0;border-radius:11px;font-size:13px;font-weight:600;cursor:pointer;background:{{ pickDateYBg }};color:{{ pickDateYC }}">Yesterday</div>
@@ -872,7 +859,10 @@
       <span style="font-size:10.5px;font-weight:600">Matches</span>
     </div>
     <div onClick="{{ tabPicks }}" style-active="transform:scale(.85)" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;transition:transform .22s cubic-bezier(.34,1.56,.64,1);color:{{ cPicks }}">
-      <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.4"/><path d="M14.5 13.2c2.7.4 4.5 2.4 4.5 5.3" stroke-width="1.8"/></svg>
+      <div style="position:relative;display:flex">
+        <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.4"/><path d="M14.5 13.2c2.7.4 4.5 2.4 4.5 5.3" stroke-width="1.8"/></svg>
+        <span style="position:absolute;top:-6px;left:14px;font-size:7px;font-weight:800;letter-spacing:.3px;color:#fff;background:#FF2D78;border-radius:5px;padding:1px 3px;line-height:1.1">NEW</span>
+      </div>
       <span style="font-size:10.5px;font-weight:600">Picks</span>
     </div>
     <div onClick="{{ tabPredict }}" style-active="transform:scale(.85)" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;transition:transform .22s cubic-bezier(.34,1.56,.64,1);color:{{ cPredict }}">
