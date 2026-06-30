@@ -184,7 +184,7 @@
           <span style="width:36px;text-align:right;font-size:9.5px;font-weight:600;letter-spacing:.6px;color:#636366;cursor:help" title="Total KO prediction points">PTS</span>
         </div>
         <sc-for list="{{ koLeaderboard }}" as="kp" hint-placeholder-count="12">
-          <div style="display:flex;align-items:center;gap:11px;padding:5.5px 16px;border-top:1px solid rgba(255,255,255,.045);background:{{ kp.rowBg }}">
+          <div onClick="{{ kp.open }}" style-active="background:rgba(255,255,255,.04)" style="display:flex;align-items:center;gap:11px;padding:5.5px 16px;border-top:1px solid rgba(255,255,255,.045);background:{{ kp.rowBg }};cursor:pointer;transition:background .2s">
             <div style="width:15px;text-align:center;color:{{ kp.rankC }};font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;flex:none">{{ kp.koRank }}</div>
             <div style="flex:1;min-width:0">
               <div style="display:flex;align-items:center;gap:6px;min-width:0"><span style="color:#F5F5F7;font-size:14.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ kp.name }}</span><sc-if value="{{ kp.you }}" hint-placeholder-val="{{ false }}"><span style="flex:none;font-size:8.5px;font-weight:700;letter-spacing:.5px;color:#FF6FA0;background:rgba(255,45,120,.16);border:1px solid rgba(255,45,120,.32);border-radius:5px;padding:1.5px 5px;line-height:1.1">YOU</span></sc-if></div>
@@ -378,6 +378,83 @@
     </div>
     </sc-if>
 
+    <!-- ===================== PICKS ===================== -->
+    <sc-if value="{{ isPicks }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="Picks" style="padding:0 0 110px">
+      <div style="position:sticky;top:0;z-index:4;background:rgba(10,10,11,.72);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)">
+        <div style="padding:6px 20px 10px;display:flex;align-items:center;justify-content:space-between">
+          <div><div class="disp" style="color:#F5F5F7;font-size:27px;font-weight:600;letter-spacing:-.6px;line-height:1">Picks</div><div style="color:#636366;font-size:12.5px;font-weight:500;margin-top:3px;white-space:nowrap">See what everyone predicted</div></div>
+          <div onClick="{{ openProfile }}" style-active="transform:scale(.9)" style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#FF2D78,#7A3CFF);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:14px;cursor:pointer">{{ userInitials }}</div>
+        </div>
+        <div style="display:flex;gap:6px;padding:2px 16px 12px">
+          <div onClick="{{ pickDateY }}" style-active="transform:scale(.94)" style="flex:1;text-align:center;padding:8px 0;border-radius:11px;font-size:13px;font-weight:600;cursor:pointer;background:{{ pickDateYBg }};color:{{ pickDateYC }}">Yesterday</div>
+          <div onClick="{{ pickDateT }}" style-active="transform:scale(.94)" style="flex:1;text-align:center;padding:8px 0;border-radius:11px;font-size:13px;font-weight:600;cursor:pointer;background:{{ pickDateTBg }};color:{{ pickDateTC }}">Today</div>
+          <div onClick="{{ pickDateU }}" style-active="transform:scale(.94)" style="flex:1;text-align:center;padding:8px 0;border-radius:11px;font-size:13px;font-weight:600;cursor:pointer;background:{{ pickDateUBg }};color:{{ pickDateUC }}">Upcoming</div>
+        </div>
+      </div>
+
+      <sc-if value="{{ picksEmptyAtAll }}" hint-placeholder-val="{{ false }}">
+        <div style="margin:16px;padding:28px 20px;border-radius:18px;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.022));border:1px solid rgba(255,255,255,.09);text-align:center">
+          <div style="color:#A98BFF;font-size:28px;margin-bottom:10px">🔒</div>
+          <div style="color:#F5F5F7;font-size:15px;font-weight:600;margin-bottom:5px">Picks reveal once a round locks</div>
+          <div style="color:#8E8E93;font-size:12.5px;font-weight:500;line-height:1.5">Everyone's predictions appear here the moment entries close — no peeking before then.</div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ noPicksMatches }}" hint-placeholder-val="{{ false }}">
+        <div style="margin:16px;padding:24px 20px;border-radius:18px;background:rgba(255,255,255,.03);text-align:center;color:#636366;font-size:12.5px;font-weight:500">No locked matches in this window</div>
+      </sc-if>
+
+      <div style="padding:6px 16px 0">
+        <sc-for list="{{ picksMatches }}" as="m" hint-placeholder-count="4">
+          <div style="background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.022));backdrop-filter:blur(16px) saturate(1.25);-webkit-backdrop-filter:blur(16px) saturate(1.25);border:1px solid rgba(255,255,255,.09);box-shadow:inset 0 1px 0 0 rgba(255,255,255,.08),0 14px 32px -12px rgba(0,0,0,.62);border-radius:18px;margin-top:9px;overflow:hidden">
+            <div onClick="{{ m.toggle }}" style-active="background:rgba(255,255,255,.04)" style="padding:13px 14px;cursor:pointer;transition:background .2s">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+                <span style="color:#636366;font-size:10.5px;font-weight:600">{{ m.round }} · {{ m.kickStr }}</span>
+                <span style="display:flex;align-items:center;gap:5px;padding:2px 8px;border-radius:7px;background:rgba(255,255,255,.06)"><sc-if value="{{ m.live }}" hint-placeholder-val="{{ false }}"><span style="width:6px;height:6px;border-radius:50%;background:#FF453A;animation:livePulse 1.1s infinite"></span></sc-if><span style="color:#8E8E93;font-size:10.5px;font-weight:600">{{ m.statusLabel }}</span></span>
+              </div>
+              <div style="display:flex;align-items:center;gap:9px">
+                <img loading="lazy" decoding="async" src="{{ m.hFu }}" style="width:20px;height:13px;border-radius:2px;object-fit:cover;display:block;flex:none;box-shadow:0 0 0 1px rgba(255,255,255,.14)"/>
+                <span style="flex:1;color:#F5F5F7;font-size:13.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ m.hName }}</span>
+                <span class="disp" style="color:#F5F5F7;font-size:15px;font-weight:600;font-variant-numeric:tabular-nums;padding:0 6px">{{ m.hs }}</span>
+                <span style="color:#48484A;font-size:11px">–</span>
+                <span class="disp" style="color:#F5F5F7;font-size:15px;font-weight:600;font-variant-numeric:tabular-nums;padding:0 6px">{{ m.as }}</span>
+                <span style="flex:1;color:#F5F5F7;font-size:13.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:right">{{ m.aName }}</span>
+                <img loading="lazy" decoding="async" src="{{ m.aFu }}" style="width:20px;height:13px;border-radius:2px;object-fit:cover;display:block;flex:none;box-shadow:0 0 0 1px rgba(255,255,255,.14)"/>
+              </div>
+              <div style="display:flex;height:6px;border-radius:3px;overflow:hidden;background:rgba(255,255,255,.07);margin-top:11px">
+                <div style="width:{{ m.aPct }};background:linear-gradient(90deg,#FF2D78,#7A3CFF);transition:width .4s ease"></div>
+                <div style="width:{{ m.bPct }};background:linear-gradient(90deg,#7A3CFF,#1FA2FF);transition:width .4s ease"></div>
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-top:7px">
+                <span style="color:#8E8E93;font-size:11px;font-weight:500">{{ m.crowdLabel }}</span>
+                <span style="display:flex;align-items:center;gap:5px;color:#636366;font-size:10.5px;font-weight:500">{{ m.predictedOf }}<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#636366" stroke-width="2.5" style="transform:{{ m.chev }};transition:transform .25s ease"><path d="M9 6l6 6-6 6"/></svg></span>
+              </div>
+            </div>
+            <sc-if value="{{ m.open }}" hint-placeholder-val="{{ false }}">
+              <div style="padding:2px 14px 13px;display:flex;flex-direction:column;gap:6px">
+                <sc-for list="{{ m.rows }}" as="row" hint-placeholder-count="6">
+                  <div style="display:flex;align-items:center;gap:9px;padding:7px 9px;border-radius:10px;background:rgba(255,255,255,.035)">
+                    <div class="disp" style="width:26px;height:26px;border-radius:50%;background:{{ row.avBg }};display:flex;align-items:center;justify-content:center;color:#fff;font-size:10.5px;font-weight:700;flex:none">{{ row.initials }}</div>
+                    <div style="flex:1;min-width:0;display:flex;align-items:center;gap:6px">
+                      <span style="color:#F5F5F7;font-size:12.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ row.name }}</span>
+                      <sc-if value="{{ row.you }}" hint-placeholder-val="{{ false }}"><span style="flex:none;font-size:8px;font-weight:700;letter-spacing:.4px;color:#FF6FA0;background:rgba(255,45,120,.16);border:1px solid rgba(255,45,120,.32);border-radius:5px;padding:1px 4px">YOU</span></sc-if>
+                    </div>
+                    <img loading="lazy" decoding="async" src="{{ row.advFu }}" style="width:16px;height:11px;border-radius:2px;object-fit:cover;flex:none;box-shadow:0 0 0 1px rgba(255,255,255,.14)"/>
+                    <span style="color:#C7C7CC;font-size:12px;font-weight:700;font-variant-numeric:tabular-nums;flex:none;width:38px;text-align:center">{{ row.predScore }}</span>
+                    <sc-if value="{{ row.finished }}" hint-placeholder-val="{{ false }}">
+                      <span style="flex:none;display:flex;align-items:center;gap:3px;padding:2px 7px;border-radius:6px;font-size:11px;font-weight:700;background:{{ row.badgeBg }};color:{{ row.badgeC }}">{{ row.badgeIcon }} {{ row.ptsStr }}</span>
+                    </sc-if>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    </sc-if>
+
     <!-- ===================== PREDICT ===================== -->
     <sc-if value="{{ isPredict }}" hint-placeholder-val="{{ true }}">
     <div data-screen-label="Predict" style="padding:0 0 110px">
@@ -502,10 +579,18 @@
             <sc-if value="{{ koHasLocked }}" hint-placeholder-val="{{ false }}">
               <div style="color:#636366;font-size:10.5px;font-weight:600;letter-spacing:.5px;margin-bottom:8px">YOUR PICKS</div>
               <sc-for list="{{ koLockedSummary }}" as="t" hint-placeholder-count="4">
-                <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 10px;margin-bottom:4px;border-radius:10px;background:rgba(255,255,255,.04)">
-                  <div style="display:flex;align-items:center;gap:7px;flex:1;min-width:0"><img src="{{ t.hFu }}" style="width:18px;height:12px;border-radius:2px;object-fit:cover;flex:none"/><span style="color:#F5F5F7;font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ t.hName }}</span></div>
-                  <span style="color:#636366;font-size:12px;font-weight:600;flex:none;padding:0 8px">{{ t.score }}</span>
-                  <div style="display:flex;align-items:center;gap:7px;flex:1;min-width:0;justify-content:flex-end"><span style="color:#F5F5F7;font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ t.aName }}</span><img src="{{ t.aFu }}" style="width:18px;height:12px;border-radius:2px;object-fit:cover;flex:none"/></div>
+                <div style="padding:7px 10px;margin-bottom:5px;border-radius:10px;background:{{ t.rowBg }};border:1px solid {{ t.rowBd }};transition:background .25s ease,border-color .25s ease">
+                  <div style="display:flex;align-items:center;justify-content:space-between">
+                    <div style="display:flex;align-items:center;gap:7px;flex:1;min-width:0"><img src="{{ t.hFu }}" style="width:18px;height:12px;border-radius:2px;object-fit:cover;flex:none"/><span style="color:#F5F5F7;font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ t.hName }}</span></div>
+                    <span style="color:#C7C7CC;font-size:12px;font-weight:700;flex:none;padding:0 8px;font-variant-numeric:tabular-nums">{{ t.score }}</span>
+                    <div style="display:flex;align-items:center;gap:7px;flex:1;min-width:0;justify-content:flex-end"><span style="color:#F5F5F7;font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ t.aName }}</span><img src="{{ t.aFu }}" style="width:18px;height:12px;border-radius:2px;object-fit:cover;flex:none"/></div>
+                  </div>
+                  <sc-if value="{{ t.finished }}" hint-placeholder-val="{{ false }}">
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin-top:5px">
+                      <span style="display:flex;align-items:center;gap:4px;color:{{ t.badgeC }};font-size:10.5px;font-weight:700"><span style="font-size:11px">{{ t.badgeIcon }}</span>{{ t.badgeLabel }} · {{ t.actScore }}</span>
+                      <span style="flex:none;padding:1px 7px;border-radius:6px;font-size:11px;font-weight:700;font-variant-numeric:tabular-nums;color:{{ t.badgeC }};background:rgba(255,255,255,.06)">{{ t.ptsStr }}</span>
+                    </div>
+                  </sc-if>
                 </div>
               </sc-for>
             </sc-if>
@@ -773,6 +858,10 @@
       <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18" stroke-width="1.6"/></svg>
       <span style="font-size:10.5px;font-weight:600">Matches</span>
     </div>
+    <div onClick="{{ tabPicks }}" style-active="transform:scale(.85)" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;transition:transform .22s cubic-bezier(.34,1.56,.64,1);color:{{ cPicks }}">
+      <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.4"/><path d="M14.5 13.2c2.7.4 4.5 2.4 4.5 5.3" stroke-width="1.8"/></svg>
+      <span style="font-size:10.5px;font-weight:600">Picks</span>
+    </div>
     <div onClick="{{ tabPredict }}" style-active="transform:scale(.85)" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;transition:transform .22s cubic-bezier(.34,1.56,.64,1);color:{{ cPredict }}">
       <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.4" fill="currentColor"/></svg>
       <span style="font-size:10.5px;font-weight:600">Predict</span>
@@ -839,11 +928,49 @@
         <div style="display:flex;justify-content:space-between;padding:10px 0 2px;border-top:1px solid rgba(255,255,255,.08);margin-top:4px"><span style="color:#F5F5F7;font-size:15px;font-weight:600">Total</span><span class="disp" style="font-size:18px;font-weight:600;background:linear-gradient(135deg,#FF2D78,#7A3CFF);-webkit-background-clip:text;background-clip:text;color:transparent">{{ detail.totalPts }} pts</span></div>
       </div>
 
-      <div style="background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.022));backdrop-filter:blur(16px) saturate(1.25);-webkit-backdrop-filter:blur(16px) saturate(1.25);border:1px solid rgba(255,255,255,.09);box-shadow:inset 0 1px 0 0 rgba(255,255,255,.08),0 14px 32px -12px rgba(0,0,0,.62);border-radius:16px;padding:20px 16px;margin-top:10px;text-align:center">
-        <div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(160deg,#2b2b32,#15151a);display:flex;align-items:center;justify-content:center;margin:0 auto 11px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#636366" stroke-width="2"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
-        <div style="color:#F5F5F7;font-size:14.5px;font-weight:600">Knockout predictions hidden</div>
-        <div style="color:#8E8E93;font-size:12.5px;font-weight:500;margin-top:5px">Revealed when predictions lock</div>
-      </div>
+      <sc-if value="{{ detail.detailHasBonus }}" hint-placeholder-val="{{ false }}">
+        <div style="background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.022));backdrop-filter:blur(16px) saturate(1.25);-webkit-backdrop-filter:blur(16px) saturate(1.25);border:1px solid rgba(255,255,255,.09);box-shadow:inset 0 1px 0 0 rgba(255,255,255,.08),0 14px 32px -12px rgba(0,0,0,.62);border-radius:16px;padding:15px;margin-top:6px">
+          <div style="color:#636366;font-size:11px;font-weight:600;letter-spacing:.5px;margin-bottom:11px">FINALIST PICKS</div>
+          <div style="display:flex;gap:14px">
+            <sc-for list="{{ detail.detailFinalists }}" as="fp" hint-placeholder-count="2">
+              <div style="flex:1;position:relative;display:flex;flex-direction:column;align-items:center;gap:6px">
+                <span style="position:relative;display:inline-flex"><img loading="lazy" decoding="async" src="{{ fp.fu }}" style="width:42px;height:28px;border-radius:3px;object-fit:cover;display:block;box-shadow:0 0 0 1px rgba(255,255,255,.14),0 3px 9px -2px rgba(0,0,0,.5)"/><sc-if value="{{ fp.champ }}" hint-placeholder-val="{{ false }}"><span title="Champion" style="position:absolute;top:-9px;right:-7px;font-size:14px">👑</span></sc-if></span>
+                <span style="color:#C7C7CC;font-size:11.5px;font-weight:600">{{ fp.name }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ detail.detailHasKo }}" hint-placeholder-val="{{ false }}">
+        <div style="background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.022));backdrop-filter:blur(16px) saturate(1.25);-webkit-backdrop-filter:blur(16px) saturate(1.25);border:1px solid rgba(255,255,255,.09);box-shadow:inset 0 1px 0 0 rgba(255,255,255,.08),0 14px 32px -12px rgba(0,0,0,.62);border-radius:16px;padding:15px;margin-top:10px">
+          <div style="color:#636366;font-size:11px;font-weight:600;letter-spacing:.5px;margin-bottom:10px">KNOCKOUT PREDICTIONS</div>
+          <sc-for list="{{ detail.detailKoRows }}" as="kr" hint-placeholder-count="6">
+            <sc-if value="{{ kr.head }}" hint-placeholder-val="{{ false }}">
+              <div style="color:#48484A;font-size:10px;font-weight:700;letter-spacing:.4px;margin:8px 2px 1px">{{ kr.label }}</div>
+            </sc-if>
+            <sc-if value="{{ kr.headNot }}" hint-placeholder-val="{{ true }}">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 11px;margin-bottom:4px;border-radius:10px;background:rgba(255,255,255,.04)">
+                <div style="flex:1;min-width:0">
+                  <div style="color:#C7C7CC;font-size:12px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ kr.label }}</div>
+                  <div style="color:#636366;font-size:10.5px;font-weight:500;margin-top:1px">{{ kr.sub }}</div>
+                </div>
+                <sc-if value="{{ kr.finished }}" hint-placeholder-val="{{ false }}">
+                  <span style="flex:none;margin-left:8px;padding:2px 8px;border-radius:6px;font-size:12px;font-weight:700;font-variant-numeric:tabular-nums;background:{{ kr.badgeBg }};color:{{ kr.badgeC }}">{{ kr.ptsStr }}</span>
+                </sc-if>
+              </div>
+            </sc-if>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ detail.detailKoHidden }}" hint-placeholder-val="{{ false }}">
+        <div style="background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.022));backdrop-filter:blur(16px) saturate(1.25);-webkit-backdrop-filter:blur(16px) saturate(1.25);border:1px solid rgba(255,255,255,.09);box-shadow:inset 0 1px 0 0 rgba(255,255,255,.08),0 14px 32px -12px rgba(0,0,0,.62);border-radius:16px;padding:20px 16px;margin-top:10px;text-align:center">
+          <div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(160deg,#2b2b32,#15151a);display:flex;align-items:center;justify-content:center;margin:0 auto 11px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#636366" stroke-width="2"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+          <div style="color:#F5F5F7;font-size:14.5px;font-weight:600">Knockout predictions hidden</div>
+          <div style="color:#8E8E93;font-size:12.5px;font-weight:500;margin-top:5px">Revealed when predictions lock</div>
+        </div>
+      </sc-if>
     </div>
   </div>
   </sc-if>
@@ -1011,12 +1138,22 @@
       </div>
       <div style="color:#636366;font-size:11px;font-weight:600;letter-spacing:.5px;margin-bottom:10px">MATCH LOG</div>
       <sc-if value="{{ hasMatchLog }}" hint-placeholder-val="{{ true }}">
-        <div style="margin-bottom:16px;display:flex;flex-direction:column;gap:6px;max-height:180px;overflow-y:auto">
+        <div style="margin-bottom:16px;display:flex;flex-direction:column;gap:5px;max-height:260px;overflow-y:auto">
           <sc-for list="{{ userMatchLog }}" as="e" hint-placeholder-count="4">
-            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 11px;border-radius:10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06)">
-              <span style="color:#C7C7CC;font-size:12px;font-weight:500;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ e.reason }}</span>
-              <span style="flex:none;margin-left:8px;padding:2px 8px;border-radius:6px;font-size:12px;font-weight:700;background:{{ e.ptsBg }};color:{{ e.ptsC }}">+{{ e.pts }}</span>
-            </div>
+            <sc-if value="{{ e.isHead }}" hint-placeholder-val="{{ false }}">
+              <div style="color:#48484A;font-size:10px;font-weight:700;letter-spacing:.4px;margin:8px 2px 1px">{{ e.label }}</div>
+            </sc-if>
+            <sc-if value="{{ e.isRow }}" hint-placeholder-val="{{ true }}">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 11px;border-radius:10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06)">
+                <div style="flex:1;min-width:0">
+                  <div style="color:#C7C7CC;font-size:12px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ e.label }}</div>
+                  <sc-if value="{{ e.hasSub }}" hint-placeholder-val="{{ false }}">
+                    <div style="color:#636366;font-size:10.5px;font-weight:500;margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ e.sub }}</div>
+                  </sc-if>
+                </div>
+                <span style="flex:none;margin-left:8px;padding:2px 8px;border-radius:6px;font-size:12px;font-weight:700;font-variant-numeric:tabular-nums;background:{{ e.ptsBg }};color:{{ e.ptsC }}">{{ e.ptsStr }}</span>
+              </div>
+            </sc-if>
           </sc-for>
         </div>
       </sc-if>
@@ -1132,7 +1269,8 @@ class Component extends DCLogic {
       loggedIn:false, loginError:'', loginLoading:false,
       expandedPick:{}, rulesOpen:false,
       lockMs:(2*86400+14*3600+9*60)*1000,
-      toast:null
+      toast:null,
+      pickDate:'today', pickOpen:'', picksUser:null
     };
     this.scrollTop=()=>{ if(this.mainScroll) this.mainScroll.scrollTop=0; };
   }
@@ -1166,6 +1304,95 @@ class Component extends DCLogic {
     if(roundKey==='r32') return this._apiData?._r32tbd||[];
     const roundNames={r16:'Round of 16',qf:'Quarter-finals',sf:'Semi-finals',final:'Final'};
     return this._apiData?.bracket?.[roundNames[roundKey]]||[];
+  }
+  // Client-side mirror of scoring.js scoreKoRound — single source for correctness UI.
+  koPickResult(roundKey,pick,resultMatch){
+    const KO_BASE={r32:4,r16:5,qf:10,sf:15,final:20};
+    const base=KO_BASE[roundKey]||4;
+    if(!pick||!resultMatch) return {finished:false,winnerCorrect:false,exact:false,points:0,base,predScore:null,actScore:null};
+    const hG=resultMatch.homeGoals!=null?resultMatch.homeGoals:resultMatch.home?.goals;
+    const aG=resultMatch.awayGoals!=null?resultMatch.awayGoals:resultMatch.away?.goals;
+    const finished=!!resultMatch.finished&&hG!=null&&aG!=null;
+    const predAdv=pick.adv||(pick.h>pick.a?'a':pick.a>pick.h?'b':null);
+    const actualAdv=finished?(hG>aG?'a':aG>hG?'b':null):null;
+    const winnerCorrect=finished&&!!predAdv&&predAdv===actualAdv;
+    const exact=winnerCorrect&&pick.h===hG&&pick.a===aG;
+    const points=exact?base*2:winnerCorrect?base:0;
+    return {finished,winnerCorrect,exact,points,base,predAdv,actualAdv,
+      predScore:(pick.h!=null?pick.h+'–'+pick.a:null),actScore:finished?hG+'–'+aG:null};
+  }
+  // Outcome → {label,c,bg,bd,icon} for green/purple/red/neutral coloring (color + icon, never color alone).
+  koOutcomeStyle(r){
+    if(!r.finished) return {label:'',c:'#8E8E93',bg:'rgba(255,255,255,.04)',bd:'rgba(255,255,255,.07)',icon:'',dim:true};
+    if(r.exact) return {label:'Exact',c:'#5BE584',bg:'rgba(52,199,89,.14)',bd:'rgba(52,199,89,.34)',icon:'✓',dim:false};
+    if(r.winnerCorrect) return {label:'Winner',c:'#A98BFF',bg:'rgba(122,60,255,.16)',bd:'rgba(122,60,255,.36)',icon:'✓',dim:false};
+    return {label:'Missed',c:'#FF6961',bg:'rgba(255,69,58,.13)',bd:'rgba(255,69,58,.32)',icon:'✗',dim:false};
+  }
+  // All locked-round KO matches with every participant's pick — privacy-safe (predictions are
+  // only ever present here for rounds buildAppData.js has already locked).
+  picksMatchesData(openKey){
+    const KO_ROUNDS=[['r32','Round of 32'],['r16','Round of 16'],['qf','Quarter-finals'],['sf','Semi-finals'],['final','Final']];
+    const preds=this._apiData?.predictions||{};
+    const parts=this._apiData?.participants||[];
+    const uid=this._userParticipantId;
+    const now=new Date(), todayS=now.toLocaleDateString('en-CA',{timeZone:'Asia/Kolkata'});
+    const yest=new Date(now-86400000).toLocaleDateString('en-CA',{timeZone:'Asia/Kolkata'});
+    const out=[];
+    for(const [rk,rlabel] of KO_ROUNDS){
+      const anyLocked=parts.some(p=>{
+        const pr=preds[p.id]; const l=pr&&(typeof pr.locked==='object'?pr.locked[rk]:(rk==='r32'&&pr.locked));
+        return l&&pr[rk];
+      });
+      if(!anyLocked) continue;
+      const defs=this.getRoundMatchList(rk), results=this.getRoundKickoffs(rk);
+      defs.forEach(([hn,hf,an,af,hCode,aCode],i)=>{
+        const res=results[i]||{};
+        const kickoffMs=res.kickoffMs||0;
+        const dayS=kickoffMs?new Date(kickoffMs).toLocaleDateString('en-CA',{timeZone:'Asia/Kolkata'}):todayS;
+        const bucket=dayS===yest?'yesterday':(dayS===todayS?'today':'upcoming');
+        const dt=kickoffMs?new Date(kickoffMs):null;
+        const kickStr=dt?dt.toLocaleDateString('en-US',{day:'numeric',month:'short',timeZone:'Asia/Kolkata'})+' · '+dt.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',hour12:false,timeZone:'Asia/Kolkata'}):'TBD';
+        const finished=res.finished&&(res.homeGoals??res.home?.goals)!=null;
+        const hG=res.homeGoals??res.home?.goals, aG=res.awayGoals??res.away?.goals;
+        let aCount=0,bCount=0;
+        const rows=[];
+        for(const p of parts){
+          const pr=preds[p.id]; if(!pr) continue;
+          const locked=typeof pr.locked==='object'?pr.locked[rk]:(rk==='r32'&&pr.locked);
+          if(!locked||!pr[rk]) continue;
+          const pick=pr[rk][i]; if(!pick) continue;
+          const adv=pick.adv||(pick.h>pick.a?'a':pick.a>pick.h?'b':null);
+          if(adv==='a') aCount++; else if(adv==='b') bCount++;
+          const pr2=this.koPickResult(rk,pick,res);
+          const st=this.koOutcomeStyle(pr2);
+          rows.push({
+            id:p.id, you:p.id===uid, name:p.name, initials:this.initials(p.name),
+            avBg:this.avPal[parts.indexOf(p)%this.avPal.length],
+            predScore:pick.h+' – '+pick.a, advName:adv==='a'?hn:(adv==='b'?an:'—'),
+            advFu:this.flagUrl(adv==='a'?hf:(adv==='b'?af:'')),
+            finished:pr2.finished, pts:pr2.points, ptsStr:pr2.finished?('+'+pr2.points):'',
+            badgeBg:st.bg, badgeC:st.c, badgeIcon:st.icon
+          });
+        }
+        const total=aCount+bCount;
+        const aPct=total?Math.round(aCount/total*100):50, bPct=100-aPct;
+        const matchKey=rk+'-'+i;
+        out.push({
+          key:matchKey, round:rlabel, bucket, kickStr,
+          hFu:this.flagUrl(hf), hName:hn, aFu:this.flagUrl(af), aName:an,
+          finished, hs:finished?hG:null, as:finished?aG:null,
+          statusLabel:finished?'FT':(dt&&dt.getTime()<Date.now()?'Live':'Upcoming'),
+          live:!finished&&!!dt&&dt.getTime()<Date.now(),
+          aCount,bCount,total,aPct:aPct+'%',bPct:bPct+'%',
+          crowdLabel: total?(aCount+' picked '+hn+' · '+bCount+' picked '+an):'No picks yet',
+          predictedOf: total+' of '+parts.length+' predicted',
+          hasPicks: total>0,
+          open: openKey===matchKey,
+          rows: rows.sort((a,b)=>(b.you-a.you)||((b.pts||0)-(a.pts||0)))
+        });
+      });
+    }
+    return out;
   }
   updKo(roundKey,i,fn){
     this.setState(st=>{ const cur=(st[roundKey]||{})[i]||{h:0,a:0,adv:null}; return {[roundKey]:{...(st[roundKey]||{}),[i]:{...cur,...fn(cur)}}, submitted:false}; });
@@ -1301,7 +1528,7 @@ class Component extends DCLogic {
       this.teams=t;
     }
     if(d.leaderboard?.length){
-      this.P=d.leaderboard.map(p=>[p.name,p.picks,p.total,(p.delta>=0?'+':'')+p.delta,p.breakdown||{}]);
+      this.P=d.leaderboard.map(p=>[p.name,p.picks,p.total,(p.delta>=0?'+':'')+p.delta,p.breakdown||{},p.id]);
       if(this._userParticipantId){
         const partName=(d.participants||[]).find(p=>p.id===this._userParticipantId)?.name;
         const ui=partName?this.P.findIndex(([n])=>n===partName):-1;
@@ -1441,14 +1668,14 @@ class Component extends DCLogic {
   }
   buildParticipants(){
     return this.P.map((p,i)=>{
-      const [name,picks,_total,delta,breakdown]=p;
+      const [name,picks,_total,delta,breakdown,pid]=p;
       const pts=breakdown?.group??_total;
       let W=0,D=0,L=0;
       picks.forEach(c=>{const gf=this.groupForm?.[c]||{res:[]};gf.res.forEach(r=>{ if(r==='w')W++; else if(r==='d')D++; else if(r==='l')L++; });});
       const koPts=breakdown?.ko||0;
       const bonusPts=(breakdown?.finalist||0)+(breakdown?.champion||0);
       const totalPts=pts+koPts+bonusPts;
-      return { idx:i, rank:i+1, name, picks, pts, delta, w:W, d:D, l:L, koPts, bonusPts, totalPts,
+      return { idx:i, pid, rank:i+1, name, picks, pts, delta, w:W, d:D, l:L, koPts, bonusPts, totalPts,
         initials:this.initials(name), avBg:this.avPal[i%this.avPal.length],
         you:i===this.USER,
         picksX:picks.map(c=>({ code:c, name:this.teams[c].n, flag:this.teams[c].f,
@@ -1621,6 +1848,30 @@ class Component extends DCLogic {
           expanded, chev: expanded?'rotate(90deg)':'rotate(0deg)',
           toggle: ()=>this.setState(st=>({expandedPick:{...st.expandedPick,[pi]:!st.expandedPick[pi]}})) };
       })};
+      // Locked-round KO predictions for this participant (privacy-safe: only present once locked).
+      const pr=this._apiData?.predictions?.[base.pid]||{};
+      const KO_ROUNDS=[['r32','Round of 32'],['r16','Round of 16'],['qf','Quarter-finals'],['sf','Semi-finals'],['final','Final']];
+      const koRows=[];
+      for(const [rk,rlabel] of KO_ROUNDS){
+        const locked=typeof pr.locked==='object'?pr.locked[rk]:(rk==='r32'&&pr.locked);
+        const picks=pr[rk]; if(!locked||!picks) continue;
+        const defs=this.getRoundMatchList(rk), results=this.getRoundKickoffs(rk);
+        const rows=[];
+        Object.keys(picks).forEach(k=>{
+          const i=parseInt(k); const def=defs[i]; if(!def) return; const pick=picks[k];
+          const r=this.koPickResult(rk,pick,results[i]); const st=this.koOutcomeStyle(r);
+          rows.push({head:false,headNot:true,finished:r.finished,label:def[0]+' '+pick.h+' – '+pick.a+' '+def[2],
+            sub:r.finished?('Actual '+r.actScore+' · '+st.label):'Awaiting result',
+            ptsStr:r.finished?('+'+r.points):'', badgeBg:st.bg, badgeC:st.c});
+        });
+        if(rows.length){ koRows.push({head:true,headNot:false,label:rlabel}); rows.forEach(x=>koRows.push(x)); }
+      }
+      const fin=pr.finalists||[], champ=pr.champion||null;
+      detail.detailFinalists=fin.map(c=>({fu:this.flagUrl(this.teams[c]?.f||''),name:this.teams[c]?.n||c,champ:c===champ}));
+      detail.detailHasBonus=fin.length>0;
+      detail.detailKoRows=koRows;
+      detail.detailHasKo=koRows.length>0;
+      detail.detailKoHidden=koRows.length===0 && !detail.detailHasBonus;
       this.deepFlags(detail);
     }
 
@@ -1761,10 +2012,17 @@ class Component extends DCLogic {
     const koDoneStr=koDone+' / '+koTotal+' predicted';
     // Locked picks summary for lock screen
     const koHasLocked=Object.keys(roundPicks).length>0;
+    const koResults=this.getRoundKickoffs(activeKey);
     const koLockedSummary=this.deepFlags(koMatchDefs.map(([hn,hf,an,af],i)=>{
       const tie=roundPicks[i]||{};
+      const r=this.koPickResult(activeKey,tie,koResults[i]);
+      const st=this.koOutcomeStyle(r);
       return{hName:hn,hFu:this.flagUrl(hf),aName:an,aFu:this.flagUrl(af),
-        score:tie.h!=null?(tie.h+' – '+tie.a):'? – ?'};
+        score:tie.h!=null?(tie.h+' – '+tie.a):'? – ?',
+        finished:r.finished, pending:!r.finished,
+        actScore:r.actScore?('actual '+r.actScore):'',
+        rowBg:st.bg, rowBd:st.bd, badgeC:st.c, badgeIcon:st.icon, badgeLabel:st.label,
+        ptsStr:r.finished?('+'+r.points):'', showPts:r.finished};
     }));
 
     const rounds=[['R32','r32',4],['R16','r16',5],['QF','qf',10],['SF','sf',15],['Final','final',20]].map(([name,key,pts])=>({
@@ -1823,20 +2081,51 @@ class Component extends DCLogic {
     const userP=lb[this.USER];
     const userPicks=this.deepFlags(userP.picksX.map(pk=>({flag:pk.flag,pts:pk.pts})));
     const userId=this._userParticipantId;
-    const rawLog=(this._apiData?._scoringLog?.[userId]||[]).slice().reverse();
-    const userMatchLog=rawLog.slice(0,8).map(e=>({
-      pts:e.points, reason:e.reason,
-      ptsBg:e.points>=8?'rgba(52,199,89,.18)':(e.points>=4?'rgba(122,60,255,.18)':'rgba(255,255,255,.08)'),
-      ptsC:e.points>=8?'#5BE584':(e.points>=4?'#A98BFF':'#8E8E93')
-    }));
+    const rawLog=(this._apiData?._scoringLog?.[userId]||[]);
+    // Classify backend ledger: bonus (matchId null), group ("X win/draw/loss"), ko (advances/exact).
+    const isGroupReason=r=>/\b(win|draw|loss)\s*\(/.test(r||'');
+    const groupEntries=rawLog.filter(e=>e.matchId!=null&&isGroupReason(e.reason));
+    const bonusEntries=rawLog.filter(e=>e.matchId==null);
+    const mkRow=(label,sub,pts,st)=>({isHead:false,isRow:true,label,sub:sub||'',hasSub:!!sub,
+      ptsStr:(pts>0?'+':'')+pts,
+      ptsBg:st?st.bg:(pts>=8?'rgba(52,199,89,.18)':pts>=4?'rgba(122,60,255,.18)':pts>0?'rgba(255,255,255,.08)':'rgba(255,69,58,.14)'),
+      ptsC:st?st.c:(pts>=8?'#5BE584':pts>=4?'#A98BFF':pts>0?'#C7C7CC':'#FF6961')});
+    const head=t=>({isHead:true,isRow:false,label:t});
+    // Fresh KO log incl. 0-point finished matches (backend ledger omits zeros).
+    const userPred=this._apiData?.predictions?.[userId]||{};
+    const KO_ROUNDS=[['r32','Round of 32'],['r16','Round of 16'],['qf','Quarter-finals'],['sf','Semi-finals'],['final','Final']];
+    const koLog=[];
+    for(const [rk,rlabel] of KO_ROUNDS){
+      const locked=(typeof userPred.locked==='object'?userPred.locked[rk]:(rk==='r32'&&userPred.locked));
+      const picks=userPred[rk]; if(!locked||!picks) continue;
+      const defs=this.getRoundMatchList(rk), results=this.getRoundKickoffs(rk);
+      const rows=[];
+      Object.keys(picks).forEach(k=>{
+        const i=parseInt(k); const def=defs[i]; if(!def) return; const tie=picks[k];
+        const r=this.koPickResult(rk,tie,results[i]); if(!r.finished) return;
+        const st=this.koOutcomeStyle(r);
+        rows.push(mkRow((def[0]||'?')+' '+(r.predScore||'?')+' '+(def[2]||'?'),
+          'Actual '+r.actScore+' · '+st.label, r.points, st));
+      });
+      if(rows.length){ koLog.push(head(rlabel)); rows.forEach(x=>koLog.push(x)); }
+    }
+    const bonusRows=bonusEntries.map(e=>mkRow(e.reason,'',e.points));
+    const groupRows=groupEntries.slice().reverse().map(e=>mkRow(e.reason,'',e.points));
+    const userMatchLog=[
+      ...koLog,
+      ...(bonusRows.length?[head('Bonus'),...bonusRows]:[]),
+      ...(groupRows.length?[head('Group stage'),...groupRows]:[])
+    ];
     const hasMatchLog=userMatchLog.length>0;
     const noMatchLog=!hasMatchLog;
 
     return {
-      isFantasy:s.tab==='fantasy', isMatches:s.tab==='matches', isPredict:s.tab==='predict', isStats:s.tab==='stats',
+      isFantasy:s.tab==='fantasy', isMatches:s.tab==='matches', isPicks:s.tab==='picks', isPredict:s.tab==='predict', isStats:s.tab==='stats',
       cFantasy:s.tab==='fantasy'?'#FF2D78':'#636366', cMatches:s.tab==='matches'?'#FF2D78':'#636366',
+      cPicks:s.tab==='picks'?'#FF2D78':'#636366',
       cPredict:s.tab==='predict'?'#FF2D78':'#636366', cStats:s.tab==='stats'?'#FF2D78':'#636366',
       tabFantasy:()=>this.setTab('fantasy'), tabMatches:()=>this.setTab('matches'),
+      tabPicks:()=>this.setTab('picks'),
       tabPredict:()=>this.setTab('predict'), tabStats:()=>this.setTab('stats'),
       heroPts:s.heroPts, heroRank:this.USER+1, heroTotal:this.P.length,
       heroPhase: this._apiData?.meta?.phase==='ko'?'Knockout stage':'Group stage · in progress',
@@ -1875,6 +2164,7 @@ class Component extends DCLogic {
               rowBg:p.id===uid?'linear-gradient(90deg,rgba(255,45,120,.1),rgba(31,162,255,.06))':'transparent',
               rankC:i===0?'#FFD93D':(i<3?'#F5F5F7':'#636366'),
               picksX:fin.map(c=>({fu:this.flagUrl(this.teams[c]?.f||''),name:this.teams[c]?.n||c,champ:c===champ})),
+              open:()=>{ const idx=lb.findIndex(x=>x.pid===p.id); if(idx>=0) this.setState({detailIdx:idx}); },
               cpBg:correctPicks?'rgba(52,199,89,.2)':'rgba(255,255,255,.09)',
               cpC:correctPicks?'#34C759':'#AEAEB2',
               exBg:exactScores?'rgba(255,214,10,.18)':'rgba(255,255,255,.09)',
@@ -1914,6 +2204,23 @@ class Component extends DCLogic {
       dateUBg:pill(s.dateTab==='upcoming'), dateUC:pillT(s.dateTab==='upcoming'),
       showScored:s.dateTab!=='upcoming', showUpcoming:s.dateTab==='upcoming',
       scoredMatches:scored, upcomingDays:this.deepFlags(this.upcoming()),
+      ...(()=>{
+        const allPicks=this.picksMatchesData(s.pickOpen);
+        const bucketed=allPicks.filter(m=>m.bucket===s.pickDate);
+        const picksMatches=this.deepFlags(bucketed.map(m=>({
+          ...m,
+          toggle:()=>this.setState({pickOpen:s.pickOpen===m.key?'':m.key}),
+          chev:m.open?'rotate(90deg)':'rotate(0deg)'
+        })));
+        return {
+          pickDateY:()=>this.setState({pickDate:'yesterday'}), pickDateT:()=>this.setState({pickDate:'today'}), pickDateU:()=>this.setState({pickDate:'upcoming'}),
+          pickDateYBg:pill(s.pickDate==='yesterday'), pickDateYC:pillT(s.pickDate==='yesterday'),
+          pickDateTBg:pill(s.pickDate==='today'), pickDateTC:pillT(s.pickDate==='today'),
+          pickDateUBg:pill(s.pickDate==='upcoming'), pickDateUC:pillT(s.pickDate==='upcoming'),
+          picksMatches, hasPicksMatches:picksMatches.length>0, noPicksMatches:picksMatches.length===0,
+          picksEmptyAtAll:allPicks.length===0
+        };
+      })(),
       standings:this.deepFlags(this.standingsData()), bracket:this.bracketData(),
       detailOpen:detail!=null, detail, closeDetail:()=>this.setState({detailIdx:null,expandedPick:{}}),
       matchOpen:mdet!=null, mdet, closeMatch:()=>this.setState({matchObj:null}),
