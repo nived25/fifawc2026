@@ -194,10 +194,10 @@
                 </sc-for>
               </div>
             </div>
-            <div style="display:flex;align-items:center;gap:0;flex:none">
-              <div style="width:30px;text-align:center;font-size:15px;font-weight:700;font-variant-numeric:tabular-nums;color:{{ p.correctPicks ? '#34C759' : '#8E8E93' }}">{{ p.correctPicks }}</div>
-              <div style="width:44px;text-align:center;font-size:15px;font-weight:700;font-variant-numeric:tabular-nums;color:{{ p.exactScores ? '#FFD60A' : '#8E8E93' }}">{{ p.exactScores }}</div>
-              <div style="width:36px;text-align:right;font-size:20px;font-weight:700;letter-spacing:-.5px;font-variant-numeric:tabular-nums;color:{{ p.koPts ? '#FFFFFF' : '#8E8E93' }}">{{ p.koPts }}</div>
+            <div style="display:flex;align-items:center;gap:5px;flex:none">
+              <div style="width:32px;text-align:center"><span style="display:inline-block;min-width:26px;padding:3px 5px;border-radius:7px;background:{{ p.cpBg }};color:{{ p.cpC }};font-size:14px;font-weight:700;font-variant-numeric:tabular-nums;text-align:center">{{ p.correctPicks }}</span></div>
+              <div style="width:40px;text-align:center"><span style="display:inline-block;min-width:26px;padding:3px 5px;border-radius:7px;background:{{ p.exBg }};color:{{ p.exC }};font-size:14px;font-weight:700;font-variant-numeric:tabular-nums;text-align:center">{{ p.exactScores }}</span></div>
+              <div style="width:38px;text-align:right"><span style="display:inline-block;min-width:30px;padding:3px 6px;border-radius:7px;background:{{ p.ptsBg }};color:{{ p.ptsC }};font-size:15px;font-weight:700;font-variant-numeric:tabular-nums;text-align:center">{{ p.koPts }}</span></div>
             </div>
           </div>
         </sc-for>
@@ -1867,7 +1867,13 @@ class Component extends DCLogic {
               koPtsBreakdown: sub,
               rowBg:p.id===uid?'linear-gradient(90deg,rgba(255,45,120,.1),rgba(31,162,255,.06))':'transparent',
               rankC:i===0?'#FFD93D':(i<3?'#F5F5F7':'#636366'),
-              picksX:(p.picks||[]).map(c=>({fu:this.flagUrl(this.teams[c]?.f||''),name:this.teams[c]?.n||c}))
+              picksX:(p.picks||[]).map(c=>({fu:this.flagUrl(this.teams[c]?.f||''),name:this.teams[c]?.n||c})),
+              cpBg:correctPicks?'rgba(52,199,89,.2)':'rgba(255,255,255,.09)',
+              cpC:correctPicks?'#34C759':'#AEAEB2',
+              exBg:exactScores?'rgba(255,214,10,.18)':'rgba(255,255,255,.09)',
+              exC:exactScores?'#FFD60A':'#AEAEB2',
+              ptsBg:koPts?'rgba(169,139,255,.2)':'rgba(255,255,255,.09)',
+              ptsC:koPts?'#FFFFFF':'#AEAEB2'
             };
           }));
       })(),
