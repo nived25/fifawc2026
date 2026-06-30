@@ -183,24 +183,24 @@
           <span style="width:44px;text-align:center;font-size:9.5px;font-weight:600;letter-spacing:.6px;color:#FFD60A;cursor:help" title="Exact scores">EXACT</span>
           <span style="width:36px;text-align:right;font-size:9.5px;font-weight:600;letter-spacing:.6px;color:#636366;cursor:help" title="Total KO prediction points">PTS</span>
         </div>
-        <sc-for list="{{ koLeaderboard }}" as="p" hint-placeholder-count="12">
-          <div style="display:flex;align-items:center;gap:11px;padding:5.5px 16px;border-top:1px solid rgba(255,255,255,.045);background:{{ p.rowBg }}">
-            <div style="width:15px;text-align:center;color:{{ p.rankC }};font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;flex:none">{{ p.koRank }}</div>
+        <sc-for list="{{ koLeaderboard }}" as="kp" hint-placeholder-count="12">
+          <div style="display:flex;align-items:center;gap:11px;padding:5.5px 16px;border-top:1px solid rgba(255,255,255,.045);background:{{ kp.rowBg }}">
+            <div style="width:15px;text-align:center;color:{{ kp.rankC }};font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;flex:none">{{ kp.koRank }}</div>
             <div style="flex:1;min-width:0">
-              <div style="display:flex;align-items:center;gap:6px;min-width:0"><span style="color:#F5F5F7;font-size:14.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ p.name }}</span><sc-if value="{{ p.you }}" hint-placeholder-val="{{ false }}"><span style="flex:none;font-size:8.5px;font-weight:700;letter-spacing:.5px;color:#FF6FA0;background:rgba(255,45,120,.16);border:1px solid rgba(255,45,120,.32);border-radius:5px;padding:1.5px 5px;line-height:1.1">YOU</span></sc-if></div>
+              <div style="display:flex;align-items:center;gap:6px;min-width:0"><span style="color:#F5F5F7;font-size:14.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ kp.name }}</span><sc-if value="{{ kp.you }}" hint-placeholder-val="{{ false }}"><span style="flex:none;font-size:8.5px;font-weight:700;letter-spacing:.5px;color:#FF6FA0;background:rgba(255,45,120,.16);border:1px solid rgba(255,45,120,.32);border-radius:5px;padding:1.5px 5px;line-height:1.1">YOU</span></sc-if></div>
               <div style="display:flex;gap:4px;margin-top:3px">
-                <sc-for list="{{ p.picksX }}" as="pk" hint-placeholder-count="2">
+                <sc-for list="{{ kp.picksX }}" as="kpk" hint-placeholder-count="2">
                   <span style="position:relative;display:inline-flex;flex:none">
-                    <img loading="lazy" decoding="async" src="{{ pk.fu }}" title="{{ pk.name }}" style="width:15px;height:10px;border-radius:2px;object-fit:cover;display:block;flex:none;box-shadow:0 0 0 1px rgba(255,255,255,.14)"/>
-                    <sc-if value="{{ pk.champ }}" hint-placeholder-val="{{ false }}"><span title="Champion" style="position:absolute;top:-7px;right:-4px;font-size:8px;line-height:1">👑</span></sc-if>
+                    <img loading="lazy" decoding="async" src="{{ kpk.fu }}" title="{{ kpk.name }}" style="width:15px;height:10px;border-radius:2px;object-fit:cover;display:block;flex:none;box-shadow:0 0 0 1px rgba(255,255,255,.14)"/>
+                    <sc-if value="{{ kpk.champ }}" hint-placeholder-val="{{ false }}"><span title="Champion" style="position:absolute;top:-7px;right:-4px;font-size:8px;line-height:1">👑</span></sc-if>
                   </span>
                 </sc-for>
               </div>
             </div>
             <div style="display:flex;align-items:center;gap:5px;flex:none">
-              <div style="width:32px;text-align:center"><span style="display:inline-block;min-width:26px;padding:3px 5px;border-radius:7px;background:{{ p.cpBg }};color:{{ p.cpC }};font-size:14px;font-weight:700;font-variant-numeric:tabular-nums;text-align:center">{{ p.correctPicks }}</span></div>
-              <div style="width:40px;text-align:center"><span style="display:inline-block;min-width:26px;padding:3px 5px;border-radius:7px;background:{{ p.exBg }};color:{{ p.exC }};font-size:14px;font-weight:700;font-variant-numeric:tabular-nums;text-align:center">{{ p.exactScores }}</span></div>
-              <div style="width:38px;text-align:right"><span style="display:inline-block;min-width:30px;padding:3px 6px;border-radius:7px;background:{{ p.ptsBg }};color:{{ p.ptsC }};font-size:15px;font-weight:700;font-variant-numeric:tabular-nums;text-align:center">{{ p.koPts }}</span></div>
+              <div style="width:32px;text-align:center"><span style="display:inline-block;min-width:26px;padding:3px 5px;border-radius:7px;background:{{ kp.cpBg }};color:{{ kp.cpC }};font-size:14px;font-weight:700;font-variant-numeric:tabular-nums;text-align:center">{{ kp.correctPicks }}</span></div>
+              <div style="width:40px;text-align:center"><span style="display:inline-block;min-width:26px;padding:3px 5px;border-radius:7px;background:{{ kp.exBg }};color:{{ kp.exC }};font-size:14px;font-weight:700;font-variant-numeric:tabular-nums;text-align:center">{{ kp.exactScores }}</span></div>
+              <div style="width:38px;text-align:right"><span style="display:inline-block;min-width:30px;padding:3px 6px;border-radius:7px;background:{{ kp.ptsBg }};color:{{ kp.ptsC }};font-size:15px;font-weight:700;font-variant-numeric:tabular-nums;text-align:center">{{ kp.koPts }}</span></div>
             </div>
           </div>
         </sc-for>
