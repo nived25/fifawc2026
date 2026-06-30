@@ -189,8 +189,11 @@
             <div style="flex:1;min-width:0">
               <div style="display:flex;align-items:center;gap:6px;min-width:0"><span style="color:#F5F5F7;font-size:14.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ p.name }}</span><sc-if value="{{ p.you }}" hint-placeholder-val="{{ false }}"><span style="flex:none;font-size:8.5px;font-weight:700;letter-spacing:.5px;color:#FF6FA0;background:rgba(255,45,120,.16);border:1px solid rgba(255,45,120,.32);border-radius:5px;padding:1.5px 5px;line-height:1.1">YOU</span></sc-if></div>
               <div style="display:flex;gap:4px;margin-top:3px">
-                <sc-for list="{{ p.picksX }}" as="pk" hint-placeholder-count="4">
-                  <img loading="lazy" decoding="async" src="{{ pk.fu }}" title="{{ pk.name }}" style="width:15px;height:10px;border-radius:2px;object-fit:cover;display:block;flex:none;box-shadow:0 0 0 1px rgba(255,255,255,.14)"/>
+                <sc-for list="{{ p.picksX }}" as="pk" hint-placeholder-count="2">
+                  <span style="position:relative;display:inline-flex;flex:none">
+                    <img loading="lazy" decoding="async" src="{{ pk.fu }}" title="{{ pk.name }}" style="width:15px;height:10px;border-radius:2px;object-fit:cover;display:block;flex:none;box-shadow:0 0 0 1px rgba(255,255,255,.14)"/>
+                    <sc-if value="{{ pk.champ }}" hint-placeholder-val="{{ false }}"><span title="Champion" style="position:absolute;top:-7px;right:-4px;font-size:8px;line-height:1">👑</span></sc-if>
+                  </span>
                 </sc-for>
               </div>
             </div>
@@ -1194,7 +1197,8 @@ class Component extends DCLogic {
     this._userPin='5555';
     this._userName=participant.name;
     try{ localStorage.setItem('fifa_auth',JSON.stringify({participantId:participant.id,name:participant.name,email:participant.email})); }catch(e){}
-    const idx=this.P.findIndex(([n])=>n===participant.name);
+    const canonName=(this._apiData?.participants||[]).find(p=>p.id===participant.id)?.name||participant.name;
+    const idx=this.P.findIndex(([n])=>n===canonName);
     if(idx>=0) this.USER=idx;
     this.setState({loggedIn:true,loginLoading:false,loginError:''});
     this.showToast('Welcome '+participant.name+'!','ok');
@@ -1862,12 +1866,15 @@ class Component extends DCLogic {
             const correctPicks=koEntries.length;
             const exactScores=exactEntries.length;
             const sub=koPts===0?'no picks scored':(correctPicks+'✓'+(exactScores?' · '+exactScores+' exact':''));
+            const preds=this._apiData?.predictions||{};
+            const fin=preds[p.id]?.finalists||[];
+            const champ=preds[p.id]?.champion||null;
             return {
               koRank:i+1, name:p.name, you:p.id===uid, koPts, correctPicks, exactScores,
               koPtsBreakdown: sub,
               rowBg:p.id===uid?'linear-gradient(90deg,rgba(255,45,120,.1),rgba(31,162,255,.06))':'transparent',
               rankC:i===0?'#FFD93D':(i<3?'#F5F5F7':'#636366'),
-              picksX:(p.picks||[]).map(c=>({fu:this.flagUrl(this.teams[c]?.f||''),name:this.teams[c]?.n||c})),
+              picksX:fin.map(c=>({fu:this.flagUrl(this.teams[c]?.f||''),name:this.teams[c]?.n||c,champ:c===champ})),
               cpBg:correctPicks?'rgba(52,199,89,.2)':'rgba(255,255,255,.09)',
               cpC:correctPicks?'#34C759':'#AEAEB2',
               exBg:exactScores?'rgba(255,214,10,.18)':'rgba(255,255,255,.09)',
