@@ -758,5 +758,158 @@
     "locked": {
       "r32": true
     }
+  },
+  "renu_verma": {
+    "submittedAtMs": {
+      "r32": 1782847712209
+    },
+    "r32": {
+      "1": {
+        "h": 2,
+        "a": 0,
+        "adv": "a"
+      },
+      "2": {
+        "h": 2,
+        "a": 0,
+        "adv": "a"
+      },
+      "3": {
+        "h": 1,
+        "a": 0,
+        "adv": "a"
+      },
+      "4": {
+        "h": 0,
+        "a": 1,
+        "adv": "b"
+      },
+      "5": {
+        "h": 2,
+        "a": 0,
+        "adv": "a"
+      },
+      "6": {
+        "h": 2,
+        "a": 0,
+        "adv": "a"
+      },
+      "7": {
+        "h": 2,
+        "a": 0,
+        "adv": "a"
+      }
+    },
+    "finalists": [
+      "ARG",
+      "ESP"
+    ],
+    "champion": "ESP",
+    "locked": {
+      "r32": true
+    },
+    "_manualEntry": true
+  },
+  "sagar_vatkar": {
+    "submittedAtMs": {
+      "r32": 1782847712209
+    },
+    "r32": {
+      "1": {
+        "h": 1,
+        "a": 2,
+        "adv": "b"
+      },
+      "2": {
+        "h": 2,
+        "a": 1,
+        "adv": "a"
+      },
+      "3": {
+        "h": 0,
+        "a": 1,
+        "adv": "b"
+      },
+      "4": {
+        "h": 1,
+        "a": 2,
+        "adv": "b"
+      },
+      "5": {
+        "h": 3,
+        "a": 1,
+        "adv": "a"
+      },
+      "6": {
+        "h": 1,
+        "a": 2,
+        "adv": "b"
+      },
+      "7": {
+        "h": 3,
+        "a": 0,
+        "adv": "a"
+      }
+    },
+    "finalists": [
+      "FRA",
+      "GER"
+    ],
+    "champion": "FRA",
+    "locked": {
+      "r32": true
+    },
+    "_manualEntry": true
+  },
+  "neelkanth_vyas": {
+    "submittedAtMs": {
+      "r32": 1782847712209
+    },
+    "r32": {
+      "1": {
+        "h": 2,
+        "a": 0,
+        "adv": "a"
+      },
+      "2": {
+        "h": 2,
+        "a": 1,
+        "adv": "a"
+      },
+      "3": {
+        "h": 2,
+        "a": 0,
+        "adv": "a"
+      },
+      "4": {
+        "h": 0,
+        "a": 5,
+        "adv": "b"
+      },
+      "5": {
+        "h": 4,
+        "a": 3,
+        "adv": "a"
+      },
+      "6": {
+        "h": 2,
+        "a": 0,
+        "adv": "a"
+      },
+      "7": {
+        "h": 3,
+        "a": 2,
+        "adv": "a"
+      }
+    },
+    "finalists": [
+      "POR",
+      "MEX"
+    ],
+    "champion": "POR",
+    "locked": {
+      "r32": true
+    },
+    "_manualEntry": true
   }
 }
