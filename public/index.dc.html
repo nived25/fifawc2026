@@ -425,12 +425,17 @@
                 <span style="flex:1;color:#F5F5F7;font-size:13.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:right">{{ m.aName }}</span>
                 <img loading="lazy" decoding="async" src="{{ m.aFu }}" style="width:20px;height:13px;border-radius:2px;object-fit:cover;display:block;flex:none;box-shadow:0 0 0 1px rgba(255,255,255,.14)"/>
               </div>
-              <div style="display:flex;height:6px;border-radius:3px;overflow:hidden;background:rgba(255,255,255,.07);margin-top:11px">
-                <div style="width:{{ m.aPct }};background:linear-gradient(90deg,#FF2D78,#7A3CFF);transition:width .4s ease"></div>
-                <div style="width:{{ m.bPct }};background:linear-gradient(90deg,#7A3CFF,#1FA2FF);transition:width .4s ease"></div>
+              <div style="display:flex;gap:3px;height:8px;margin-top:11px">
+                <div style="width:{{ m.aPct }};background:linear-gradient(90deg,#0A84FF,#5AC8FA);border-radius:4px;transition:width .4s ease;box-shadow:0 0 9px -1px rgba(10,132,255,.65)"></div>
+                <div style="width:{{ m.bPct }};background:linear-gradient(90deg,#FF9F0A,#FFD60A);border-radius:4px;transition:width .4s ease;box-shadow:0 0 9px -1px rgba(255,159,10,.6)"></div>
               </div>
               <div style="display:flex;align-items:center;justify-content:space-between;margin-top:7px">
-                <span style="color:#8E8E93;font-size:11px;font-weight:500">{{ m.crowdLabel }}</span>
+                <sc-if value="{{ m.hasPicks }}" hint-placeholder-val="{{ true }}">
+                  <span style="font-size:11px;font-weight:600"><span style="color:#5AC8FA">{{ m.aCount }} {{ m.hName }}</span><span style="color:#48484A;font-weight:500"> · </span><span style="color:#FFD60A">{{ m.bCount }} {{ m.aName }}</span></span>
+                </sc-if>
+                <sc-if value="{{ m.noPicks }}" hint-placeholder-val="{{ false }}">
+                  <span style="color:#636366;font-size:11px;font-weight:500">No picks yet</span>
+                </sc-if>
                 <span style="display:flex;align-items:center;gap:5px;color:#636366;font-size:10.5px;font-weight:500">{{ m.predictedOf }}<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#636366" stroke-width="2.5" style="transform:{{ m.chev }};transition:transform .25s ease"><path d="M9 6l6 6-6 6"/></svg></span>
               </div>
             </div>
@@ -1392,7 +1397,7 @@ class Component extends DCLogic {
           aCount,bCount,total,aPct:aPct+'%',bPct:bPct+'%',
           crowdLabel: total?(aCount+' picked '+hn+' · '+bCount+' picked '+an):'No picks yet',
           predictedOf: total+' of '+parts.length+' predicted',
-          hasPicks: total>0,
+          hasPicks: total>0, noPicks: total===0,
           open: openKey===matchKey,
           rows: rows.sort((a,b)=>(b.you-a.you)||((b.pts||0)-(a.pts||0)))
         });
