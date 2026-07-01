@@ -613,6 +613,15 @@
         </sc-if>
 
         <sc-if value="{{ isKoOpen }}" hint-placeholder-val="{{ true }}">
+        <sc-if value="{{ canReopen }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top:16px;padding:13px 15px;border-radius:15px;background:linear-gradient(90deg,rgba(255,45,120,.14),rgba(122,60,255,.14));border:1px solid rgba(255,45,120,.3);display:flex;align-items:center;gap:11px">
+            <span style="font-size:20px">⏳</span>
+            <div style="flex:1;min-width:0">
+              <div style="color:#F5F5F7;font-size:13.5px;font-weight:600">Finish your Round of 32</div>
+              <div style="color:#F7B8CE;font-size:11.5px;font-weight:500;margin-top:1px">Only your remaining matches — editing closes {{ reopenDeadlineStr }} IST. Already-played matches are locked.</div>
+            </div>
+          </div>
+        </sc-if>
         <!-- no bracket matches yet for this round -->
         <sc-if value="{{ koNoMatches }}" hint-placeholder-val="{{ false }}">
           <div style="margin-top:16px;padding:28px 20px;border-radius:18px;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.022));border:1px solid rgba(255,255,255,.09);text-align:center">
@@ -1946,10 +1955,19 @@ class Component extends DCLogic {
     const koRoundName = ROUND_LABELS[activeKey]||'Round of 32';
     const koNextRoundMsg = NEXT_ROUND_MSG[activeKey]||'';
     const activeLockMs = this._apiData?.meta?.koLockTimes?.[activeKey]||this._apiData?.meta?.lockAtMs;
-    const isKoLocked = !!(activeLockMs && Date.now()>=activeLockMs);
+    const baseLocked = !!(activeLockMs && Date.now()>=activeLockMs);
+    // Per-user reopen window: named participants may edit the remaining R32 matches
+    // (idx >= fromIdx) until a deadline. Round stays locked=true server-side, so
+    // scoring/exposure/auto-lock are unaffected — only the editable UI is reopened.
+    const REOPEN = this._apiData?.meta?.r32Reopen;
+    const canReopen = activeKey==='r32' && !!REOPEN && Array.isArray(REOPEN.ids)
+      && REOPEN.ids.includes(this._userParticipantId) && Date.now() < (REOPEN.deadlineMs||0);
+    const reopenFrom = (REOPEN && REOPEN.fromIdx!=null) ? REOPEN.fromIdx : 8;
+    const isKoLocked = baseLocked && !canReopen;
     const isKoOpen = !isKoLocked;
-    // Bonus (finalists + champion) locks when R32 locks or once we move past R32
-    const isBonusLocked = activeKey!=='r32' || isKoLocked;
+    // Bonus (finalists + champion) stays locked whenever the round is base-locked,
+    // even during a reopen window — reopen only re-enables match scorelines.
+    const isBonusLocked = activeKey!=='r32' || baseLocked;
     const isBonusOpen = !isBonusLocked;
     // Locked bonus summary data
     const bonusHasPicks = fin.length>0 || !!s.champ;
@@ -1972,7 +1990,6 @@ class Component extends DCLogic {
       return 'TBD · TBD · TBD';
     });
     const roundPicks = s[activeKey]||{};
-    let koDone=0;
     const allKoCards = koMatchDefs.map(([hn,hf,an,af,hCode,aCode],i)=>{
       const tie=roundPicks[i]||{h:0,a:0,adv:null};
       const has=!!roundPicks[i];
@@ -1980,12 +1997,11 @@ class Component extends DCLogic {
       const winSide=tie.h>tie.a?'a':(tie.a>tie.h?'b':null);
       const advSel=isDraw?tie.adv:winSide;
       const done=has&&(!isDraw||tie.adv);
-      if(done) koDone++;
       const winName=advSel==='a'?hn:(advSel==='b'?an:'');
       const winF=advSel==='a'?hf:(advSel==='b'?af:'');
       const meta=(koKickoffMeta[i]||'').split(' · ');
       return {
-        no:i+1,idx:i,kick:meta.slice(0,2).join(' · '),venue:meta[2]||'',isDraw,notDraw:!isDraw,has,done,
+        no:i+1,idx:i,kickoffMs:koKickoffs[i]?.kickoffMs||0,kick:meta.slice(0,2).join(' · '),venue:meta[2]||'',isDraw,notDraw:!isDraw,has,done,
         h:{n:hn,f:hf,score:tie.h,form:this.codeForm(hCode)},
         b:{n:an,f:af,score:tie.a,form:this.codeForm(aCode)},
         advSel,winName,winFu:this.flagUrl(winF),scoreStr:tie.h+' – '+tie.a,
@@ -1999,14 +2015,17 @@ class Component extends DCLogic {
         advBBg:tie.adv==='b'?'rgba(52,199,89,.16)':'#1A1A1E',advBBd:tie.adv==='b'?'#34C759':'rgba(255,255,255,.06)',advBC:tie.adv==='b'?'#5BE584':'#F5F5F7'
       };
     });
-    const koTotal=allKoCards.length;
-    allKoCards.forEach((t,k)=>{ let nx=-1; for(let d=1;d<=allKoCards.length;d++){ const j=(k+d)%allKoCards.length; if(!allKoCards[j].done){ nx=allKoCards[j].idx; break; } } t._next=nx; });
+    // During a reopen window the working set is only the still-open remaining matches.
+    const workCards = canReopen ? allKoCards.filter(c=>c.idx>=reopenFrom && c.kickoffMs>Date.now()) : allKoCards;
+    let koDone=workCards.filter(c=>c.done).length;
+    const koTotal=workCards.length;
+    workCards.forEach((t,k)=>{ let nx=-1; for(let d=1;d<=workCards.length;d++){ const j=(k+d)%workCards.length; if(!workCards[j].done){ nx=workCards[j].idx; break; } } t._next=nx; });
     const koRemCount=koTotal-koDone;
     const koAllDone=koDone===koTotal&&koTotal>0;
     const koAllDoneMsg='All '+koTotal+' '+koRoundName+' matches predicted — tap any to edit';
     const openIdx=s.koRoundOpen;
     const showAllKo=s.koFilter==='all'||koAllDone;
-    const koCards=this.deepFlags(allKoCards.filter(t=>showAllKo||!t.done||t.idx===openIdx).map(t=>{
+    const koCards=this.deepFlags(workCards.filter(t=>showAllKo||!t.done||t.idx===openIdx).map(t=>{
       const open=t.idx===openIdx;
       let hpText,hpBg,hpC,statusText,statusColor;
       if(t.done){hpText=t.scoreStr;hpBg='rgba(52,199,89,.16)';hpC='#5BE584';
@@ -2056,7 +2075,7 @@ class Component extends DCLogic {
     const r32total=activeKey==='r32'?koTotal:0;
 
     // ---- prediction completeness gates ----
-    const incompleteKo = allKoCards.filter(t=> t.has && t.isDraw && !t.advSel);
+    const incompleteKo = workCards.filter(t=> t.has && t.isDraw && !t.advSel);
     const incompleteR32 = incompleteKo; // alias for backwards compat
     const finPartial = fin.length===1;
     const champMissing = fin.length===2 && !s.champ;
@@ -2255,6 +2274,7 @@ class Component extends DCLogic {
       lockStr, bonusPts:100, finalistPicks, hasFinalists, noFinalists:!hasFinalists, champFinalists, finalCountStr, rounds,
       isBonusLocked, isBonusOpen, bonusHasPicks, bonusNoPicks, bonusFinalistCards, bonusChampCard, bonusHasChamp, bonusNoChamp,
       koCards, koDone, koTotal, koPct, koDoneStr, koRemCount, koAllDone, koAllDoneMsg,
+      canReopen, reopenDeadlineStr: REOPEN?.deadlineMs ? new Date(REOPEN.deadlineMs).toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',hour12:true,timeZone:'Asia/Kolkata'}) : '',
       koLockedSummary, koHasLocked, isKoLocked, isKoOpen, koRoundName, koNextRoundMsg,
       koHasMatches: koMatchDefs.length > 0,
       koNoMatches: koMatchDefs.length === 0,

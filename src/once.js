@@ -1,4 +1,5 @@
 import 'dotenv/config';
+import { readFileSync } from 'fs';
 import { read, write, readOr } from './store.js';
 import { computeScores, getLockTime, getKoLockTimes, determineActiveRound } from './scoring.js';
 import { computeStandings } from './standings.js';
@@ -180,6 +181,12 @@ async function run() {
   const r32LockMs = koLockTimes.r32;
   if (r32LockMs) meta.lockAtMs = r32LockMs;
   if (process.env.APPS_SCRIPT_URL) meta.appsScriptUrl = process.env.APPS_SCRIPT_URL;
+  // Per-user reopen window (tracked in config/reopen.json so it survives Vercel rebuilds,
+  // unlike data/meta.json which is gitignored/regenerated). Frontend enforces the deadline.
+  try {
+    const reopen = JSON.parse(readFileSync(new URL('../config/reopen.json', import.meta.url), 'utf8'));
+    if (reopen?.r32) meta.r32Reopen = reopen.r32; else delete meta.r32Reopen;
+  } catch { delete meta.r32Reopen; }
   write('meta.json', meta);
 
   const leaderboard = computeScores();
