@@ -77,6 +77,8 @@ async function pollFixtures() {
       const group = isGroup ? `Group ${g.group}` : null;
 
       if (homeCode && awayCode) {
+        const penHome = g.home_penalty_score != null && g.home_penalty_score !== '' ? parseInt(g.home_penalty_score) : null;
+        const penAway = g.away_penalty_score != null && g.away_penalty_score !== '' ? parseInt(g.away_penalty_score) : null;
         fixtures.push({
           id: parseInt(g.id),
           apiId: parseInt(g.id),
@@ -87,6 +89,8 @@ async function pollFixtures() {
           home: { code: homeCode, name: homeName, goals: homeGoals },
           away: { code: awayCode, name: awayName, goals: awayGoals },
           finished,
+          penHome,
+          penAway,
           venue,
           scorers: [
             ...parseScorers(g.home_scorers, homeCode),
