@@ -108,7 +108,9 @@ async function pollFixtures() {
           venue,
           finished,
           homeGoals,
-          awayGoals
+          awayGoals,
+          penHome: g.home_penalty_score != null && g.home_penalty_score !== '' ? parseInt(g.home_penalty_score) : null,
+          penAway: g.away_penalty_score != null && g.away_penalty_score !== '' ? parseInt(g.away_penalty_score) : null
         });
       }
     }

@@ -1325,7 +1325,8 @@ class Component extends DCLogic {
     const aG=resultMatch.awayGoals!=null?resultMatch.awayGoals:resultMatch.away?.goals;
     const finished=!!resultMatch.finished&&hG!=null&&aG!=null;
     const predAdv=pick.adv||(pick.h>pick.a?'a':pick.a>pick.h?'b':null);
-    const actualAdv=finished?(hG>aG?'a':aG>hG?'b':null):null;
+    const penH=resultMatch.penHome, penA=resultMatch.penAway;
+    const actualAdv=!finished?null:(hG>aG?'a':aG>hG?'b':(penH!=null&&penA!=null?(penH>penA?'a':'b'):null));
     const winnerCorrect=finished&&!!predAdv&&predAdv===actualAdv;
     const exact=winnerCorrect&&pick.h===hG&&pick.a===aG;
     const points=exact?base*2:winnerCorrect?base:0;

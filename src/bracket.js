@@ -18,6 +18,8 @@ export function updateBracket() {
       kickoffMs: m.kickoffMs,
       status: m.status,
       finished: m.finished,
+      penHome: m.penHome ?? null,
+      penAway: m.penAway ?? null,
       home: {
         code: m.home.code,
         name: teams[m.home.code]?.name || m.home.code || 'TBD',
