@@ -18,6 +18,8 @@ for (const g of groups) {
     GROUP_TITLE: g.title || g.name || '',
     GROUP_SUBTITLE: g.subtitle || '',
     GROUP_PIN: g.loginPin || '',
+    GROUP_REOPEN_MS: g.reopenUntil ? String(Date.parse(g.reopenUntil)) : '',
+    GROUP_REOPEN_FROM: g.reopenFromIdx != null ? String(g.reopenFromIdx) : '',
     DATA_DIR: `data/groups/${g.id}`,
     OUTPUT_SUBDIR: g.id,
     // Group's OWN Apps Script only. Explicit override (even to '') stops LR's URL leaking in

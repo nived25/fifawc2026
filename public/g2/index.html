@@ -1466,6 +1466,7 @@ class Component extends DCLogic {
     const canonName=(this._apiData?.participants||[]).find(p=>p.id===participant.id)?.name||participant.name;
     const idx=this.P.findIndex(([n])=>n===canonName);
     if(idx>=0) this.USER=idx;
+    this.animHero(this.P[this.USER]?.[2]||0);   // re-animate hero to the logged-in user's total
     this.setState({loggedIn:true,loginLoading:false,loginError:''});
     this.showToast('Welcome '+participant.name+'!','ok');
     this.loadStoredPredictions(participant.id);
@@ -2323,7 +2324,7 @@ class Component extends DCLogic {
         this._savePredictionsToLocal();
         const appsScriptUrl=this._apiData?.meta?.appsScriptUrl;
         const participantId=this._userParticipantId;
-        const payload={action:'save',participantId,pin:'5555',round:activeKey,
+        const payload={action:'save',participantId,pin:(this._apiData?.meta?.loginPin||'5555'),round:activeKey,
           picks:s[activeKey]||{},finalists:fin,champion:s.champ};
         if(appsScriptUrl && participantId){
           try{

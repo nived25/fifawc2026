@@ -49,8 +49,15 @@ function buildGroupMeta() {
   meta.activeRound = sharedMeta.activeRound;
   meta.koLockTimes = sharedMeta.koLockTimes || {};
   if (sharedMeta.lockAtMs) meta.lockAtMs = sharedMeta.lockAtMs;
-  // r32Reopen is an LR-only late-entrant window keyed by LR participant ids — never applies to groups.
-  delete meta.r32Reopen;
+  // Group reopen window: let ALL members edit the still-unplayed R32 matches (idx >= fromIdx)
+  // until the deadline. Played matches stay locked/scored. (LR's shared r32Reopen never applies.)
+  const reopenMs = Number(process.env.GROUP_REOPEN_MS || 0);
+  if (reopenMs && Date.now() < reopenMs) {
+    const ids = readOr('participants.json', []).map(p => p.id);
+    meta.r32Reopen = { ids, fromIdx: Number(process.env.GROUP_REOPEN_FROM || 8), deadlineMs: reopenMs };
+  } else {
+    delete meta.r32Reopen;
+  }
   meta.lastUpdated = Date.now();
   if (process.env.APPS_SCRIPT_URL) meta.appsScriptUrl = process.env.APPS_SCRIPT_URL;
   else delete meta.appsScriptUrl;
