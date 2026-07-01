@@ -1361,7 +1361,9 @@ class Component extends DCLogic {
         const res=results[i]||{};
         const kickoffMs=res.kickoffMs||0;
         const dayS=kickoffMs?new Date(kickoffMs).toLocaleDateString('en-CA',{timeZone:'Asia/Kolkata'}):todayS;
-        const bucket=dayS===yest?'yesterday':(dayS===todayS?'today':'upcoming');
+        // Any day up to and including yesterday buckets as "yesterday" so already-played
+        // matches never leak into Upcoming (lexicographic compare works for YYYY-MM-DD).
+        const bucket=dayS===todayS?'today':(dayS<=yest?'yesterday':'upcoming');
         const dt=kickoffMs?new Date(kickoffMs):null;
         const kickStr=dt?dt.toLocaleDateString('en-US',{day:'numeric',month:'short',timeZone:'Asia/Kolkata'})+' · '+dt.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',hour12:false,timeZone:'Asia/Kolkata'}):'TBD';
         const finished=res.finished&&(res.homeGoals??res.home?.goals)!=null;
