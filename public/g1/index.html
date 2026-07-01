@@ -1836,18 +1836,22 @@ class Component extends DCLogic {
     const colH=900, colW=120;
     const T=(n,f)=>({n,f}); const tbd=()=>T('TBD','');
     const BRACKET_ORDER=[74,77,73,75,83,84,81,82,76,78,79,80,86,88,85,87];
+    const B=this._apiData?.bracket||{};
+    const teamT=code=>{ if(!code) return tbd(); const t=this.teams[code]||{}; return T(t.n||code, t.f||this._CODE_EMOJI[code]||''); };
     const raw32=this.R32LIST();
     const byId={};
     raw32.forEach(m=>{byId[m[6]]=m});
     const ordered=BRACKET_ORDER.map(id=>byId[id]).filter(Boolean);
     const r32=(ordered.length===16?ordered:raw32).map(([hn,hf,an,af])=>[T(hn,hf),T(an,af)]);
-    const mkTBD=n=>Array.from({length:n},()=>[tbd(),tbd()]);
+    // R16 → Final: show the ACTUAL resolved matches from the live bracket (API advances winners
+    // as each match finishes); pad with TBD for slots not yet decided.
+    const roundPairs=(rname,cnt)=>{ const ms=B[rname]||[]; return Array.from({length:cnt},(_,i)=>{ const m=ms[i]; return m?[teamT(m.home&&m.home.code),teamT(m.away&&m.away.code)]:[tbd(),tbd()]; }); };
     const raw=[
       {title:'Round of 32',pairs:r32},
-      {title:'Round of 16',pairs:mkTBD(8)},
-      {title:'Quarter-finals',pairs:mkTBD(4)},
-      {title:'Semi-finals',pairs:mkTBD(2)},
-      {title:'Final',pairs:mkTBD(1)}
+      {title:'Round of 16',pairs:roundPairs('Round of 16',8)},
+      {title:'Quarter-finals',pairs:roundPairs('Quarter-finals',4)},
+      {title:'Semi-finals',pairs:roundPairs('Semi-finals',2)},
+      {title:'Final',pairs:roundPairs('Final',1)}
     ];
     const out={ colH, colW,
       rounds: raw.map((r,ri)=>{
