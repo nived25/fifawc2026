@@ -10,7 +10,8 @@
     "build": "node src/buildAppData.js",
     "once": "node src/once.js",
     "scheduler": "node src/scheduler.js",
-    "sync-predictions": "node src/sync-predictions.js"
+    "sync-predictions": "node src/sync-predictions.js",
+    "refresh:groups": "node src/refresh-groups.js"
   },
   "dependencies": {
     "dotenv": "^16.4.5",

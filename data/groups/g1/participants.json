@@ -1,0 +1,79 @@
+[
+  {
+    "id": "sunny55",
+    "name": "Sunny",
+    "picks": [
+      "ARG",
+      "FRA",
+      "GER",
+      "BRA"
+    ],
+    "email": "sunny55@gmail.com"
+  },
+  {
+    "id": "unairgmail",
+    "name": "Unairgmail",
+    "picks": [
+      "ESP",
+      "GER",
+      "ENG",
+      "FRA"
+    ],
+    "email": "unairgmail@gmail.com"
+  },
+  {
+    "id": "sreek_iyer",
+    "name": "Sreek Iyer",
+    "picks": [
+      "ESP",
+      "ARG",
+      "POR",
+      "FRA"
+    ],
+    "email": "sreek.iyer@gmail.com"
+  },
+  {
+    "id": "mathgean",
+    "name": "Mathgean",
+    "picks": [
+      "ESP",
+      "ARG",
+      "FRA",
+      "ENG"
+    ],
+    "email": "mathgean@gmail.com"
+  },
+  {
+    "id": "ranjitn15",
+    "name": "Ranjitn",
+    "picks": [
+      "ESP",
+      "ARG",
+      "POR",
+      "BEL"
+    ],
+    "email": "ranjitn15@gmail.com"
+  },
+  {
+    "id": "shanu_chamathundil",
+    "name": "Shanu Chamathundil",
+    "picks": [
+      "BRA",
+      "ARG",
+      "POR",
+      "FRA"
+    ],
+    "email": "shanu.chamathundil@gmail.com"
+  },
+  {
+    "id": "rejathnair",
+    "name": "Rejathnair",
+    "picks": [
+      "ESP",
+      "FRA",
+      "POR",
+      "BRA"
+    ],
+    "email": "rejathnair@gmail.com"
+  }
+]

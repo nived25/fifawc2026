@@ -1,0 +1,552 @@
+{
+  "sanjarj": {
+    "submittedAtMs": {
+      "r32": 1782712261923
+    },
+    "r32": {
+      "0": {
+        "h": 0,
+        "a": 1,
+        "adv": null
+      },
+      "1": {
+        "h": 2,
+        "a": 1,
+        "adv": null
+      },
+      "2": {
+        "h": 2,
+        "a": 0,
+        "adv": null
+      },
+      "3": {
+        "h": 1,
+        "a": 1,
+        "adv": "a"
+      },
+      "4": {
+        "h": 1,
+        "a": 1,
+        "adv": "a"
+      },
+      "5": {
+        "h": 2,
+        "a": 0,
+        "adv": null
+      },
+      "6": {
+        "h": 1,
+        "a": 0,
+        "adv": null
+      },
+      "7": {
+        "h": 2,
+        "a": 1,
+        "adv": null
+      }
+    },
+    "finalists": [
+      "FRA",
+      "ARG"
+    ],
+    "champion": "FRA",
+    "locked": {
+      "r32": true
+    }
+  },
+  "ranjitn15": {
+    "submittedAtMs": {
+      "r32": 1782667943992
+    },
+    "r32": {
+      "0": {
+        "h": 0,
+        "a": 1,
+        "adv": null
+      },
+      "1": {
+        "h": 2,
+        "a": 0,
+        "adv": null
+      },
+      "2": {
+        "h": 3,
+        "a": 0,
+        "adv": null
+      },
+      "3": {
+        "h": 2,
+        "a": 1,
+        "adv": null
+      },
+      "4": {
+        "h": 0,
+        "a": 1,
+        "adv": null
+      },
+      "5": {
+        "h": 3,
+        "a": 1,
+        "adv": null
+      },
+      "6": {
+        "h": 2,
+        "a": 0,
+        "adv": null
+      },
+      "7": {
+        "h": 3,
+        "a": 1,
+        "adv": null
+      }
+    },
+    "finalists": [
+      "ARG",
+      "FRA"
+    ],
+    "champion": "ARG",
+    "locked": {
+      "r32": true
+    }
+  },
+  "kumarsudhish5": {
+    "submittedAtMs": {
+      "r32": 1782698518068
+    },
+    "r32": {
+      "0": {
+        "h": 0,
+        "a": 1,
+        "adv": null
+      },
+      "1": {
+        "h": 2,
+        "a": 1,
+        "adv": null
+      },
+      "2": {
+        "h": 3,
+        "a": 1,
+        "adv": null
+      },
+      "3": {
+        "h": 2,
+        "a": 2,
+        "adv": "a"
+      },
+      "4": {
+        "h": 1,
+        "a": 2,
+        "adv": null
+      },
+      "5": {
+        "h": 4,
+        "a": 2,
+        "adv": null
+      },
+      "6": {
+        "h": 2,
+        "a": 1,
+        "adv": null
+      },
+      "7": {
+        "h": 3,
+        "a": 1,
+        "adv": null
+      }
+    },
+    "finalists": [
+      "FRA",
+      "ARG"
+    ],
+    "champion": "FRA",
+    "locked": {
+      "r32": true
+    }
+  },
+  "priya1074": {
+    "submittedAtMs": {
+      "r32": 1782668021187
+    },
+    "r32": {
+      "0": {
+        "h": 0,
+        "a": 1,
+        "adv": null
+      },
+      "1": {
+        "h": 3,
+        "a": 2,
+        "adv": null
+      },
+      "2": {
+        "h": 1,
+        "a": 2,
+        "adv": null
+      },
+      "3": {
+        "h": 2,
+        "a": 1,
+        "adv": null
+      },
+      "4": {
+        "h": 0,
+        "a": 1,
+        "adv": null
+      },
+      "5": {
+        "h": 3,
+        "a": 1,
+        "adv": null
+      },
+      "6": {
+        "h": 2,
+        "a": 3,
+        "adv": null
+      },
+      "7": {
+        "h": 1,
+        "a": 2,
+        "adv": null
+      }
+    },
+    "finalists": [
+      "FRA",
+      "COD"
+    ],
+    "champion": "FRA",
+    "locked": {
+      "r32": true
+    }
+  },
+  "sreehari_nair": {
+    "submittedAtMs": {
+      "r32": 1782669025965
+    },
+    "r32": {
+      "0": {
+        "h": 2,
+        "a": 1,
+        "adv": null
+      },
+      "1": {
+        "h": 1,
+        "a": 1,
+        "adv": "a"
+      },
+      "2": {
+        "h": 2,
+        "a": 0,
+        "adv": null
+      },
+      "3": {
+        "h": 1,
+        "a": 0,
+        "adv": null
+      },
+      "4": {
+        "h": 0,
+        "a": 2,
+        "adv": null
+      },
+      "5": {
+        "h": 2,
+        "a": 1,
+        "adv": null
+      },
+      "6": {
+        "h": 1,
+        "a": 0,
+        "adv": null
+      },
+      "7": {
+        "h": 2,
+        "a": 0,
+        "adv": null
+      }
+    },
+    "finalists": [
+      "FRA",
+      "ARG"
+    ],
+    "champion": "FRA",
+    "locked": {
+      "r32": true
+    }
+  },
+  "nambiarnvg": {
+    "submittedAtMs": {
+      "r32": 1782668397683
+    },
+    "r32": {
+      "0": {
+        "h": 0,
+        "a": 1,
+        "adv": null
+      },
+      "1": {
+        "h": 2,
+        "a": 1,
+        "adv": null
+      },
+      "2": {
+        "h": 2,
+        "a": 0,
+        "adv": null
+      },
+      "3": {
+        "h": 2,
+        "a": 1,
+        "adv": null
+      },
+      "4": {
+        "h": 0,
+        "a": 2,
+        "adv": null
+      },
+      "5": {
+        "h": 3,
+        "a": 1,
+        "adv": null
+      },
+      "6": {
+        "h": 2,
+        "a": 0,
+        "adv": null
+      },
+      "7": {
+        "h": 3,
+        "a": 1,
+        "adv": null
+      }
+    },
+    "finalists": [
+      "FRA",
+      "ARG"
+    ],
+    "champion": "FRA",
+    "locked": {
+      "r32": true
+    }
+  },
+  "rohitsnair2002": {
+    "submittedAtMs": {
+      "r32": 1782668034686
+    },
+    "r32": {
+      "0": {
+        "h": 1,
+        "a": 2,
+        "adv": null
+      },
+      "1": {
+        "h": 2,
+        "a": 0,
+        "adv": null
+      },
+      "2": {
+        "h": 3,
+        "a": 1,
+        "adv": null
+      },
+      "3": {
+        "h": 2,
+        "a": 3,
+        "adv": null
+      },
+      "4": {
+        "h": 2,
+        "a": 1,
+        "adv": null
+      },
+      "5": {
+        "h": 4,
+        "a": 0,
+        "adv": null
+      },
+      "6": {
+        "h": 2,
+        "a": 0,
+        "adv": null
+      },
+      "7": {
+        "h": 3,
+        "a": 1,
+        "adv": null
+      }
+    },
+    "finalists": [
+      "FRA",
+      "ARG"
+    ],
+    "champion": "ARG",
+    "locked": {
+      "r32": true
+    }
+  },
+  "arjsanj214": {
+    "submittedAtMs": {
+      "r32": 1782669005241
+    },
+    "r32": {
+      "0": {
+        "h": 2,
+        "a": 1,
+        "adv": null
+      },
+      "1": {
+        "h": 2,
+        "a": 1,
+        "adv": null
+      },
+      "2": {
+        "h": 3,
+        "a": 1,
+        "adv": null
+      },
+      "3": {
+        "h": 2,
+        "a": 1,
+        "adv": null
+      },
+      "4": {
+        "h": 1,
+        "a": 3,
+        "adv": null
+      },
+      "5": {
+        "h": 3,
+        "a": 1,
+        "adv": null
+      },
+      "6": {
+        "h": 2,
+        "a": 1,
+        "adv": null
+      },
+      "7": {
+        "h": 3,
+        "a": 1,
+        "adv": null
+      }
+    },
+    "finalists": [
+      "FRA",
+      "ARG"
+    ],
+    "champion": "FRA",
+    "locked": {
+      "r32": true
+    }
+  },
+  "advaith_sreehari": {
+    "submittedAtMs": {
+      "r32": 1782669064420
+    },
+    "r32": {
+      "0": {
+        "h": 0,
+        "a": 3,
+        "adv": null
+      },
+      "1": {
+        "h": 1,
+        "a": 2,
+        "adv": null
+      },
+      "2": {
+        "h": 4,
+        "a": 0,
+        "adv": null
+      },
+      "3": {
+        "h": 3,
+        "a": 1,
+        "adv": null
+      },
+      "4": {
+        "h": 1,
+        "a": 2,
+        "adv": null
+      },
+      "5": {
+        "h": 3,
+        "a": 1,
+        "adv": null
+      },
+      "6": {
+        "h": 2,
+        "a": 0,
+        "adv": null
+      },
+      "7": {
+        "h": 2,
+        "a": 1,
+        "adv": null
+      }
+    },
+    "finalists": [
+      "FRA",
+      "ENG"
+    ],
+    "champion": "FRA",
+    "locked": {
+      "r32": true
+    }
+  },
+  "kiransas": {
+    "submittedAtMs": {
+      "r32": 1782668772705
+    },
+    "r32": {
+      "0": {
+        "h": 1,
+        "a": 2,
+        "adv": null
+      },
+      "1": {
+        "h": 3,
+        "a": 1,
+        "adv": null
+      },
+      "2": {
+        "h": 2,
+        "a": 0,
+        "adv": null
+      },
+      "3": {
+        "h": 2,
+        "a": 1,
+        "adv": null
+      },
+      "4": {
+        "h": 1,
+        "a": 2,
+        "adv": null
+      },
+      "5": {
+        "h": 3,
+        "a": 1,
+        "adv": null
+      },
+      "6": {
+        "h": 2,
+        "a": 1,
+        "adv": null
+      },
+      "7": {
+        "h": 3,
+        "a": 0,
+        "adv": null
+      }
+    },
+    "finalists": [
+      "FRA",
+      "ARG"
+    ],
+    "champion": "FRA",
+    "locked": {
+      "r32": true
+    }
+  }
+}

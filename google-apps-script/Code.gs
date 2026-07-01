@@ -61,13 +61,17 @@ function findParticipantByEmail(email) {
     const nameCol = headers.findIndex(h =>
       h === 'name' || h === 'player' || h === 'participant' || h.includes('name')
     );
+    const idCol = headers.findIndex(h => h === 'id');
     if (emailCol < 0) continue;
 
     for (let i = 1; i < data.length; i++) {
       const rowEmail = String(data[i][emailCol]).toLowerCase().trim();
       if (rowEmail === target) {
         const rawName = nameCol >= 0 ? String(data[i][nameCol]) : email;
-        const id = rawName.toLowerCase()
+        // Prefer an explicit `id` column (group sheets) so renaming a player never
+        // changes their id; fall back to name-slug for sheets without one (LR).
+        const explicitId = idCol >= 0 ? String(data[i][idCol]).trim() : '';
+        const id = explicitId || rawName.toLowerCase()
           .replace(/[^a-z0-9]/g, '_')
           .replace(/_+/g, '_')
           .replace(/^_|_$/, '');

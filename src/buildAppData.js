@@ -2,7 +2,10 @@ import { read, readOr } from './store.js';
 import { writeFileSync, mkdirSync, existsSync } from 'fs';
 import { join, dirname } from 'path';
 
-const PUBLIC_DIR = join(dirname(new URL(import.meta.url).pathname), '..', 'public');
+// OUTPUT_SUBDIR scopes the output to a per-group folder (e.g. 'g2' -> public/g2/app-data.json).
+// Empty (default) writes public/app-data.json — the LR root behaviour, unchanged.
+const OUT_SUBDIR = process.env.OUTPUT_SUBDIR || '';
+const PUBLIC_DIR = join(dirname(new URL(import.meta.url).pathname), '..', 'public', OUT_SUBDIR);
 
 export function buildAppData() {
   if (!existsSync(PUBLIC_DIR)) mkdirSync(PUBLIC_DIR, { recursive: true });

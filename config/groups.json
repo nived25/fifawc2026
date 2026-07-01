@@ -1,0 +1,4 @@
+[
+  { "id": "g1", "name": "Group 1", "title": "Group 1", "subtitle": "World Cup League", "appsScriptUrlEnv": "APPS_SCRIPT_URL_G1" },
+  { "id": "g2", "name": "Group 2", "title": "Group 2", "subtitle": "World Cup League", "appsScriptUrlEnv": "APPS_SCRIPT_URL_G2" }
+]

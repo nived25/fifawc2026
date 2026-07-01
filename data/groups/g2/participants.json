@@ -1,0 +1,112 @@
+[
+  {
+    "id": "sanjarj",
+    "name": "Sanjarj",
+    "picks": [
+      "ENG",
+      "BRA",
+      "NED",
+      "POR"
+    ],
+    "email": "sanjarj@gmail.com"
+  },
+  {
+    "id": "ranjitn15",
+    "name": "Ranjitn",
+    "picks": [
+      "ESP",
+      "ARG",
+      "BEL",
+      "POR"
+    ],
+    "email": "ranjitn15@gmail.com"
+  },
+  {
+    "id": "kumarsudhish5",
+    "name": "Kumarsudhish",
+    "picks": [
+      "FRA",
+      "ESP",
+      "ARG",
+      "BRA"
+    ],
+    "email": "kumarsudhish5@gmail.com"
+  },
+  {
+    "id": "priya1074",
+    "name": "Priya",
+    "picks": [
+      "FRA",
+      "ARG",
+      "ESP",
+      "CRO"
+    ],
+    "email": "priya1074@gmail.com"
+  },
+  {
+    "id": "sreehari_nair",
+    "name": "Sreehari Nair",
+    "picks": [
+      "ESP",
+      "FRA",
+      "ARG",
+      "ENG"
+    ],
+    "email": "sreehari.nair@gmail.com"
+  },
+  {
+    "id": "nambiarnvg",
+    "name": "Nambiarnvg",
+    "picks": [
+      "POR",
+      "FRA",
+      "ENG",
+      "ESP"
+    ],
+    "email": "nambiarnvg@gmail.com"
+  },
+  {
+    "id": "rohitsnair2002",
+    "name": "Rohitsnair",
+    "picks": [
+      "ENG",
+      "FRA",
+      "ESP",
+      "ARG"
+    ],
+    "email": "rohitsnair2002@gmail.com"
+  },
+  {
+    "id": "arjsanj214",
+    "name": "Arjsanj",
+    "picks": [
+      "ESP",
+      "ARG",
+      "FRA",
+      "POR"
+    ],
+    "email": "arjsanj214@gmail.com"
+  },
+  {
+    "id": "advaith_sreehari",
+    "name": "Advaith Sreehari",
+    "picks": [
+      "FRA",
+      "GER",
+      "ESP",
+      "ARG"
+    ],
+    "email": "advaith.sreehari@gmail.com"
+  },
+  {
+    "id": "kiransas",
+    "name": "Kiransas",
+    "picks": [
+      "ESP",
+      "FRA",
+      "ARG",
+      "GER"
+    ],
+    "email": "kiransas@gmail.com"
+  }
+]
