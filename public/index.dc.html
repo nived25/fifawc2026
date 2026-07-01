@@ -390,7 +390,7 @@
           <div onClick="{{ openProfile }}" style-active="transform:scale(.9)" style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#FF2D78,#7A3CFF);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:14px;cursor:pointer">{{ userInitials }}</div>
         </div>
         <div style="display:flex;gap:6px;padding:2px 16px 12px">
-          <div onClick="{{ pickDateY }}" style-active="transform:scale(.94)" style="flex:1;text-align:center;padding:8px 0;border-radius:11px;font-size:13px;font-weight:600;cursor:pointer;background:{{ pickDateYBg }};color:{{ pickDateYC }}">Yesterday</div>
+          <div onClick="{{ pickDateP }}" style-active="transform:scale(.94)" style="flex:1;text-align:center;padding:8px 0;border-radius:11px;font-size:13px;font-weight:600;cursor:pointer;background:{{ pickDatePBg }};color:{{ pickDatePC }}">Past</div>
           <div onClick="{{ pickDateT }}" style-active="transform:scale(.94)" style="flex:1;text-align:center;padding:8px 0;border-radius:11px;font-size:13px;font-weight:600;cursor:pointer;background:{{ pickDateTBg }};color:{{ pickDateTC }}">Today</div>
           <div onClick="{{ pickDateU }}" style-active="transform:scale(.94)" style="flex:1;text-align:center;padding:8px 0;border-radius:11px;font-size:13px;font-weight:600;cursor:pointer;background:{{ pickDateUBg }};color:{{ pickDateUC }}">Upcoming</div>
         </div>
@@ -405,11 +405,17 @@
       </sc-if>
 
       <sc-if value="{{ noPicksMatches }}" hint-placeholder-val="{{ false }}">
-        <div style="margin:16px;padding:24px 20px;border-radius:18px;background:rgba(255,255,255,.03);text-align:center;color:#636366;font-size:12.5px;font-weight:500">No locked matches in this window</div>
+        <div style="margin:16px;padding:24px 20px;border-radius:18px;background:rgba(255,255,255,.03);text-align:center;color:#636366;font-size:12.5px;font-weight:500">{{ noPicksMsg }}</div>
       </sc-if>
 
       <div style="padding:6px 16px 0">
-        <sc-for list="{{ picksMatches }}" as="m" hint-placeholder-count="4">
+        <sc-for list="{{ picksGroups }}" as="g" hint-placeholder-count="2">
+        <div style="display:flex;align-items:center;gap:8px;margin:16px 4px 2px">
+          <span style="color:#8E8E93;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">{{ g.round }}</span>
+          <span style="flex:1;height:1px;background:rgba(255,255,255,.07)"></span>
+          <span style="color:#48484A;font-size:10.5px;font-weight:600;font-variant-numeric:tabular-nums">{{ g.count }} matches</span>
+        </div>
+        <sc-for list="{{ g.items }}" as="m" hint-placeholder-count="4">
           <div style="background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.022));backdrop-filter:blur(16px) saturate(1.25);-webkit-backdrop-filter:blur(16px) saturate(1.25);border:1px solid rgba(255,255,255,.09);box-shadow:inset 0 1px 0 0 rgba(255,255,255,.08),0 14px 32px -12px rgba(0,0,0,.62);border-radius:18px;margin-top:9px;overflow:hidden">
             <div onClick="{{ m.toggle }}" style-active="background:rgba(255,255,255,.04)" style="padding:13px 14px;cursor:pointer;transition:background .2s">
               <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
@@ -458,6 +464,7 @@
               </div>
             </sc-if>
           </div>
+        </sc-for>
         </sc-for>
       </div>
     </div>
@@ -1281,7 +1288,7 @@ class Component extends DCLogic {
       expandedPick:{}, rulesOpen:false,
       lockMs:(2*86400+14*3600+9*60)*1000,
       toast:null,
-      pickDate:'today', pickOpen:'', picksUser:null
+      pickDate:'past', pickOpen:'', picksUser:null
     };
     this.scrollTop=()=>{ if(this.mainScroll) this.mainScroll.scrollTop=0; };
   }
@@ -1348,7 +1355,6 @@ class Component extends DCLogic {
     const parts=this._apiData?.participants||[];
     const uid=this._userParticipantId;
     const now=new Date(), todayS=now.toLocaleDateString('en-CA',{timeZone:'Asia/Kolkata'});
-    const yest=new Date(now-86400000).toLocaleDateString('en-CA',{timeZone:'Asia/Kolkata'});
     const out=[];
     for(const [rk,rlabel] of KO_ROUNDS){
       const anyLocked=parts.some(p=>{
@@ -1361,13 +1367,13 @@ class Component extends DCLogic {
         const res=results[i]||{};
         const kickoffMs=res.kickoffMs||0;
         const dayS=kickoffMs?new Date(kickoffMs).toLocaleDateString('en-CA',{timeZone:'Asia/Kolkata'}):todayS;
-        // Any day up to and including yesterday buckets as "yesterday" so already-played
-        // matches never leak into Upcoming (lexicographic compare works for YYYY-MM-DD).
-        const bucket=dayS===todayS?'today':(dayS<=yest?'yesterday':'upcoming');
         const dt=kickoffMs?new Date(kickoffMs):null;
         const kickStr=dt?dt.toLocaleDateString('en-US',{day:'numeric',month:'short',timeZone:'Asia/Kolkata'})+' · '+dt.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',hour12:false,timeZone:'Asia/Kolkata'}):'TBD';
         const finished=res.finished&&(res.homeGoals??res.home?.goals)!=null;
         const hG=res.homeGoals??res.home?.goals, aG=res.awayGoals??res.away?.goals;
+        // Bucket by status: finished → past (history); in-progress/started-today → today; else upcoming.
+        const started=kickoffMs&&kickoffMs<=Date.now();
+        const bucket=finished?'past':((started||dayS===todayS)?'today':'upcoming');
         let aCount=0,bCount=0;
         const rows=[];
         for(const p of parts){
@@ -1392,7 +1398,7 @@ class Component extends DCLogic {
         const aPct=total?Math.round(aCount/total*100):50, bPct=100-aPct;
         const matchKey=rk+'-'+i;
         out.push({
-          key:matchKey, round:rlabel, bucket, kickStr,
+          key:matchKey, round:rlabel, roundKey:rk, bucket, kickStr, kickoffMs,
           hFu:this.flagUrl(hf), hName:hn, aFu:this.flagUrl(af), aName:an,
           finished, hs:finished?hG:null, as:finished?aG:null,
           statusLabel:finished?'FT':(dt&&dt.getTime()<Date.now()?'Live':'Upcoming'),
@@ -2221,17 +2227,25 @@ class Component extends DCLogic {
       ...(()=>{
         const allPicks=this.picksMatchesData(s.pickOpen);
         const bucketed=allPicks.filter(m=>m.bucket===s.pickDate);
-        const picksMatches=this.deepFlags(bucketed.map(m=>({
-          ...m,
-          toggle:()=>this.setState({pickOpen:s.pickOpen===m.key?'':m.key}),
-          chev:m.open?'rotate(90deg)':'rotate(0deg)'
-        })));
+        const ORDER=['r32','r16','qf','sf','final'];
+        const byRound={};
+        for(const m of bucketed){ (byRound[m.roundKey]=byRound[m.roundKey]||[]).push(m); }
+        let keys=Object.keys(byRound).sort((a,b)=>ORDER.indexOf(a)-ORDER.indexOf(b));
+        if(s.pickDate==='past') keys.reverse();
+        const picksGroups=this.deepFlags(keys.map(rk=>{
+          const items=byRound[rk].slice().sort((a,b)=> s.pickDate==='past' ? (b.kickoffMs-a.kickoffMs) : (a.kickoffMs-b.kickoffMs));
+          return { round:items[0].round, count:items.length,
+            items:items.map(m=>({ ...m,
+              toggle:()=>this.setState({pickOpen:s.pickOpen===m.key?'':m.key}),
+              chev:m.open?'rotate(90deg)':'rotate(0deg)' })) };
+        }));
         return {
-          pickDateY:()=>this.setState({pickDate:'yesterday'}), pickDateT:()=>this.setState({pickDate:'today'}), pickDateU:()=>this.setState({pickDate:'upcoming'}),
-          pickDateYBg:pill(s.pickDate==='yesterday'), pickDateYC:pillT(s.pickDate==='yesterday'),
+          pickDateP:()=>this.setState({pickDate:'past'}), pickDateT:()=>this.setState({pickDate:'today'}), pickDateU:()=>this.setState({pickDate:'upcoming'}),
+          pickDatePBg:pill(s.pickDate==='past'), pickDatePC:pillT(s.pickDate==='past'),
           pickDateTBg:pill(s.pickDate==='today'), pickDateTC:pillT(s.pickDate==='today'),
           pickDateUBg:pill(s.pickDate==='upcoming'), pickDateUC:pillT(s.pickDate==='upcoming'),
-          picksMatches, hasPicksMatches:picksMatches.length>0, noPicksMatches:picksMatches.length===0,
+          picksGroups, hasPicksMatches:picksGroups.length>0, noPicksMatches:picksGroups.length===0,
+          noPicksMsg:s.pickDate==='past'?'No completed matches yet':(s.pickDate==='today'?'No matches today':'No upcoming matches'),
           picksEmptyAtAll:allPicks.length===0
         };
       })(),
