@@ -19,10 +19,13 @@ export async function syncPredictions() {
 
     const merged = {};
     for (const [pid, pred] of Object.entries(data.predictions || {})) {
+      const prev = existing[pid] || {};
       merged[pid] = {
-        ...pred,
+        ...prev,   // keep locally-seeded rounds (e.g. groups' imported R32) absent from the sheet
+        ...pred,   // sheet values win for the rounds it does contain
+        submittedAtMs: { ...(prev.submittedAtMs || {}), ...(pred.submittedAtMs || {}) },
         // Preserve server-side locked flags; auto-lock runs in once.js
-        locked: existing[pid]?.locked || {}
+        locked: prev.locked || {}
       };
     }
 

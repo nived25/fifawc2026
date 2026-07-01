@@ -1432,6 +1432,16 @@ class Component extends DCLogic {
     if(!email){ this.setState({loginError:'Enter your email address'}); return; }
     if(!pin){ this.setState({loginError:'Enter your PIN'}); return; }
     this.setState({loginLoading:true,loginError:''});
+    // Per-group login: validate client-side against the roster + the group's own PIN
+    // (meta.loginPin). Decoupled from the Apps Script so login never depends on the sheet.
+    const loginPin=this._apiData?.meta?.loginPin;
+    if(loginPin){
+      const em=email.toLowerCase().trim();
+      const part=this._apiData?.participants?.find(p=>p.email?.toLowerCase()===em);
+      if(part && String(pin)===String(loginPin)){ this.setLoggedIn(part); }
+      else{ this.setState({loginLoading:false,loginError:'Email not found or wrong PIN'}); }
+      return;
+    }
     const appsScriptUrl=this._apiData?.meta?.appsScriptUrl;
     if(appsScriptUrl){
       try{
@@ -2117,8 +2127,8 @@ class Component extends DCLogic {
       return { rank:i+1, fu: teamData[t.code]?.flag||'', name:t.name, goals:t.gf, bar:Math.round(t.gf/maxTeamGoals*100)+'%', medalBg:m.bg, medalC:m.c };
     });
     const assists = [];
-    const userP=lb[this.USER];
-    const userPicks=this.deepFlags(userP.picksX.map(pk=>({flag:pk.flag,pts:pk.pts})));
+    const userP=lb[this.USER]||lb[0]||{picksX:[]};
+    const userPicks=this.deepFlags((userP.picksX||[]).map(pk=>({flag:pk.flag,pts:pk.pts})));
     const userId=this._userParticipantId;
     const rawLog=(this._apiData?._scoringLog?.[userId]||[]);
     // Classify backend ledger: bonus (matchId null), group ("X win/draw/loss"), ko (advances/exact).

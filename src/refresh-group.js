@@ -49,10 +49,13 @@ function buildGroupMeta() {
   meta.activeRound = sharedMeta.activeRound;
   meta.koLockTimes = sharedMeta.koLockTimes || {};
   if (sharedMeta.lockAtMs) meta.lockAtMs = sharedMeta.lockAtMs;
-  if (sharedMeta.r32Reopen) meta.r32Reopen = sharedMeta.r32Reopen; else delete meta.r32Reopen;
+  // r32Reopen is an LR-only late-entrant window keyed by LR participant ids — never applies to groups.
+  delete meta.r32Reopen;
   meta.lastUpdated = Date.now();
   if (process.env.APPS_SCRIPT_URL) meta.appsScriptUrl = process.env.APPS_SCRIPT_URL;
   else delete meta.appsScriptUrl;
+  if (process.env.GROUP_PIN) meta.loginPin = process.env.GROUP_PIN;
+  else delete meta.loginPin;
   write('meta.json', meta);
   return meta;
 }
