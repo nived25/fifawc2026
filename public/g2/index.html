@@ -1986,23 +1986,48 @@ class Component extends DCLogic {
   bracketData(){
     const colH=900, colW=120;
     const T=(n,f)=>({n,f}); const tbd=()=>T('TBD','');
-    const BRACKET_ORDER=[74,77,73,75,83,84,81,82,76,78,79,80,86,88,85,87];
     const B=this._apiData?.bracket||{};
     const teamT=code=>{ if(!code) return tbd(); const t=this.teams[code]||{}; return T(t.n||code, t.f||this._CODE_EMOJI[code]||''); };
+    // ---- Build the real feeder tree so every column continues the previous one. ----
+    // A team's presence identifies its feeder match (each team plays exactly one match per
+    // round), so once a match resolves we KNOW its feeders. The schedule's "Winner Match N"
+    // labels are only a fallback for still-unresolved slots (the API has mislabelled some).
+    const norm=rn=>(B[rn]||[]).map(m=>({id:m.id,h:m.home&&m.home.code,a:m.away&&m.away.code}));
+    const r32raw=(this._apiData?._r32tbd||[]).map(m=>({id:m.apiId,h:m.home&&m.home.code,a:m.away&&m.away.code}));
+    const LBL={89:[74,77],90:[73,75],91:[76,78],92:[79,80],93:[83,84],94:[81,82],95:[86,88],96:[85,87],
+               97:[89,90],98:[93,94],99:[91,92],100:[95,96],101:[97,98],102:[99,100],104:[101,102]};
+    const feederPair=(m,prev)=>{
+      const byCode={}; prev.forEach(p=>{ if(p.h) byCode[p.h]=p.id; if(p.a) byCode[p.a]=p.id; });
+      const lbl=LBL[m&&m.id]||[];
+      let x=(m&&m.h&&byCode[m.h])||lbl[0], y=(m&&m.a&&byCode[m.a])||lbl[1];
+      if(x&&y&&x===y) y=(lbl[1]!==x?lbl[1]:lbl[0]);
+      return [x,y];
+    };
+    const r16=norm('Round of 16'), qf=norm('Quarter-finals');
+    const idx=arr=>{const o={};arr.forEach(m=>{o[m.id]=m;});return o;};
+    const r16ById=idx(r16), qfById=idx(qf);
+    const qfOrder=[97,98,99,100], sfOrder=[101,102], fOrder=[104];
+    let r16Order=[]; qfOrder.forEach(id=>{ const [x,y]=feederPair(qfById[id]||{id},r16); r16Order.push(x,y); });
+    let r32Order=[]; r16Order.forEach(id=>{ const [x,y]=feederPair(r16ById[id]||{id},r32raw); r32Order.push(x,y); });
+    if(r16Order.some(x=>!x)||new Set(r16Order).size!==8) r16Order=[89,90,93,94,91,92,95,96];
+    if(r32Order.some(x=>!x)||new Set(r32Order).size!==16) r32Order=[74,77,73,75,83,84,81,82,76,78,79,80,86,88,85,87];
+    // R32 column in feeder order
     const raw32=this.R32LIST();
     const byId={};
     raw32.forEach(m=>{byId[m[6]]=m});
-    const ordered=BRACKET_ORDER.map(id=>byId[id]).filter(Boolean);
+    const ordered=r32Order.map(id=>byId[id]).filter(Boolean);
     const r32=(ordered.length===16?ordered:raw32).map(([hn,hf,an,af])=>[T(hn,hf),T(an,af)]);
-    // R16 → Final: show the ACTUAL resolved matches from the live bracket (API advances winners
-    // as each match finishes); pad with TBD for slots not yet decided.
-    const roundPairs=(rname,cnt)=>{ const ms=B[rname]||[]; return Array.from({length:cnt},(_,i)=>{ const m=ms[i]; return m?[teamT(m.home&&m.home.code),teamT(m.away&&m.away.code)]:[tbd(),tbd()]; }); };
+    // Later rounds fill their DERIVED slot; TBD until the API resolves them
+    const roundPairs=(rname,order)=>{
+      const mById=idx(norm(rname));
+      return order.map(id=>{ const m=mById[id]; return m?[teamT(m.h),teamT(m.a)]:[tbd(),tbd()]; });
+    };
     const raw=[
       {title:'Round of 32',pairs:r32},
-      {title:'Round of 16',pairs:roundPairs('Round of 16',8)},
-      {title:'Quarter-finals',pairs:roundPairs('Quarter-finals',4)},
-      {title:'Semi-finals',pairs:roundPairs('Semi-finals',2)},
-      {title:'Final',pairs:roundPairs('Final',1)}
+      {title:'Round of 16',pairs:roundPairs('Round of 16',r16Order)},
+      {title:'Quarter-finals',pairs:roundPairs('Quarter-finals',qfOrder)},
+      {title:'Semi-finals',pairs:roundPairs('Semi-finals',sfOrder)},
+      {title:'Final',pairs:roundPairs('Final',fOrder)}
     ];
     const out={ colH, colW,
       rounds: raw.map((r,ri)=>{
