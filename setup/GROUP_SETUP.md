@@ -68,6 +68,22 @@ Forms collected no names, so display names were derived from emails (some are ro
 
 Because `id` is keyed on email, renaming is safe — picks stay attached.
 
+## Security model / accepted tradeoffs
+
+Deliberate tradeoffs for a ~30-person office pool on a static site — revisit only if the
+audience changes:
+
+- **Group login PINs are plaintext** in each group's public `app-data.json` (`meta.loginPin`),
+  and member emails are exposed there too (both are needed for client-side login). Anyone who
+  opens the JSON can read them.
+- **Cross-group reads by URL guessing**: `/g1/app-data.json` and `/g2/app-data.json` are public;
+  a member of one group can read another group's leaderboard/picks. True isolation would need an
+  auth-gated backend, which this app intentionally doesn't have.
+- **Apps Script `?action=export` returns live (unlocked) picks** — someone technical could peek
+  at others' picks before a round locks. The app UI itself only reveals picks after lock.
+- The destructive `?action=clear` endpoint **requires the group PIN and a participantId**
+  (wipe-all removed) as of the July 2026 hardening — keep that check when editing Code.gs.
+
 ## Note on Ranjit
 
 `ranjitn15@gmail.com` (group-stage form) vs `ranjitn15@yahoo.co.in` (knockout form) were treated

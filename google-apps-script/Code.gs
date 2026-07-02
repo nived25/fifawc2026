@@ -22,8 +22,12 @@ function doGet(e) {
     const action = e.parameter.action;
     if (action === 'load') return jsonResponse(handleLoad(e.parameter));
     if (action === 'export') return jsonResponse(handleExport());
-    if (action === 'clear') return jsonResponse(handleClear(e.parameter));
-    return jsonResponse({ ok: false, error: 'Use action=load, action=export, or action=clear&participantId=...' });
+    if (action === 'clear') {
+      // Destructive — require the PIN (the web-app URL is public in app-data.json)
+      if (String(e.parameter.pin) !== STATIC_PIN) return jsonResponse({ ok: false, error: 'Invalid PIN' });
+      return jsonResponse(handleClear(e.parameter));
+    }
+    return jsonResponse({ ok: false, error: 'Use action=load, action=export, or action=clear&participantId=...&pin=...' });
   } catch(err) {
     return jsonResponse({ ok: false, error: err.toString() });
   }
@@ -163,6 +167,7 @@ function handleLoad(params) {
 
 function handleClear(params) {
   const { participantId } = params;
+  if (!participantId) return { ok: false, error: 'Missing participantId — wiping all rows is not allowed' };
   const sheet = getOrCreatePredSheet();
   const allData = sheet.getDataRange().getValues();
   const rowsToDelete = [];

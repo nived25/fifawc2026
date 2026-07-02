@@ -102,6 +102,9 @@ function generateHtml() {
   // Per-group branding: swap the hardcoded "LR World Cup" title (header, login, splash).
   if (process.env.GROUP_TITLE) html = html.split('LR World Cup').join(process.env.GROUP_TITLE);
   if (process.env.GROUP_SUBTITLE) html = html.split('Office World Cup League').join(process.env.GROUP_SUBTITLE);
+  // Namespace localStorage so sessions/drafts never collide across groups on the shared origin
+  // (same person can be in two groups with the same participantId). LR root keeps '' = legacy keys.
+  html = html.split("this._ns = '';").join(`this._ns = '${OUT_SUBDIR}_';`);
   writeFileSync(join(outDir, 'index.html'), html);
 }
 

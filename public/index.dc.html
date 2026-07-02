@@ -1285,6 +1285,9 @@ class Component extends DCLogic {
       ['Ranjit Nambiar',['ESP','ARG','POR','BEL'],5,'-1']
     ];
     this.USER = 8; // Nived (0-indexed, updated by applyLiveData)
+    // localStorage namespace — '' for LR root; group builds inject 'g1_'/'g2_' so sessions
+    // and prediction drafts never collide across groups on the shared origin.
+    this._ns = '';
     this._userParticipantId = null;
     this._userPin = null;
     this._userName = null;
@@ -1462,7 +1465,7 @@ class Component extends DCLogic {
     this._userParticipantId=participant.id;
     this._userPin='5555';
     this._userName=participant.name;
-    try{ localStorage.setItem('fifa_auth',JSON.stringify({participantId:participant.id,name:participant.name,email:participant.email})); }catch(e){}
+    try{ localStorage.setItem(this._ns+'fifa_auth',JSON.stringify({participantId:participant.id,name:participant.name,email:participant.email})); }catch(e){}
     const canonName=(this._apiData?.participants||[]).find(p=>p.id===participant.id)?.name||participant.name;
     const idx=this.P.findIndex(([n])=>n===canonName);
     if(idx>=0) this.USER=idx;
@@ -1473,7 +1476,7 @@ class Component extends DCLogic {
   }
   checkStoredLogin(){
     try{
-      const stored=localStorage.getItem('fifa_auth');
+      const stored=localStorage.getItem(this._ns+'fifa_auth');
       if(!stored) return;
       const auth=JSON.parse(stored);
       if(!auth.participantId||!auth.name) return;
@@ -1686,16 +1689,16 @@ class Component extends DCLogic {
   _savePredictionsToLocal(){
     if(!this._userParticipantId) return;
     const s=this.state;
-    try{ localStorage.setItem('fifa_preds_'+this._userParticipantId,
+    try{ localStorage.setItem(this._ns+'fifa_preds_'+this._userParticipantId,
       JSON.stringify({r32:s.r32,r16:s.r16,qf:s.qf,sf:s.sf,final:s.final,finalists:s.finalists,champ:s.champ,savedAt:Date.now()})); }catch(e){}
   }
   _loadPredictionsFromLocal(){
     if(!this._userParticipantId) return null;
-    try{ const raw=localStorage.getItem('fifa_preds_'+this._userParticipantId); return raw?JSON.parse(raw):null; }catch(e){ return null; }
+    try{ const raw=localStorage.getItem(this._ns+'fifa_preds_'+this._userParticipantId); return raw?JSON.parse(raw):null; }catch(e){ return null; }
   }
   _clearPredictionsLocal(){
     if(!this._userParticipantId) return;
-    try{ localStorage.removeItem('fifa_preds_'+this._userParticipantId); }catch(e){}
+    try{ localStorage.removeItem(this._ns+'fifa_preds_'+this._userParticipantId); }catch(e){}
   }
   toggleFinalist(c){
     this.setState(st=>{
@@ -2366,7 +2369,7 @@ class Component extends DCLogic {
       toastMsg: s.toast?s.toast.msg:'',
       openSettings:()=>this.showToast('Settings open in the full build','ok'),
       signOut:()=>{
-        try{ localStorage.removeItem('fifa_auth'); }catch(e){}
+        try{ localStorage.removeItem(this._ns+'fifa_auth'); }catch(e){}
         this._clearPredictionsLocal();
         this._userParticipantId=null; this._userPin=null; this._userName=null;
         this.setState({profile:false,loggedIn:false,r32:{},r16:{},qf:{},sf:{},final:{},submitted:false,champ:null,finalists:[]});
