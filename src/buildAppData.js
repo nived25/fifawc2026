@@ -23,6 +23,16 @@ export function buildAppData() {
 
   const KO_ROUNDS = ['r32', 'r16', 'qf', 'sf', 'final'];
 
+  // Match-level locking (r16 onward): a pick becomes public once its match is within
+  // matchLockMins of kickoff. Locks are derived from time, never stored.
+  const MATCH_LOCK_MINS = Number(process.env.MATCH_LOCK_MINS || meta.matchLockMins || 30);
+  const kickoffById = {};
+  for (const f of fixtures) kickoffById[f.id] = f.kickoffMs;
+  const matchLocked = (id) => {
+    const k = kickoffById[+id];
+    return !!k && Date.now() >= k - MATCH_LOCK_MINS * 60000;
+  };
+
   const publicPredictions = {};
   for (const [pid, pred] of Object.entries(predictions)) {
     const locked = typeof pred.locked === 'boolean'
@@ -31,12 +41,22 @@ export function buildAppData() {
 
     const entry = { locked, submittedAtMs: pred.submittedAtMs || {} };
 
-    // Only expose picks after the round is locked
+    // r32: legacy round-level exposure. r16+: expose per match once time-locked (id-keyed picks).
     for (const rk of KO_ROUNDS) {
-      if (locked[rk]) {
-        const picks = pred[rk] || (rk === 'r32' ? pred.ko : null);
-        if (picks) entry[rk] = picks;
+      if (rk === 'r32') {
+        if (locked.r32) {
+          const picks = pred.r32 || pred.ko;
+          if (picks) entry.r32 = picks;
+        }
+        continue;
       }
+      const picks = pred[rk];
+      if (!picks) continue;
+      const pub = {};
+      for (const [mid, pick] of Object.entries(picks)) {
+        if (matchLocked(mid)) pub[mid] = pick;
+      }
+      if (Object.keys(pub).length) entry[rk] = pub;
     }
     // Expose bonus picks after r32 locks
     if (locked.r32 || locked.r16) {
@@ -50,6 +70,7 @@ export function buildAppData() {
   const appData = {
     meta: {
       ...meta,
+      matchLockMins: MATCH_LOCK_MINS,
       generatedAt: Date.now()
     },
     leaderboard,

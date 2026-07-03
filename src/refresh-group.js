@@ -72,6 +72,7 @@ function autoLock(koLockTimes) {
   const predictions = readOr('predictions.json', {});
   let locked = 0;
   for (const [rk, lockMs] of Object.entries(koLockTimes || {})) {
+    if (rk !== 'r32') continue; // r16+ uses match-level time locks, no stored flags
     if (!lockMs || Date.now() < lockMs) continue;
     for (const [, pred] of Object.entries(predictions)) {
       const already = typeof pred.locked === 'boolean' ? pred.locked : !!(pred.locked?.[rk]);

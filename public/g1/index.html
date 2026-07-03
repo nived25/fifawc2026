@@ -654,7 +654,7 @@
         </div>
         <div style="display:flex;gap:8px;margin-top:11px;overflow-x:auto;padding:2px 2px 6px">
           <sc-for list="{{ rounds }}" as="r" hint-placeholder-count="6">
-            <div style="flex:none;min-width:78px;text-align:center;padding:11px 12px;border-radius:14px;background:{{ r.bg }};border:1px solid {{ r.bd }};opacity:{{ r.op }}">
+            <div onClick="{{ r.pick }}" style-active="transform:scale(.94)" style="flex:none;min-width:78px;text-align:center;padding:11px 12px;border-radius:14px;background:{{ r.bg }};border:1px solid {{ r.bd }};opacity:{{ r.op }};cursor:pointer;transition:background var(--dur-fast) var(--ease-out),border-color var(--dur-fast) var(--ease-out),transform var(--dur-press) var(--ease-out)">
               <div style="color:{{ r.tc }};font-size:14px;font-weight:600">{{ r.name }}</div>
               <div style="color:#8E8E93;font-size:11px;font-weight:600;margin-top:2px">{{ r.pts }} pts</div>
             </div>
@@ -662,7 +662,7 @@
         </div>
 
         <!-- KO round progress (active round) -->
-        <sc-if value="{{ isKoLocked }}" hint-placeholder-val="{{ false }}">
+        <sc-if value="{{ legacyLocked }}" hint-placeholder-val="{{ false }}">
           <div style="margin-top:16px;padding:18px;border-radius:18px;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.022));border:1px solid rgba(255,69,58,.28);text-align:center">
             <div style="display:flex;justify-content:center;margin-bottom:12px"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#FF7A6B" stroke-width="1.9" style="display:block"><rect x="5" y="10.5" width="14" height="9.5" rx="2.4"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/><circle cx="12" cy="15.2" r="1.3" fill="#FF7A6B" stroke="none"/></svg></div>
             <div style="color:#F5F5F7;font-size:16px;font-weight:600;margin-bottom:4px">{{ koRoundName }} predictions locked</div>
@@ -688,7 +688,7 @@
           </div>
         </sc-if>
 
-        <sc-if value="{{ isKoOpen }}" hint-placeholder-val="{{ true }}">
+        <sc-if value="{{ legacyOpen }}" hint-placeholder-val="{{ false }}">
         <sc-if value="{{ canReopen }}" hint-placeholder-val="{{ false }}">
           <div style="margin-top:16px;padding:13px 15px;border-radius:15px;background:linear-gradient(90deg,rgba(255,45,120,.14),rgba(122,60,255,.14));border:1px solid rgba(255,45,120,.3);display:flex;align-items:center;gap:11px">
             <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#FF6FA0" stroke-width="1.9" style="display:block"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2.2"/></svg>
@@ -809,14 +809,125 @@
 
         </sc-if><!-- end koHasMatches -->
         </sc-if><!-- end isKoOpen -->
+        <sc-if value="{{ legacyOpen }}" hint-placeholder-val="{{ false }}">
         <sc-if value="{{ showSubmitHint }}" hint-placeholder-val="{{ false }}">
           <div style="margin-top:14px;display:flex;align-items:center;gap:8px;padding:11px 13px;border-radius:13px;background:rgba(255,159,10,.1);border:1px solid rgba(255,159,10,.28)">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#FFB44C" stroke-width="2" style="flex:none"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/></svg>
             <span style="color:#FFB44C;font-size:12.5px;font-weight:600">{{ submitHint }}</span>
           </div>
         </sc-if>
-        <sc-if value="{{ koHasMatches }}" hint-placeholder-val="{{ true }}">
+        <sc-if value="{{ koHasMatches }}" hint-placeholder-val="{{ false }}">
         <div onClick="{{ submit }}" style-active="transform:scale(.975)" style="margin-top:12px;text-align:center;padding:15px;border-radius:16px;cursor:pointer;font-size:16px;font-weight:600;color:{{ submitC }};background:{{ submitBg }};box-shadow:{{ submitShadow }};transition:transform var(--dur-press) var(--ease-out),box-shadow var(--dur-fast) var(--ease-out),background var(--dur-fast) var(--ease-out)"><span class="save-label" style="display:inline-block">{{ submitLabel }}</span></div>
+        </sc-if>
+        </sc-if>
+
+        <!-- ===== MATCH-LEVEL PREDICTIONS (R16 onward): predict each match as soon as its
+             pairing is decided; every match locks 30 min before ITS OWN kickoff ===== -->
+        <sc-if value="{{ selIsML }}" hint-placeholder-val="{{ false }}">
+        <div style="margin-top:16px;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.022));backdrop-filter:blur(16px) saturate(1.25);-webkit-backdrop-filter:blur(16px) saturate(1.25);border:1px solid rgba(255,255,255,.09);border-radius:18px;padding:15px">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <span style="color:#F5F5F7;font-size:16px;font-weight:600">{{ mlRoundName }}</span>
+            <span style="color:#A98BFF;font-size:12.5px;font-weight:600;font-variant-numeric:tabular-nums">{{ mlDoneStr }}</span>
+          </div>
+          <div style="margin-top:11px;height:7px;border-radius:4px;background:rgba(255,255,255,.08);overflow:hidden">
+            <div style="height:100%;width:{{ mlPct }};border-radius:4px;background:linear-gradient(90deg,#FF2D78,#7A3CFF,#1FA2FF);transition:width .4s ease"></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:14px;margin-top:12px;color:#7C7C82;font-size:10.5px;font-weight:500">
+            <span style="display:flex;align-items:center;gap:5px"><span style="width:6px;height:6px;border-radius:2px;background:#5BE584"></span>Exact score = 2× pts</span>
+            <span style="display:flex;align-items:center;gap:5px"><span style="width:6px;height:6px;border-radius:2px;background:#FFB44C"></span>Each match locks 30 min before kickoff</span>
+          </div>
+          <sc-if value="{{ mlHasGhostNote }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:10px;padding:8px 11px;border-radius:10px;background:rgba(122,60,255,.1);border:1px solid rgba(122,60,255,.22);color:#C9B4FF;font-size:11.5px;font-weight:500">{{ mlGhostNote }}</div>
+          </sc-if>
+        </div>
+
+        <sc-for list="{{ mlCards }}" as="m" hint-placeholder-count="8">
+          <div class="reveal-up" style="margin-top:10px;background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));border:1px solid {{ m.cardBd }};border-radius:16px;padding:13px 14px;opacity:{{ m.cardOp }};transition:border-color var(--dur-fast) var(--ease-out)">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+              <span style="color:#7C7C82;font-size:10.5px;font-weight:600;letter-spacing:.3px">{{ m.kickStr }}</span>
+              <sc-if value="{{ m.isOpen }}" hint-placeholder-val="{{ false }}">
+                <span style="display:inline-flex;align-items:center;gap:5px;padding:2px 8px;border-radius:8px;background:rgba(52,199,89,.12);border:1px solid rgba(52,199,89,.26);color:#5BE584;font-size:10px;font-weight:700;font-variant-numeric:tabular-nums">{{ m.lockIn }}</span>
+              </sc-if>
+              <sc-if value="{{ m.isLocked }}" hint-placeholder-val="{{ false }}">
+                <span style="display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:8px;background:rgba(255,159,10,.13);border:1px solid rgba(255,159,10,.3);color:#FFB44C;font-size:10px;font-weight:700">Locked</span>
+              </sc-if>
+              <sc-if value="{{ m.isFinished }}" hint-placeholder-val="{{ false }}">
+                <span style="display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:8px;background:{{ m.resBg }};color:{{ m.resC }};font-size:10px;font-weight:700">{{ m.resIcon }} {{ m.resLabel }}</span>
+              </sc-if>
+              <sc-if value="{{ m.isGhost }}" hint-placeholder-val="{{ false }}">
+                <span style="padding:2px 8px;border-radius:8px;background:rgba(255,255,255,.06);color:#7C7C82;font-size:10px;font-weight:600">Teams TBD</span>
+              </sc-if>
+            </div>
+
+            <!-- ghost: pairing not decided yet -->
+            <sc-if value="{{ m.isGhost }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;flex-direction:column;gap:7px">
+                <div style="padding:10px 12px;border-radius:11px;background:rgba(255,255,255,.04);border:1px dashed rgba(255,255,255,.14);color:#9A9AA1;font-size:13px;font-weight:600">{{ m.feederH }}</div>
+                <div style="padding:10px 12px;border-radius:11px;background:rgba(255,255,255,.04);border:1px dashed rgba(255,255,255,.14);color:#9A9AA1;font-size:13px;font-weight:600">{{ m.feederA }}</div>
+                <div style="color:#7C7C82;font-size:10.5px;font-weight:500;text-align:center;margin-top:2px">Opens automatically when the teams are decided</div>
+              </div>
+            </sc-if>
+
+            <!-- teams row (any non-ghost state) -->
+            <sc-if value="{{ m.showTeams }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+                <div style="display:flex;align-items:center;gap:8px;flex:1;min-width:0"><img loading="lazy" decoding="async" src="{{ m.hFu }}" style="width:26px;height:17px;border-radius:3px;object-fit:cover;box-shadow:0 0 0 1px rgba(255,255,255,.14)"/><span style="color:#F5F5F7;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ m.hN }}</span></div>
+                <span style="color:#48484A;font-size:11px;font-weight:600;flex:none">vs</span>
+                <div style="display:flex;align-items:center;gap:8px;flex:1;min-width:0;justify-content:flex-end"><span style="color:#F5F5F7;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ m.aN }}</span><img loading="lazy" decoding="async" src="{{ m.aFu }}" style="width:26px;height:17px;border-radius:3px;object-fit:cover;box-shadow:0 0 0 1px rgba(255,255,255,.14)"/></div>
+              </div>
+            </sc-if>
+
+            <!-- open: steppers + draw advance -->
+            <sc-if value="{{ m.showSteppers }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;align-items:center;justify-content:center;gap:16px;margin-top:13px">
+                <div style="display:flex;align-items:center;gap:11px">
+                  <div onClick="{{ m.hMinus }}" data-step="1" style-active="transform:scale(.86)" style="width:40px;height:40px;border-radius:12px;background:#1A1A1E;border:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;color:#C7C7CC;font-size:21px;font-weight:500;cursor:pointer;line-height:0;padding-bottom:2px;transition:transform var(--dur-press) var(--ease-out)">−</div>
+                  <span class="disp score-digit" style="min-width:22px;text-align:center;color:#F5F5F7;font-size:30px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-1px">{{ m.hScore }}</span>
+                  <div onClick="{{ m.hPlus }}" data-step="1" style-active="transform:scale(.86)" style="width:40px;height:40px;border-radius:12px;background:#1A1A1E;border:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;color:#C7C7CC;font-size:20px;font-weight:500;cursor:pointer;line-height:0;padding-bottom:1px;transition:transform var(--dur-press) var(--ease-out)">+</div>
+                </div>
+                <span style="color:#3A3A3C;font-size:22px;font-weight:500;margin-bottom:3px">:</span>
+                <div style="display:flex;align-items:center;gap:11px">
+                  <div onClick="{{ m.aMinus }}" data-step="1" style-active="transform:scale(.86)" style="width:40px;height:40px;border-radius:12px;background:#1A1A1E;border:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;color:#C7C7CC;font-size:21px;font-weight:500;cursor:pointer;line-height:0;padding-bottom:2px;transition:transform var(--dur-press) var(--ease-out)">−</div>
+                  <span class="disp score-digit" style="min-width:22px;text-align:center;color:#F5F5F7;font-size:30px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-1px">{{ m.aScore }}</span>
+                  <div onClick="{{ m.aPlus }}" data-step="1" style-active="transform:scale(.86)" style="width:40px;height:40px;border-radius:12px;background:#1A1A1E;border:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;color:#C7C7CC;font-size:20px;font-weight:500;cursor:pointer;line-height:0;padding-bottom:1px;transition:transform var(--dur-press) var(--ease-out)">+</div>
+                </div>
+              </div>
+              <sc-if value="{{ m.isDraw }}" hint-placeholder-val="{{ false }}">
+                <div title="Your 90' scoreline is what's scored — pick who survives the shootout" style="display:flex;align-items:center;justify-content:center;gap:5px;color:#FFB44C;font-size:10px;font-weight:600;letter-spacing:.5px;margin-top:11px;cursor:help">DRAW — WHO ADVANCES ON PENALTIES?</div>
+                <div style="display:flex;gap:8px;margin-top:8px">
+                  <div onClick="{{ m.pickAdvA }}" style-active="transform:scale(.96)" style="flex:1;display:flex;align-items:center;justify-content:center;gap:7px;padding:9px;border-radius:11px;cursor:pointer;transition:background var(--dur-fast) var(--ease-out);background:{{ m.advABg }};border:1px solid {{ m.advABd }}"><img loading="lazy" decoding="async" src="{{ m.hFu }}" style="width:20px;height:13px;border-radius:2px;object-fit:cover"/><span style="color:{{ m.advAC }};font-size:12.5px;font-weight:600">{{ m.hN }}</span></div>
+                  <div onClick="{{ m.pickAdvB }}" style-active="transform:scale(.96)" style="flex:1;display:flex;align-items:center;justify-content:center;gap:7px;padding:9px;border-radius:11px;cursor:pointer;transition:background var(--dur-fast) var(--ease-out);background:{{ m.advBBg }};border:1px solid {{ m.advBBd }}"><img loading="lazy" decoding="async" src="{{ m.aFu }}" style="width:20px;height:13px;border-radius:2px;object-fit:cover"/><span style="color:{{ m.advBC }};font-size:12.5px;font-weight:600">{{ m.aN }}</span></div>
+                </div>
+              </sc-if>
+            </sc-if>
+
+            <!-- locked (kickoff soon / underway) -->
+            <sc-if value="{{ m.showLockedRow }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-top:11px;padding:8px 11px;border-radius:10px;background:rgba(255,255,255,.04)">
+                <span style="color:#8E8E93;font-size:11.5px;font-weight:600">Your pick</span>
+                <span class="disp" style="color:#F5F5F7;font-size:15px;font-weight:700;font-variant-numeric:tabular-nums">{{ m.myScore }} <span style="color:#FFB44C;font-size:10.5px;font-weight:600">{{ m.advName }}</span></span>
+              </div>
+            </sc-if>
+
+            <!-- finished: pick vs actual + points -->
+            <sc-if value="{{ m.showResult }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-top:11px;padding:8px 11px;border-radius:10px;background:rgba(255,255,255,.04)">
+                <span style="color:#8E8E93;font-size:11.5px;font-weight:600">You: <span style="color:#F5F5F7;font-weight:700">{{ m.myScore }}</span> · {{ m.actScore }}</span>
+                <span class="{{ m.burst }}" style="flex:none;padding:1px 8px;border-radius:6px;font-size:11.5px;font-weight:700;font-variant-numeric:tabular-nums;color:{{ m.resC }};background:rgba(255,255,255,.06)">{{ m.ptsStr }}</span>
+              </div>
+            </sc-if>
+          </div>
+        </sc-for>
+
+        <sc-if value="{{ mlHasOpen }}" hint-placeholder-val="{{ false }}">
+          <div onClick="{{ mlSubmit }}" data-mlsave="1" style-active="transform:scale(.975)" style="margin-top:12px;text-align:center;padding:15px;border-radius:16px;cursor:pointer;font-size:16px;font-weight:600;color:{{ mlSubmitC }};background:{{ mlSubmitBg }};box-shadow:0 8px 24px rgba(122,60,255,.28);transition:transform var(--dur-press) var(--ease-out),background var(--dur-fast) var(--ease-out)"><span class="save-label" style="display:inline-block">{{ mlSubmitLabel }}</span></div>
+        </sc-if>
+        <sc-if value="{{ mlEmpty }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top:16px;padding:28px 20px;border-radius:18px;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.022));border:1px solid rgba(255,255,255,.09);text-align:center">
+            <div style="color:#F5F5F7;font-size:15px;font-weight:600;margin-bottom:5px">{{ mlRoundName }} not scheduled yet</div>
+            <div style="color:#8E8E93;font-size:12.5px;font-weight:500;line-height:1.5">Matchups appear here the moment the bracket reaches this round.</div>
+          </div>
+        </sc-if>
         </sc-if>
       </div>
     </div>
@@ -1447,6 +1558,11 @@ class Component extends DCLogic {
       if(c.hasAttribute('data-close-scrim')&&e.target.closest('[data-sheet="y"]')) return;
       this.animClose('[data-sheet="y"]',()=>this.setState({rulesOpen:false}));
     },true);
+    // Delegated save for the match-level predict button (same DC binding quirk as the rules modal)
+    D.addEventListener('click',e=>{
+      const b=e.target.closest&&e.target.closest('[data-mlsave]');
+      if(b&&this._mlSubmitFn) this._mlSubmitFn();
+    },true);
     // Digit tick — delegation survives DC re-renders
     D.addEventListener('click',e=>{
       if(reduce) return;
@@ -1643,13 +1759,27 @@ class Component extends DCLogic {
     const uid=this._userParticipantId;
     const now=new Date(), todayS=now.toLocaleDateString('en-CA',{timeZone:'Asia/Kolkata'});
     const out=[];
+    const TREE=this.koSlots();
     for(const [rk,rlabel] of KO_ROUNDS){
-      const anyLocked=parts.some(p=>{
-        const pr=preds[p.id]; const l=pr&&(typeof pr.locked==='object'?pr.locked[rk]:(rk==='r32'&&pr.locked));
-        return l&&pr[rk];
+      if(rk==='r32'){
+        const anyLocked=parts.some(p=>{
+          const pr=preds[p.id]; const l=pr&&(typeof pr.locked==='object'?pr.locked[rk]:pr.locked);
+          return l&&pr[rk];
+        });
+        if(!anyLocked) continue;
+      } else {
+        // match-level: app-data only ships a pick once its match is time-locked,
+        // so any present pick is safe to reveal
+        const anyPicks=parts.some(p=>{const pr=preds[p.id];return pr&&pr[rk]&&Object.keys(pr[rk]).length;});
+        if(!anyPicks) continue;
+      }
+      const slots=rk==='r32'?null:TREE.rounds[rk].filter(m=>m.h&&m.a);
+      const defs=rk==='r32'?this.getRoundMatchList(rk):slots.map(m=>{
+        const ht=this.teams[m.h]||{n:m.h,f:''}, at=this.teams[m.a]||{n:m.a,f:''};
+        return [ht.n,ht.f,at.n,at.f,m.h,m.a];
       });
-      if(!anyLocked) continue;
-      const defs=this.getRoundMatchList(rk), results=this.getRoundKickoffs(rk);
+      const results=rk==='r32'?this.getRoundKickoffs(rk):slots.map(m=>({kickoffMs:m.kickoffMs,finished:m.finished,homeGoals:m.hG,awayGoals:m.aG,penHome:m.penH,penAway:m.penA}));
+      const keyOf=i=>rk==='r32'?i:slots[i].id;
       defs.forEach(([hn,hf,an,af,hCode,aCode],i)=>{
         const res=results[i]||{};
         const kickoffMs=res.kickoffMs||0;
@@ -1665,9 +1795,12 @@ class Component extends DCLogic {
         const rows=[];
         for(const p of parts){
           const pr=preds[p.id]; if(!pr) continue;
-          const locked=typeof pr.locked==='object'?pr.locked[rk]:(rk==='r32'&&pr.locked);
-          if(!locked||!pr[rk]) continue;
-          const pick=pr[rk][i]; if(!pick) continue;
+          if(rk==='r32'){
+            const locked=typeof pr.locked==='object'?pr.locked[rk]:pr.locked;
+            if(!locked) continue;
+          }
+          if(!pr[rk]) continue;
+          const pick=pr[rk][keyOf(i)]; if(!pick) continue;
           const adv=pick.adv||(pick.h>pick.a?'a':pick.a>pick.h?'b':null);
           if(adv==='a') aCount++; else if(adv==='b') bCount++;
           const pr2=this.koPickResult(rk,pick,res);
@@ -1683,7 +1816,7 @@ class Component extends DCLogic {
         }
         const total=aCount+bCount;
         const aPct=total?Math.round(aCount/total*100):50, bPct=100-aPct;
-        const matchKey=rk+'-'+i;
+        const matchKey=rk+'-'+keyOf(i);
         out.push({
           key:matchKey, round:rlabel, roundKey:rk, bucket, kickStr, kickoffMs,
           hFu:this.flagUrl(hf), hName:hn, aFu:this.flagUrl(af), aName:an,
@@ -1706,6 +1839,14 @@ class Component extends DCLogic {
     this._savePredictionsToLocal();
   }
   updR32(i,fn){ this.updKo('r32',i,fn); }
+  fmtDur(ms){
+    if(ms<=0) return 'now';
+    const m=Math.floor(ms/60000), d=Math.floor(m/1440), h=Math.floor((m%1440)/60), mm=m%60;
+    if(d>0) return d+'d '+h+'h';
+    if(h>0) return h+'h '+String(mm).padStart(2,'0')+'m';
+    if(m>=1) return mm+'m '+String(Math.floor((ms%60000)/1000)).padStart(2,'0')+'s';
+    return Math.floor(ms/1000)+'s';
+  }
   async loginUser(email,pin){
     if(!email){ this.setState({loginError:'Enter your email address'}); return; }
     if(!pin){ this.setState({loginError:'Enter your PIN'}); return; }
@@ -1765,56 +1906,35 @@ class Component extends DCLogic {
     }catch(e){}
   }
   async loadStoredPredictions(participantId){
-    // Tier 1: locked/scored picks from app-data.json (always wins)
-    const preds=this._apiData?.predictions?.[participantId];
-    if(preds){
-      const ns={};
-      if(preds.r32||preds.ko) ns.r32=preds.r32||preds.ko||{};
-      if(preds.r16) ns.r16=preds.r16;
-      if(preds.qf) ns.qf=preds.qf;
-      if(preds.sf) ns.sf=preds.sf;
-      if(preds.final) ns.final=preds.final;
-      if(preds.finalists) ns.finalists=preds.finalists;
-      if(preds.champion) ns.champ=preds.champion;
-      if(Object.keys(ns).length){ ns.submitted=true; this.setState(ns); }
-    }
-    // Tier 2: live picks from Apps Script — fill blanks only (don't overwrite locked)
+    // Three tiers, merged PER MATCH for r16+ (match-level locking means app-data ships
+    // partial rounds): tier1 app-data locked picks always win per key, tier2 Apps Script
+    // live picks fill the rest, tier3 device drafts fill anything still blank.
+    // r32 stays round-level (legacy, fully locked).
+    const tier1=this._apiData?.predictions?.[participantId]||null;
+    let tier2=null;
     const appsScriptUrl=this._apiData?.meta?.appsScriptUrl;
     if(appsScriptUrl && participantId){
       try{
         const res=await fetch(`${appsScriptUrl}?action=load&participantId=${encodeURIComponent(participantId)}`);
         const data=await res.json();
-        if(data.ok && data.predictions){
-          const p=data.predictions;
-          const cur=this.state;
-          const ns={};
-          const hasKeys=o=>o&&Object.keys(o).length>0;
-          if(p.r32 && !hasKeys(cur.r32)) ns.r32=p.r32;
-          if(p.r16 && !hasKeys(cur.r16)) ns.r16=p.r16;
-          if(p.qf && !hasKeys(cur.qf)) ns.qf=p.qf;
-          if(p.sf && !hasKeys(cur.sf)) ns.sf=p.sf;
-          if(p.final && !hasKeys(cur.final)) ns.final=p.final;
-          if((p.finalists||[]).length && !(cur.finalists||[]).length) ns.finalists=p.finalists;
-          if(p.champion && !cur.champ) ns.champ=p.champion;
-          if(Object.keys(ns).length){ ns.submitted=true; this.setState(ns); this._savePredictionsToLocal(); }
-        }
+        if(data.ok && data.predictions) tier2=data.predictions;
       }catch(e){}
     }
-    // Tier 3: localStorage fallback — fills blanks not covered by tiers 1 & 2
-    const local=this._loadPredictionsFromLocal();
-    if(local){
-      const cur=this.state;
-      const ns={};
-      const hasKeys=o=>o&&Object.keys(o).length>0;
-      if(hasKeys(local.r32) && !hasKeys(cur.r32)) ns.r32=local.r32;
-      if(hasKeys(local.r16) && !hasKeys(cur.r16)) ns.r16=local.r16;
-      if(hasKeys(local.qf) && !hasKeys(cur.qf)) ns.qf=local.qf;
-      if(hasKeys(local.sf) && !hasKeys(cur.sf)) ns.sf=local.sf;
-      if(hasKeys(local.final) && !hasKeys(cur.final)) ns.final=local.final;
-      if((local.finalists||[]).length && !(cur.finalists||[]).length) ns.finalists=local.finalists;
-      if(local.champ && !cur.champ) ns.champ=local.champ;
-      if(Object.keys(ns).length){ ns.submitted=true; this.setState(ns); }
+    const tier3=this._loadPredictionsFromLocal()||null;
+    const ns={};
+    // r32: first tier that has it wins whole (legacy shape, incl. old pred.ko)
+    const r32v=(tier1&&(tier1.r32||tier1.ko))||(tier2&&tier2.r32)||(tier3&&tier3.r32);
+    if(r32v&&Object.keys(r32v).length) ns.r32=r32v;
+    // r16+: per-key merge (id-keyed)
+    for(const rk of ['r16','qf','sf','final']){
+      const merged={...((tier3&&tier3[rk])||{}),...((tier2&&tier2[rk])||{}),...((tier1&&tier1[rk])||{})};
+      if(Object.keys(merged).length) ns[rk]=merged;
     }
+    const fin=(tier1&&tier1.finalists)||(tier2&&tier2.finalists)||(tier3&&tier3.finalists);
+    if((fin||[]).length) ns.finalists=fin;
+    const champ=(tier1&&tier1.champion)||(tier2&&tier2.champion)||(tier3&&tier3.champ)||(tier3&&tier3.champion);
+    if(champ) ns.champ=champ;
+    if(Object.keys(ns).length){ ns.submitted=true; this.setState(ns); this._savePredictionsToLocal(); }
   }
   async fetchLiveData(){
     try {
@@ -2113,51 +2233,80 @@ class Component extends DCLogic {
     const lm={w:'W',d:'D',l:'L',p:'?',live:'•'};
     return res.map(r=>({c:cm[r]||'#48484A',label:lm[r]||'?'}));
   }
-  bracketData(){
-    const colH=900, colW=120;
-    const T=(n,f)=>({n,f}); const tbd=()=>T('TBD','');
+  // Shared knockout tree: per round, matches in OFFICIAL slot order with full info +
+  // "Winner of X" feeder labels for unresolved sides. Single source of truth for the
+  // bracket view, the Predict tab and the Picks reveal, so all three always agree.
+  koSlots(){
     const B=this._apiData?.bracket||{};
-    const teamT=code=>{ if(!code) return tbd(); const t=this.teams[code]||{}; return T(t.n||code, t.f||this._CODE_EMOJI[code]||''); };
-    // ---- Build the real feeder tree so every column continues the previous one. ----
-    // A team's presence identifies its feeder match (each team plays exactly one match per
-    // round), so once a match resolves we KNOW its feeders. The schedule's "Winner Match N"
-    // labels are only a fallback for still-unresolved slots (the API has mislabelled some).
-    const norm=rn=>(B[rn]||[]).map(m=>({id:m.id,h:m.home&&m.home.code,a:m.away&&m.away.code}));
+    const norm=rn=>(B[rn]||[]).map(m=>({id:m.id,h:m.home&&m.home.code,a:m.away&&m.away.code,
+      kickoffMs:m.kickoffMs||0,finished:!!m.finished,hG:m.home&&m.home.goals,aG:m.away&&m.away.goals,
+      penH:m.penHome,penA:m.penAway}));
     const r32raw=(this._apiData?._r32tbd||[]).map(m=>({id:m.apiId,h:m.home&&m.home.code,a:m.away&&m.away.code}));
     const LBL={89:[74,77],90:[73,75],91:[76,78],92:[79,80],93:[83,84],94:[81,82],95:[86,88],96:[85,87],
                97:[89,90],98:[93,94],99:[91,92],100:[95,96],101:[97,98],102:[99,100],104:[101,102]};
     const feederPair=(m,prev)=>{
-      const byCode={}; prev.forEach(p=>{ if(p.h) byCode[p.h]=p.id; if(p.a) byCode[p.a]=p.id; });
+      const byCode={}; prev.forEach(pv=>{ if(pv.h) byCode[pv.h]=pv.id; if(pv.a) byCode[pv.a]=pv.id; });
       const lbl=LBL[m&&m.id]||[];
       let x=(m&&m.h&&byCode[m.h])||lbl[0], y=(m&&m.a&&byCode[m.a])||lbl[1];
       if(x&&y&&x===y) y=(lbl[1]!==x?lbl[1]:lbl[0]);
       return [x,y];
     };
-    const r16=norm('Round of 16'), qf=norm('Quarter-finals');
     const idx=arr=>{const o={};arr.forEach(m=>{o[m.id]=m;});return o;};
-    const r16ById=idx(r16), qfById=idx(qf);
+    const r16=norm('Round of 16'), qf=norm('Quarter-finals'), sf=norm('Semi-finals'), fin=norm('Final');
+    const r16ById=idx(r16), qfById=idx(qf), sfById=idx(sf), finById=idx(fin);
     const qfOrder=[97,98,99,100], sfOrder=[101,102], fOrder=[104];
     let r16Order=[]; qfOrder.forEach(id=>{ const [x,y]=feederPair(qfById[id]||{id},r16); r16Order.push(x,y); });
     let r32Order=[]; r16Order.forEach(id=>{ const [x,y]=feederPair(r16ById[id]||{id},r32raw); r32Order.push(x,y); });
     if(r16Order.some(x=>!x)||new Set(r16Order).size!==8) r16Order=[89,90,93,94,91,92,95,96];
     if(r32Order.some(x=>!x)||new Set(r32Order).size!==16) r32Order=[74,77,73,75,83,84,81,82,76,78,79,80,86,88,85,87];
-    // R32 column in feeder order
+    // feeder display label: teams of the feeder match when known, else "Match N"
+    const prevMap={r16:idx(r32raw),qf:r16ById,sf:qfById,final:sfById};
+    const label=(fid,rk)=>{
+      const fm=prevMap[rk]&&prevMap[rk][fid];
+      if(fm&&fm.h&&fm.a) return fm.h+'\u2013'+fm.a;
+      return 'Match '+fid;
+    };
+    const feederOrders={r16:r16Order}; // r32 order exposed separately
+    const mk=(rk,order,byIdMap,prev)=>order.map(id=>{
+      const m=byIdMap[id]||null;
+      const [f1,f2]=feederPair(m||{id}, rk==='r16'?r32raw:(rk==='qf'?r16:(rk==='sf'?qf:sf)));
+      return {
+        id, roundKey:rk,
+        h:m&&m.h?m.h:null, a:m&&m.a?m.a:null,
+        kickoffMs:m?m.kickoffMs:0, finished:!!(m&&m.finished),
+        hG:m?m.hG:null, aG:m?m.aG:null, penH:m?m.penH:null, penA:m?m.penA:null,
+        feederH:label(f1,rk), feederA:label(f2,rk)
+      };
+    });
+    return {
+      r32Order,
+      rounds:{
+        r16:mk('r16',r16Order,r16ById),
+        qf:mk('qf',qfOrder,qfById),
+        sf:mk('sf',sfOrder,sfById),
+        final:mk('final',fOrder,finById)
+      }
+    };
+  }
+  bracketData(){
+    const colH=900, colW=120;
+    const T=(n,f)=>({n,f}); const tbd=()=>T('TBD','');
+    const B=this._apiData?.bracket||{};
+    const teamT=code=>{ if(!code) return tbd(); const t=this.teams[code]||{}; return T(t.n||code, t.f||this._CODE_EMOJI[code]||''); };
+    // Feeder-slot tree from the shared helper — bracket/Predict/Picks all agree.
+    const S=this.koSlots();
     const raw32=this.R32LIST();
     const byId={};
     raw32.forEach(m=>{byId[m[6]]=m});
-    const ordered=r32Order.map(id=>byId[id]).filter(Boolean);
+    const ordered=S.r32Order.map(id=>byId[id]).filter(Boolean);
     const r32=(ordered.length===16?ordered:raw32).map(([hn,hf,an,af])=>[T(hn,hf),T(an,af)]);
-    // Later rounds fill their DERIVED slot; TBD until the API resolves them
-    const roundPairs=(rname,order)=>{
-      const mById=idx(norm(rname));
-      return order.map(id=>{ const m=mById[id]; return m?[teamT(m.h),teamT(m.a)]:[tbd(),tbd()]; });
-    };
+    const roundPairs=rk=>S.rounds[rk].map(m=>[teamT(m.h),teamT(m.a)]);
     const raw=[
       {title:'Round of 32',pairs:r32},
-      {title:'Round of 16',pairs:roundPairs('Round of 16',r16Order)},
-      {title:'Quarter-finals',pairs:roundPairs('Quarter-finals',qfOrder)},
-      {title:'Semi-finals',pairs:roundPairs('Semi-finals',sfOrder)},
-      {title:'Final',pairs:roundPairs('Final',fOrder)}
+      {title:'Round of 16',pairs:roundPairs('r16')},
+      {title:'Quarter-finals',pairs:roundPairs('qf')},
+      {title:'Semi-finals',pairs:roundPairs('sf')},
+      {title:'Final',pairs:roundPairs('final')}
     ];
     const out={ colH, colW,
       rounds: raw.map((r,ri)=>{
@@ -2283,7 +2432,7 @@ class Component extends DCLogic {
       bg: s.champ===c?'rgba(122,60,255,.24)':'#1A1A1E', bd: s.champ===c?'#7A3CFF':'rgba(255,255,255,.05)',
       pick:()=>{this.setState({champ:c, submitted:false}); this._savePredictionsToLocal();}};}));
     const finalCountStr = fin.length+'/2';
-    const activeKey = this.determineActiveRound();
+    const activeKey = 'r32'; // legacy round-level view is permanently the R32 archive; r16+ uses match-level cards
     const ROUND_LABELS = {r32:'Round of 32',r16:'Round of 16',qf:'Quarter-finals',sf:'Semi-finals',final:'Final'};
     const ROUND_DISPLAY = {r32:'R32',r16:'R16',qf:'QF',sf:'SF',final:'Final'};
     const ROUND_PTS = {r32:4,r16:5,qf:10,sf:15,final:20};
@@ -2401,11 +2550,71 @@ class Component extends DCLogic {
         ptsStr:r.finished?('+'+r.points):'', showPts:r.finished};
     }));
 
+    // ===== Match-level prediction cards (r16 onward) =====
+    const KO_TREE=this.koSlots();
+    const ML_LABEL={r16:'Round of 16',qf:'Quarter-finals',sf:'Semi-finals',final:'Final'};
+    const lockMins=this._apiData?.meta?.matchLockMins??30;
+    const nowMs=Date.now();
+    const mkCards=(rk)=>KO_TREE.rounds[rk].map(m=>{
+      const stR=(s[rk]||{});
+      const pick=stR[m.id]||{h:0,a:0,adv:null};
+      const has=!!stR[m.id];
+      const ready=!!(m.h&&m.a);
+      const lockMs=(ready&&m.kickoffMs)?m.kickoffMs-lockMins*60000:0;
+      const isFinished=!!m.finished;
+      const isLocked=ready&&!isFinished&&lockMs&&nowMs>=lockMs;
+      const isOpen=ready&&!isFinished&&!isLocked;
+      const isGhost=!ready;
+      const ht=this.teams[m.h]||{n:m.h||'',f:''}, at=this.teams[m.a]||{n:m.a||'',f:''};
+      const res=isFinished?this.koPickResult(rk,has?pick:null,{finished:true,homeGoals:m.hG,awayGoals:m.aG,penHome:m.penH,penAway:m.penA}):null;
+      const st2=res?this.koOutcomeStyle(res):null;
+      const dt=m.kickoffMs?new Date(m.kickoffMs):null;
+      const kickStr=dt?dt.toLocaleDateString('en-US',{day:'numeric',month:'short',timeZone:'Asia/Kolkata'})+' \u00b7 '+dt.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',hour12:false,timeZone:'Asia/Kolkata'}):'Date TBD';
+      const isDraw=has&&pick.h===pick.a;
+      const done=has&&(pick.h!==pick.a||!!pick.adv);
+      return {
+        id:m.id, isGhost, isOpen, isLocked, isFinished,
+        showTeams:!isGhost, showSteppers:isOpen, showLockedRow:isLocked, showResult:isFinished,
+        feederH:'Winner of '+m.feederH, feederA:'Winner of '+m.feederA,
+        hN:ht.n, hFu:this.flagUrl(ht.f), aN:at.n, aFu:this.flagUrl(at.f),
+        kickStr, lockIn:isOpen&&lockMs?('Locks in '+this.fmtDur(lockMs-nowMs)):'',
+        hScore:pick.h, aScore:pick.a, isDraw, done, notDone:isOpen&&!done,
+        myScore:has?(pick.h+' \u2013 '+pick.a):'no pick',
+        advName:pick.adv==='a'?ht.n:(pick.adv==='b'?at.n:''),
+        resLabel:st2?st2.label:'', resC:st2?st2.c:'#8E8E93', resIcon:st2?st2.icon:'',
+        resBg:st2?st2.bg:'rgba(255,255,255,.04)',
+        actScore:(res&&res.actScore)?('actual '+res.actScore):'',
+        ptsStr:(res&&res.finished)?('+'+res.points):'',
+        burst:(res&&res.exact)?'exact-burst':'',
+        cardBd:isFinished?st2.bd:(isLocked?'rgba(255,159,10,.32)':(isOpen?(done?'rgba(52,199,89,.35)':'rgba(255,255,255,.09)'):'rgba(255,255,255,.05)')),
+        cardOp:isGhost?'.62':'1',
+        hPlus:()=>this.updKo(rk,m.id,t=>({h:Math.min(9,(t.h||0)+1)})),
+        hMinus:()=>this.updKo(rk,m.id,t=>({h:Math.max(0,(t.h||0)-1)})),
+        aPlus:()=>this.updKo(rk,m.id,t=>({a:Math.min(9,(t.a||0)+1)})),
+        aMinus:()=>this.updKo(rk,m.id,t=>({a:Math.max(0,(t.a||0)-1)})),
+        pickAdvA:()=>this.updKo(rk,m.id,()=>({adv:'a'})),
+        pickAdvB:()=>this.updKo(rk,m.id,()=>({adv:'b'})),
+        advABg:pick.adv==='a'?'rgba(52,199,89,.16)':'#1A1A1E', advABd:pick.adv==='a'?'#34C759':'rgba(255,255,255,.06)', advAC:pick.adv==='a'?'#5BE584':'#F5F5F7',
+        advBBg:pick.adv==='b'?'rgba(52,199,89,.16)':'#1A1A1E', advBBd:pick.adv==='b'?'#34C759':'rgba(255,255,255,.06)', advBC:pick.adv==='b'?'#5BE584':'#F5F5F7'
+      };
+    });
+    const ML_ORDER=['r16','qf','sf','final'];
+    const cardsByRound={}; ML_ORDER.forEach(rk=>{cardsByRound[rk]=mkCards(rk);});
+    const defRound=ML_ORDER.find(rk=>cardsByRound[rk].some(c=>c.isOpen))
+      ||ML_ORDER.find(rk=>cardsByRound[rk].some(c=>!c.isGhost))||'r16';
+    const selRound=s.predRound||defRound;
+    const selIsR32=selRound==='r32', selIsML=!selIsR32;
+    const mlCardsRaw=selIsML?cardsByRound[selRound]:[];
+    const mlOpenCards=mlCardsRaw.filter(c=>c.isOpen);
+    const mlDone=mlOpenCards.filter(c=>c.done).length, mlTotal=mlOpenCards.length;
+    const mlGhosts=mlCardsRaw.filter(c=>c.isGhost).length;
+
     const rounds=[['R32','r32',4],['R16','r16',5],['QF','qf',10],['SF','sf',15],['Final','final',20]].map(([name,key,pts])=>({
       name,pts,op:'1',
-      bg:key===activeKey?'rgba(122,60,255,.16)':'#1A1A1E',
-      bd:key===activeKey?'#7A3CFF':'rgba(255,255,255,.05)',
-      tc:key===activeKey?'#F5F5F7':'#8E8E93'}));
+      pick:()=>this.setState({predRound:key}),
+      bg:key===selRound?'rgba(122,60,255,.16)':'#1A1A1E',
+      bd:key===selRound?'#7A3CFF':'rgba(255,255,255,.05)',
+      tc:key===selRound?'#F5F5F7':'#8E8E93'}));
 
     // backwards compat aliases for submit logic
     const r32done=activeKey==='r32'?koDone:0;
@@ -2624,6 +2833,36 @@ class Component extends DCLogic {
       koCards, koDone, koTotal, koPct, koDoneStr, koRemCount, koAllDone, koAllDoneMsg,
       canReopen, reopenDeadlineStr: REOPEN?.deadlineMs ? new Date(REOPEN.deadlineMs).toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',hour12:true,timeZone:'Asia/Kolkata'}) : '',
       koLockedSummary, koHasLocked, isKoLocked, isKoOpen, koRoundName, koNextRoundMsg,
+      legacyLocked:selIsR32&&isKoLocked, legacyOpen:selIsR32&&isKoOpen,
+      selIsML, mlCards:this.deepFlags(mlCardsRaw),
+      mlRoundName:ML_LABEL[selRound]||'', mlHasCards:mlCardsRaw.length>0,
+      mlHasOpen:mlTotal>0, mlDoneStr:mlDone+' of '+mlTotal+' open matches predicted',
+      mlPct:(mlTotal?Math.round(mlDone/mlTotal*100):0)+'%',
+      mlGhostNote:mlGhosts>0?(mlGhosts+' matchup'+(mlGhosts>1?'s':'')+' still being decided \u2014 they open automatically'):'',
+      mlHasGhostNote:mlGhosts>0,
+      mlEmpty:mlCardsRaw.length===0,
+      mlSubmitLabel:(mlDone===0)?'Set your scores above':(s.submitted&&mlDone===mlTotal)?('\u2713 All '+mlTotal+' saved'):('Save '+mlDone+' of '+mlTotal+' predictions'),
+      mlSubmitBg:(mlDone>0)?'linear-gradient(135deg,#FF2D78,#7A3CFF,#1FA2FF)':'rgba(255,255,255,.07)',
+      mlSubmitC:(mlDone>0)?'#fff':'#7C7C82',
+      mlSubmit:(this._mlSubmitFn=async()=>{
+        if(!mlTotal){ this.showToast('No open matches in this round yet','warn'); return; }
+        if(!mlDone){ this.showToast('Set at least one scoreline first','warn'); return; }
+        const draws=mlOpenCards.filter(c=>c.isDraw&&!c.advName);
+        if(draws.length){ this.showToast('Draw scores need a penalty winner \u2014 pick who advances','warn'); return; }
+        this._savePredictionsToLocal();
+        const url=this._apiData?.meta?.appsScriptUrl, pid=this._userParticipantId;
+        if(url&&pid){
+          try{
+            const r=await fetch(url,{method:'POST',headers:{'Content-Type':'text/plain'},
+              body:JSON.stringify({action:'save',participantId:pid,pin:(this._apiData?.meta?.loginPin||'5555'),round:selRound,picks:s[selRound]||{}})});
+            const j=await r.json();
+            if(!j.ok){ this.showToast(j.error||'Save failed \u2014 try again','warn'); return; }
+          }catch(e){ this.showToast('Sheet unavailable \u2014 saved to your device','warn'); }
+        }
+        this.setState({submitted:true});
+        try{ const l=document.querySelector('.save-label'); if(l&&l.animate) l.animate([{opacity:.4,filter:'blur(3px)'},{opacity:1,filter:'blur(0)'}],{duration:260,easing:'ease-out'}); }catch(_){}
+        this.showToast(mlDone===mlTotal?('All '+mlTotal+' predictions saved \u2014 locked in!'):('Saved '+mlDone+' of '+mlTotal+' \u2014 keep going'),'ok');
+      }),
       koHasMatches: koMatchDefs.length > 0,
       koNoMatches: koMatchDefs.length === 0,
       prevRoundName: ({r32:'group stage',r16:'Round of 32',qf:'Round of 16',sf:'Quarter-finals',final:'Semi-finals'})[activeKey]||'previous round',

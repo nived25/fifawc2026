@@ -154,6 +154,7 @@ async function run() {
   const predictions = readOr('predictions.json', {});
   let locked = 0;
   for (const [roundKey, lockMs] of Object.entries(koLockTimes)) {
+    if (roundKey !== 'r32') continue; // r16+ uses match-level time locks, no stored flags
     if (!lockMs || Date.now() < lockMs) continue;
     for (const [, pred] of Object.entries(predictions)) {
       // Support both old (pred.locked=bool) and new (pred.locked={r32:true}) format

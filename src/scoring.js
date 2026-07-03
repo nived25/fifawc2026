@@ -30,17 +30,22 @@ function scoreKoRound({ roundKey, roundName, configKey, picks, matchList, fixtur
     const idx = parseInt(idxStr);
     if (isNaN(idx) || !pick) continue;
 
-    const matchDef = matchList[idx];
-    if (!matchDef) continue;
-
-    const homeCode = matchDef.home?.code || matchDef.home;
-    const awayCode = matchDef.away?.code || matchDef.away;
-    if (!homeCode || !awayCode) continue;
-
-    const actualMatch = fixtures.find(f =>
-      f.round === roundName && f.finished &&
-      f.home.code === homeCode && f.away.code === awayCode
-    );
+    let actualMatch;
+    if (roundKey === 'r32') {
+      // legacy: picks keyed by position in r32_tbd
+      const matchDef = matchList[idx];
+      if (!matchDef) continue;
+      const homeCode = matchDef.home?.code || matchDef.home;
+      const awayCode = matchDef.away?.code || matchDef.away;
+      if (!homeCode || !awayCode) continue;
+      actualMatch = fixtures.find(f =>
+        f.round === roundName && f.finished &&
+        f.home.code === homeCode && f.away.code === awayCode
+      );
+    } else {
+      // r16 onward: picks keyed by fixture id (match-level locking)
+      actualMatch = fixtures.find(f => f.id === idx && f.round === roundName && f.finished);
+    }
     if (!actualMatch) continue;
 
     const actualAdv = actualMatch.home.goals > actualMatch.away.goals ? 'a'
@@ -51,14 +56,14 @@ function scoreKoRound({ roundKey, roundName, configKey, picks, matchList, fixtur
     const predAdv = pick.adv || (pick.h > pick.a ? 'a' : (pick.a > pick.h ? 'b' : null));
     if (!predAdv || predAdv !== actualAdv) continue;
 
-    const predWinCode = predAdv === 'a' ? homeCode : awayCode;
+    const predWinCode = predAdv === 'a' ? actualMatch.home.code : actualMatch.away.code;
     const scoreMatch = pick.h === actualMatch.home.goals && pick.a === actualMatch.away.goals;
     const pts = scoreMatch ? basePts * 2 : basePts;
     const reason = scoreMatch
       ? `${predWinCode} correct + exact score ${pick.h}-${pick.a} (2×${configKey})`
       : `${predWinCode} advances (${configKey})`;
 
-    const key = ledgerKey(participantId, actualMatch.id, `${configKey.toLowerCase()}_match_${idx}`);
+    const key = ledgerKey(participantId, actualMatch.id, roundKey === 'r32' ? `${configKey.toLowerCase()}_match_${idx}` : `${configKey.toLowerCase()}_m${idx}`);
     if (!seen.has(key)) {
       seen.add(key);
       ledger.push({ key, participantId, points: pts, reason, matchId: actualMatch.id, ts: Date.now() });
@@ -163,7 +168,7 @@ export function computeScores() {
       // Support old format (pred.ko = R32 picks) and new format (pred.r32)
       const picks = pred[key] || (key === 'r32' ? pred.ko : null);
       if (!picks) continue;
-      if (!isRoundLocked(pred, key)) continue;
+      if (key === 'r32' && !isRoundLocked(pred, key)) continue; // r16+: a finished match is past its own lock
 
       const matchList = key === 'r32' ? r32list : (bracket[name] || []);
 
