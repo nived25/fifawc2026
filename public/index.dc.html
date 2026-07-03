@@ -85,6 +85,10 @@
   @keyframes rowIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
   @keyframes newPulse{0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(255,45,120,.5)}50%{transform:scale(1.09);box-shadow:0 0 7px 1px rgba(255,45,120,.55)}}
   @keyframes tabIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes tabInL{from{opacity:0;transform:translateX(-26px)}to{opacity:1;transform:translateX(0)}}
+  @keyframes tabInR{from{opacity:0;transform:translateX(26px)}to{opacity:1;transform:translateX(0)}}
+  [data-tabdir="l"] .tab-enter{animation-name:tabInL}
+  [data-tabdir="r"] .tab-enter{animation-name:tabInR}
   @keyframes popIn{from{opacity:0;transform:scale(.94) translateY(4px)}to{opacity:1;transform:scale(1) translateY(0)}}
   @keyframes digitTick{0%{transform:scale(.78) translateY(2px);opacity:.4}100%{transform:scale(1) translateY(0);opacity:1}}
   @keyframes revealUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
@@ -94,12 +98,35 @@
   .disp{font-family:"Space Grotesk","Hanken Grotesk",sans-serif;letter-spacing:-.02em}
   /* Tab-content enter: sc-if recreates the tab root on switch, so this plays once per switch */
   .tab-enter{animation:tabIn 320ms var(--ease-out) both}
-  /* Leaderboard stagger: rows animate in once on creation, capped at 9 siblings */
-  .lb-row{animation:rowIn 340ms var(--ease-out) both}
-  .lb-row:nth-child(2){animation-delay:40ms}.lb-row:nth-child(3){animation-delay:80ms}
-  .lb-row:nth-child(4){animation-delay:120ms}.lb-row:nth-child(5){animation-delay:160ms}
-  .lb-row:nth-child(6){animation-delay:200ms}.lb-row:nth-child(7){animation-delay:240ms}
-  .lb-row:nth-child(8){animation-delay:280ms}.lb-row:nth-child(9){animation-delay:320ms}
+  /* Leaderboard: broadcast-board cascade — blur-to-sharp slide, per-row inline delay (all rows) */
+  @keyframes lbIn{from{opacity:0;transform:translateY(10px);filter:blur(2.5px)}to{opacity:1;transform:translateY(0);filter:blur(0)}}
+  .lb-row{animation:lbIn 300ms var(--ease-out) both}
+  /* One-shot shimmer sweep across the YOU row after the cascade lands */
+  @keyframes lbShine{0%,45%{transform:translateX(-160%) skewX(-18deg)}100%{transform:translateX(260%) skewX(-18deg)}}
+  .you-shimmer{position:relative;overflow:hidden}
+  .you-shimmer::after{content:'';position:absolute;top:0;bottom:0;left:0;width:46%;pointer-events:none;background:linear-gradient(100deg,transparent,rgba(255,255,255,.13),transparent);transform:translateX(-160%) skewX(-18deg);animation:lbShine 2s var(--ease-in-out) 1 both;animation-delay:inherit}
+  /* W/D/L cluster pops in after its row lands */
+  .dots-pop{animation:popIn 240ms var(--ease-pop) both}
+  /* Hero: ambient gradient drift + one-shot diagonal shine on load */
+  @keyframes heroDrift{from{background-position:0% 50%}to{background-position:100% 50%}}
+  .hero-live{background-size:220% 220%!important;animation:heroDrift 9s var(--ease-in-out) infinite alternate}
+  @keyframes heroShine{0%,25%{transform:translateX(-180%) skewX(-16deg)}100%{transform:translateX(320%) skewX(-16deg)}}
+  .hero-shine{position:absolute;top:0;bottom:0;left:0;width:38%;pointer-events:none;background:linear-gradient(100deg,transparent,rgba(255,255,255,.18),transparent);transform:translateX(-180%) skewX(-16deg);animation:heroShine 1.9s var(--ease-in-out) .35s 1 both}
+  @keyframes heroPop{0%{transform:scale(1)}45%{transform:scale(1.12)}100%{transform:scale(1)}}
+  .hero-pop{animation:heroPop 420ms var(--ease-pop) 1}
+  /* Ambient orbs drift slowly */
+  @keyframes orbA{from{transform:translate(0,0)}to{transform:translate(34px,26px)}}
+  @keyframes orbB{from{transform:translate(0,0)}to{transform:translate(-30px,22px)}}
+  @keyframes orbC{from{transform:translate(0,0)}to{transform:translate(26px,-24px)}}
+  .orb-a{animation:orbA 34s ease-in-out infinite alternate}
+  .orb-b{animation:orbB 41s ease-in-out infinite alternate}
+  .orb-c{animation:orbC 37s ease-in-out infinite alternate}
+  /* Celebration burst behind 2x-exact badges: expanding gradient ring + badge pop */
+  @keyframes burstRing{0%{transform:scale(.3);opacity:.9}100%{transform:scale(2.1);opacity:0}}
+  .exact-burst{position:relative}
+  .exact-burst::before{content:'';position:absolute;inset:-6px;border-radius:50%;border:2px solid rgba(255,214,10,.75);transform:scale(.3);opacity:0;animation:burstRing 800ms var(--ease-out) .5s 1}
+  .exact-burst::after{content:'';position:absolute;inset:-11px;border-radius:50%;border:1.5px solid rgba(255,45,120,.55);transform:scale(.3);opacity:0;animation:burstRing 950ms var(--ease-out) .62s 1}
+  .exact-burst>span,.exact-burst{animation:popIn 340ms var(--ease-pop) .5s both}
   .digit-tick{display:inline-block;animation:digitTick 130ms var(--ease-pop) both}
   .reveal-up{animation:revealUp 280ms var(--ease-out) both}
   .pop-in{animation:popIn var(--dur-enter) var(--ease-pop) both}
@@ -119,7 +146,7 @@
   /* Flag fallback chip when a flag image is missing/broken */
   .flag-chip{display:inline-flex;align-items:center;justify-content:center;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.12);border-radius:3px;color:#B9B9C0;font-size:8px;font-weight:700;letter-spacing:.3px;font-family:"Space Grotesk",sans-serif}
   @media (prefers-reduced-motion:reduce){
-    .new-badge{animation:none}
+    .new-badge,.hero-live,.hero-shine,.orb-a,.orb-b,.orb-c,.you-shimmer::after,.exact-burst::before,.exact-burst::after{animation:none}
     .tab-enter,.stagger>*,.digit-tick,.reveal-up,.pop-in{animation-duration:1ms;animation-delay:0ms}
     .sheet-x,.sheet-y,.sheet-modal{animation:fadeIn 150ms ease both}
     *{transition-duration:1ms!important}
@@ -132,9 +159,9 @@
 
   <!-- ambient depth -->
   <div style="position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden">
-    <div style="position:absolute;top:-140px;left:-90px;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(255,45,120,.42),transparent 64%);filter:blur(60px)"></div>
-    <div style="position:absolute;top:90px;right:-130px;width:360px;height:360px;border-radius:50%;background:radial-gradient(circle,rgba(122,60,255,.4),transparent 64%);filter:blur(72px)"></div>
-    <div style="position:absolute;bottom:40px;left:-70px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(31,162,255,.34),transparent 64%);filter:blur(72px)"></div>
+    <div class="orb-a" style="position:absolute;top:-140px;left:-90px;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(255,45,120,.42),transparent 64%);filter:blur(60px)"></div>
+    <div class="orb-b" style="position:absolute;top:90px;right:-130px;width:360px;height:360px;border-radius:50%;background:radial-gradient(circle,rgba(122,60,255,.4),transparent 64%);filter:blur(72px)"></div>
+    <div class="orb-c" style="position:absolute;bottom:40px;left:-70px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(31,162,255,.34),transparent 64%);filter:blur(72px)"></div>
   </div>
 
 
@@ -155,7 +182,8 @@
 
       <!-- hero (compact glass) -->
       <div style="padding:12px 16px 2px">
-        <div style="position:relative;display:flex;align-items:stretch;border-radius:22px;overflow:hidden;padding:13px 18px;background:linear-gradient(135deg,rgba(255,45,120,.2),rgba(122,60,255,.17) 52%,rgba(31,162,255,.18));backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);border:1px solid rgba(255,255,255,.13);box-shadow:inset 0 1px 0 0 rgba(255,255,255,.18),0 18px 44px -16px rgba(122,60,255,.55)">
+        <div class="hero-live" style="position:relative;display:flex;align-items:stretch;border-radius:22px;overflow:hidden;padding:13px 18px;background:linear-gradient(135deg,rgba(255,45,120,.2),rgba(122,60,255,.17) 52%,rgba(31,162,255,.18));backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);border:1px solid rgba(255,255,255,.13);box-shadow:inset 0 1px 0 0 rgba(255,255,255,.18),0 18px 44px -16px rgba(122,60,255,.55)">
+          <div class="hero-shine"></div>
           <div style="position:absolute;top:-50px;right:-30px;width:140px;height:140px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.16),transparent 70%);pointer-events:none"></div>
           <div style="flex:1;position:relative">
             <div style="color:rgba(255,255,255,.62);font-size:10px;font-weight:600;letter-spacing:1.3px">YOUR RANK</div>
@@ -169,7 +197,7 @@
           <div style="width:1px;background:linear-gradient(180deg,transparent,rgba(255,255,255,.18),transparent);margin:2px 18px"></div>
           <div style="flex:1;text-align:right;position:relative">
             <div style="color:rgba(255,255,255,.62);font-size:10px;font-weight:600;letter-spacing:1.3px">POINTS</div>
-            <div class="disp" style="font-size:43px;font-weight:600;letter-spacing:-2.5px;line-height:1;margin-top:5px;font-variant-numeric:tabular-nums;color:#fff;text-shadow:0 2px 20px rgba(255,255,255,.25)">{{ heroPts }}</div>
+            <div class="disp hero-pts" style="font-size:43px;font-weight:600;letter-spacing:-2.5px;line-height:1;margin-top:5px;font-variant-numeric:tabular-nums;color:#fff;text-shadow:0 2px 20px rgba(255,255,255,.25)">{{ heroPts }}</div>
             <div class="pop-in" style="display:inline-flex;align-items:center;gap:5px;margin-top:9px;padding:3px 10px;border-radius:20px;white-space:nowrap;background:{{ heroDeltaBg }};border:1px solid {{ heroDeltaBd }};animation-delay:650ms"><span style="color:{{ heroDeltaC }};font-size:11.5px;font-weight:600">{{ heroDeltaStr }}</span></div>
           </div>
         </div>
@@ -192,8 +220,8 @@
           <span title="Total fantasy points" style="width:34px;text-align:right;font-size:9.5px;font-weight:600;letter-spacing:.6px;color:#48484A;cursor:help">PTS</span>
         </div>
         <sc-for list="{{ leaderboard }}" as="p" hint-placeholder-count="12">
-          <div onClick="{{ p.open }}" class="lb-row" title="Tap to view {{ p.name }}'s full squad" style="display:flex;align-items:center;gap:11px;padding:5.5px 16px;cursor:pointer;border-top:1px solid rgba(255,255,255,.045);background:{{ p.rowBg }};transition:transform var(--dur-press) var(--ease-out),background var(--dur-fast) var(--ease-out)" style-active="transform:scale(.985)">
-            <div class="disp" style="width:15px;text-align:center;color:{{ p.rankC }};font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;flex:none">{{ p.rank }}</div>
+          <div onClick="{{ p.open }}" class="lb-row {{ p.youCls }}" title="Tap to view {{ p.name }}'s full squad" style="display:flex;align-items:center;gap:11px;padding:5.5px 16px;cursor:pointer;border-top:1px solid rgba(255,255,255,.045);background:{{ p.rowBg }};transition:transform var(--dur-press) var(--ease-out),background var(--dur-fast) var(--ease-out);animation-delay:{{ p.delay }}" style-active="transform:scale(.985)">
+            <div class="disp" style="width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:{{ p.medalBg }};box-shadow:{{ p.medalGlow }};color:{{ p.rankC }};font-size:11.5px;font-weight:700;font-variant-numeric:tabular-nums;flex:none">{{ p.rank }}</div>
             <div style="flex:1;min-width:0">
               <div style="display:flex;align-items:center;gap:6px;min-width:0"><span style="color:#F5F5F7;font-size:14.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ p.name }}</span><sc-if value="{{ p.you }}" hint-placeholder-val="{{ false }}"><span style="flex:none;font-size:8.5px;font-weight:700;letter-spacing:.5px;color:#FF6FA0;background:rgba(255,45,120,.16);border:1px solid rgba(255,45,120,.32);border-radius:5px;padding:1.5px 5px;line-height:1.1">YOU</span></sc-if></div>
               <div style="display:flex;gap:4px;margin-top:3px">
@@ -202,12 +230,12 @@
                 </sc-for>
               </div>
             </div>
-            <div style="display:flex;align-items:center;gap:6px;flex:none">
+            <div class="dots-pop" style="display:flex;align-items:center;gap:6px;flex:none;animation-delay:{{ p.dotDelay }}">
               <span title="Won" style="display:inline-flex;align-items:center;gap:4px;cursor:help"><span style="width:5px;height:5px;border-radius:50%;background:#30D158;flex:none"></span><span style="color:#D6D6DB;font-size:12.5px;font-weight:600;font-variant-numeric:tabular-nums;width:8px;text-align:center">{{ p.w }}</span></span>
               <span title="Drawn" style="display:inline-flex;align-items:center;gap:4px;cursor:help"><span style="width:5px;height:5px;border-radius:50%;background:#8E8E93;flex:none"></span><span style="color:#D6D6DB;font-size:12.5px;font-weight:600;font-variant-numeric:tabular-nums;width:8px;text-align:center">{{ p.d }}</span></span>
               <span title="Lost" style="display:inline-flex;align-items:center;gap:4px;cursor:help"><span style="width:5px;height:5px;border-radius:50%;background:#FF453A;flex:none"></span><span style="color:#D6D6DB;font-size:12.5px;font-weight:600;font-variant-numeric:tabular-nums;width:8px;text-align:center">{{ p.l }}</span></span>
             </div>
-            <div class="disp" style="width:34px;text-align:right;flex:none;font-variant-numeric:tabular-nums"><span style="color:#F5F5F7;font-size:18px;font-weight:600;letter-spacing:-.5px">{{ p.pts }}</span></div>
+            <div class="disp" style="width:40px;text-align:right;flex:none;font-variant-numeric:tabular-nums;display:flex;align-items:center;justify-content:flex-end;gap:3px"><span style="color:{{ p.deltaC }};font-size:8.5px;line-height:1">{{ p.deltaArrow }}</span><span style="color:#F5F5F7;font-size:18px;font-weight:600;letter-spacing:-.5px">{{ p.pts }}</span></div>
           </div>
         </sc-for>
       </div>
@@ -235,8 +263,8 @@
           <span style="width:36px;text-align:right;font-size:9.5px;font-weight:600;letter-spacing:.6px;color:#7C7C82;cursor:help" title="Total KO prediction points">PTS</span>
         </div>
         <sc-for list="{{ koLeaderboard }}" as="kp" hint-placeholder-count="12">
-          <div onClick="{{ kp.open }}" style-active="background:rgba(255,255,255,.04)" style="display:flex;align-items:center;gap:11px;padding:5.5px 16px;border-top:1px solid rgba(255,255,255,.045);background:{{ kp.rowBg }};cursor:pointer;transition:background .2s">
-            <div style="width:15px;text-align:center;color:{{ kp.rankC }};font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;flex:none">{{ kp.koRank }}</div>
+          <div onClick="{{ kp.open }}" class="lb-row" style-active="background:rgba(255,255,255,.04)" style="display:flex;align-items:center;gap:11px;padding:5.5px 16px;border-top:1px solid rgba(255,255,255,.045);background:{{ kp.rowBg }};cursor:pointer;transition:background var(--dur-fast) var(--ease-out);animation-delay:{{ kp.delay }}">
+            <div class="disp" style="width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:{{ kp.medalBg }};box-shadow:{{ kp.medalGlow }};color:{{ kp.rankC }};font-size:11.5px;font-weight:700;font-variant-numeric:tabular-nums;flex:none">{{ kp.koRank }}</div>
             <div style="flex:1;min-width:0">
               <div style="display:flex;align-items:center;gap:6px;min-width:0"><span style="color:#F5F5F7;font-size:14.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ kp.name }}</span><sc-if value="{{ kp.you }}" hint-placeholder-val="{{ false }}"><span style="flex:none;font-size:8.5px;font-weight:700;letter-spacing:.5px;color:#FF6FA0;background:rgba(255,45,120,.16);border:1px solid rgba(255,45,120,.32);border-radius:5px;padding:1.5px 5px;line-height:1.1">YOU</span></sc-if></div>
               <div style="display:flex;gap:4px;margin-top:3px">
@@ -272,8 +300,8 @@
           <span style="font-size:9.5px;font-weight:600;letter-spacing:.6px;color:#7C7C82;width:34px;text-align:right">TOTAL</span>
         </div>
         <sc-for list="{{ overallLeaderboard }}" as="p" hint-placeholder-count="12">
-          <div style="display:flex;align-items:center;gap:11px;padding:5.5px 16px;border-top:1px solid rgba(255,255,255,.045);background:{{ p.rowBg }}">
-            <div style="width:15px;text-align:center;color:{{ p.rankC }};font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;flex:none">{{ p.rank }}</div>
+          <div class="lb-row" style="display:flex;align-items:center;gap:11px;padding:5.5px 16px;border-top:1px solid rgba(255,255,255,.045);background:{{ p.rowBg }};animation-delay:{{ p.delay }}">
+            <div class="disp" style="width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:{{ p.medalBg }};box-shadow:{{ p.medalGlow }};color:{{ p.rankC }};font-size:11.5px;font-weight:700;font-variant-numeric:tabular-nums;flex:none">{{ p.rank }}</div>
             <div style="flex:1;min-width:0">
               <div style="display:flex;align-items:center;gap:6px"><span style="color:#F5F5F7;font-size:14.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ p.name }}</span><sc-if value="{{ p.you }}" hint-placeholder-val="{{ false }}"><span style="flex:none;font-size:8.5px;font-weight:700;letter-spacing:.5px;color:#FF6FA0;background:rgba(255,45,120,.16);border:1px solid rgba(255,45,120,.32);border-radius:5px;padding:1.5px 5px;line-height:1.1">YOU</span></sc-if></div>
             </div>
@@ -651,7 +679,7 @@
                   <sc-if value="{{ t.finished }}" hint-placeholder-val="{{ false }}">
                     <div style="display:flex;align-items:center;justify-content:space-between;margin-top:5px">
                       <span style="display:flex;align-items:center;gap:4px;color:{{ t.badgeC }};font-size:10.5px;font-weight:700"><span style="font-size:11px">{{ t.badgeIcon }}</span>{{ t.badgeLabel }} · {{ t.actScore }}</span>
-                      <span style="flex:none;padding:1px 7px;border-radius:6px;font-size:11px;font-weight:700;font-variant-numeric:tabular-nums;color:{{ t.badgeC }};background:rgba(255,255,255,.06)">{{ t.ptsStr }}</span>
+                      <span class="{{ t.burstCls }}" style="flex:none;padding:1px 7px;border-radius:6px;font-size:11px;font-weight:700;font-variant-numeric:tabular-nums;color:{{ t.badgeC }};background:rgba(255,255,255,.06)">{{ t.ptsStr }}</span>
                     </div>
                   </sc-if>
                 </div>
@@ -788,7 +816,7 @@
           </div>
         </sc-if>
         <sc-if value="{{ koHasMatches }}" hint-placeholder-val="{{ true }}">
-        <div onClick="{{ submit }}" style-active="transform:scale(.975)" style="margin-top:12px;text-align:center;padding:15px;border-radius:16px;cursor:pointer;font-size:16px;font-weight:600;color:{{ submitC }};background:{{ submitBg }};box-shadow:{{ submitShadow }};transition:transform .22s ease,box-shadow .25s ease,background .25s ease">{{ submitLabel }}</div>
+        <div onClick="{{ submit }}" style-active="transform:scale(.975)" style="margin-top:12px;text-align:center;padding:15px;border-radius:16px;cursor:pointer;font-size:16px;font-weight:600;color:{{ submitC }};background:{{ submitBg }};box-shadow:{{ submitShadow }};transition:transform var(--dur-press) var(--ease-out),box-shadow var(--dur-fast) var(--ease-out),background var(--dur-fast) var(--ease-out)"><span class="save-label" style="display:inline-block">{{ submitLabel }}</span></div>
         </sc-if>
       </div>
     </div>
@@ -1105,14 +1133,14 @@
 
   <!-- ===================== POINTS RULES MODAL ===================== -->
   <sc-if value="{{ rulesOpen }}" hint-placeholder-val="{{ false }}">
-  <div onClick="{{ closeRules }}" class="scrim" style="position:absolute;inset:0;z-index:20;background:rgba(0,0,0,.6);display:flex;flex-direction:column;justify-content:flex-end">
+  <div data-close="rules" data-close-scrim="1" class="scrim" style="position:absolute;inset:0;z-index:20;background:rgba(0,0,0,.6);display:flex;flex-direction:column;justify-content:flex-end">
     <div onClick="event.stopPropagation()" class="sheet-y" data-sheet="y" style="background:rgba(18,18,23,.98);backdrop-filter:blur(40px) saturate(1.4);-webkit-backdrop-filter:blur(40px) saturate(1.4);border-radius:24px 24px 0 0;border-top:1px solid rgba(255,255,255,.1);padding:8px 18px 28px;max-height:60vh;overflow-y:auto;-webkit-overflow-scrolling:touch">
 
       <!-- drag handle + header -->
       <div style="width:36px;height:4px;border-radius:2px;background:#2C2C2E;margin:0 auto 14px"></div>
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
         <div style="color:#F5F5F7;font-size:17px;font-weight:700;letter-spacing:-.2px">Points guide</div>
-        <div onClick="{{ closeRules }}" style="width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0">
+        <div data-close="rules" style="width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#8E8E93" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
         </div>
       </div>
@@ -1196,7 +1224,7 @@
         <div style="margin-top:10px;text-align:center;color:#7C7C82;font-size:10px;font-weight:500">Pick 2 finalists + 1 champion → up to 100 bonus pts</div>
       </div>
 
-      <div onClick="{{ closeRules }}" style-active="transform:scale(.97)" style="text-align:center;padding:13px;border-radius:13px;background:rgba(255,255,255,.08);color:#F5F5F7;font-size:14.5px;font-weight:600;cursor:pointer;touch-action:manipulation">Got it</div>
+      <div data-close="rules" style-active="transform:scale(.97)" style="text-align:center;padding:13px;border-radius:13px;background:rgba(255,255,255,.08);color:#F5F5F7;font-size:14.5px;font-weight:600;cursor:pointer;touch-action:manipulation">Got it</div>
     </div>
   </div>
   </sc-if>
@@ -1357,7 +1385,20 @@ class Component extends DCLogic {
     };
     this.scrollTop=()=>{ if(this.mainScroll) this.mainScroll.scrollTop=0; };
   }
-  setTab(t){ this.setState({tab:t}); this.scrollTop(); }
+  setTab(t){
+    const order=['fantasy','matches','picks','predict','stats'];
+    const from=order.indexOf(this.state.tab), to=order.indexOf(t);
+    try{ document.documentElement.dataset.tabdir = to>from?'r':(to<from?'l':''); }catch(_){}
+    this.setState({tab:t}); this.scrollTop();
+    try{
+      const order=['fantasy','matches','picks','predict','stats'];
+      const nav=document.querySelectorAll('body [onclick]');
+      const icons=document.querySelectorAll('div[style*="flex:none"][style*="env(safe-area-inset-bottom"] svg');
+      const svg=icons[order.indexOf(t)];
+      if(svg&&svg.animate&&!matchMedia('(prefers-reduced-motion: reduce)').matches)
+        svg.animate([{transform:'translateY(0)'},{transform:'translateY(-3px)',offset:.4},{transform:'translateY(0)'}],{duration:340,easing:'cubic-bezier(.34,1.56,.64,1)'});
+    }catch(_){}
+  }
   showToast(msg,tone){
     if(this.toastT) clearTimeout(this.toastT);
     this.setState({toast:{msg,tone:tone||'ok'}});
@@ -1370,13 +1411,19 @@ class Component extends DCLogic {
     this._initMicro();
   }
   // Animated close: add .closing (CSS transitions the exit), then commit the state change.
+  // Commit on transitionend with a timer fallback (background tabs throttle timers), and a
+  // second call while closing commits immediately (double-tap always wins).
   animClose(sel,done){
     try{
-      const el=document.querySelector(sel+':not(.closing)');
+      const el=document.querySelector(sel);
       if(!el){ done(); return; }
+      if(el.classList.contains('closing')){ done(); return; }
       el.classList.add('closing');
       const sc=el.closest('.scrim'); if(sc) sc.classList.add('closing');
-      setTimeout(done,240);
+      let fired=false;
+      const fin=()=>{ if(fired) return; fired=true; done(); };
+      el.addEventListener('transitionend',fin,{once:true});
+      setTimeout(fin,420);
     }catch(_){ done(); }
   }
   _closeTopSheet(axis){
@@ -1391,6 +1438,15 @@ class Component extends DCLogic {
   // Micro-interactions: stepper digit tick + swipe-to-dismiss for sheets (damping + velocity flick).
   _initMicro(){
     const D=document, reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // Delegated close for the rules modal — the DC runtime never binds onClick inside
+    // this particular sc-if block (pre-existing bug), so its close controls route here.
+    D.addEventListener('click',e=>{
+      const c=e.target.closest&&e.target.closest('[data-close="rules"]');
+      if(!c) return;
+      // the scrim closes only when the tap is OUTSIDE the sheet (sheet clicks bubble to it)
+      if(c.hasAttribute('data-close-scrim')&&e.target.closest('[data-sheet="y"]')) return;
+      this.animClose('[data-sheet="y"]',()=>this.setState({rulesOpen:false}));
+    },true);
     // Digit tick — delegation survives DC re-renders
     D.addEventListener('click',e=>{
       if(reduce) return;
@@ -1410,6 +1466,8 @@ class Component extends DCLogic {
       if(st||reduce) return;
       const y=e.target.closest&&e.target.closest('[data-sheet="y"]');
       if(y){
+        // scrollable sheets: native scroll wins unless the sheet is at its top
+        if(y.scrollTop>0) return;
         const r=y.getBoundingClientRect();
         if(e.clientY-r.top<=64) st={el:y,axis:'y',s:e.clientY,size:r.height,d:0,engaged:false,trail:[[performance.now(),0]]};
         return;
@@ -1422,6 +1480,8 @@ class Component extends DCLogic {
       let raw=(st.axis==='y'?e.clientY:e.clientX)-st.s;
       if(!st.engaged){
         if(Math.abs(raw)<10) return;                    // slop: micro-movements never move the sheet
+        // upward past slop on a scrollable sheet = scroll intent, not a dismiss gesture
+        if(raw<0&&st.axis==='y'&&st.el.scrollHeight>st.el.clientHeight+4){ st=null; return; }
         st.engaged=true;
         st.s+=(raw>0?10:-10);                           // re-anchor so motion starts from zero
         raw=(st.axis==='y'?e.clientY:e.clientX)-st.s;
@@ -1462,6 +1522,73 @@ class Component extends DCLogic {
     };
     D.addEventListener('pointerup',end,{passive:true});
     D.addEventListener('pointercancel',end,{passive:true});
+    this._initContentGestures(reduce);
+  }
+  // Pull-to-refresh + swipe-between-tabs on the main content. One candidate per touch;
+  // mode decided by first significant movement. Guards: never inside sheets, horizontal
+  // scrollers (bracket/pickers), or the login screen; PTR only from scrollTop 0.
+  _initContentGestures(reduce){
+    const D=document;
+    // PTR indicator (created once, outside DC's render tree)
+    const ind=D.createElement('div');
+    ind.style.cssText='position:fixed;left:50%;top:8px;width:38px;height:38px;margin-left:-19px;border-radius:50%;z-index:60;display:flex;align-items:center;justify-content:center;background:rgba(16,16,20,.92);border:1.5px solid rgba(255,255,255,.14);box-shadow:0 8px 24px rgba(0,0,0,.5);opacity:0;transform:translateY(-56px);transition:transform 300ms var(--ease-out),opacity 220ms var(--ease-out);pointer-events:none';
+    ind.innerHTML='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="url(#ptrg)" stroke-width="2.4" stroke-linecap="round"><defs><linearGradient id="ptrg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF2D78"/><stop offset=".5" stop-color="#7A3CFF"/><stop offset="1" stop-color="#1FA2FF"/></linearGradient></defs><path d="M20 11A8 8 0 1 0 20 13"/><path d="M20 5v6h-6"/></svg>';
+    D.body.appendChild(ind);
+    const arrow=ind.querySelector('svg');
+    let gs=null, busy=false;
+    const H_SCROLL='[class*="snap-x"],[style*="overflow-x:auto"],[style*="overflow-x: auto"]';
+    D.addEventListener('pointerdown',e=>{
+      if(gs||busy||reduce) return;
+      if(e.target.closest&&(e.target.closest('[data-sheet]')||e.target.closest('.scrim'))) return;
+      const ms=this.mainScroll;
+      if(!ms||!ms.contains(e.target)) return;
+      gs={x0:e.clientX,y0:e.clientY,mode:null,ptrOK:ms.scrollTop<=0,hGuard:!!(e.target.closest&&e.target.closest(H_SCROLL)),d:0,t0:performance.now()};
+    },{passive:true});
+    D.addEventListener('pointermove',e=>{
+      if(!gs) return;
+      const dx=e.clientX-gs.x0, dy=e.clientY-gs.y0;
+      if(!gs.mode){
+        if(Math.abs(dx)<14&&Math.abs(dy)<14) return;
+        if(Math.abs(dx)>2*Math.abs(dy)&&!gs.hGuard) gs.mode='swipe';
+        else if(dy>0&&gs.ptrOK&&Math.abs(dy)>2*Math.abs(dx)) gs.mode='ptr';
+        else gs.mode='none';
+      }
+      if(gs.mode==='ptr'){
+        const d=Math.min(110,dy/2.2); gs.d=d;
+        ind.style.transition='none';
+        ind.style.opacity=String(Math.min(1,d/34));
+        ind.style.transform=`translateY(${d-46}px) rotate(${d*3.4}deg)`;
+      } else if(gs.mode==='swipe'){
+        gs.d=dx;
+      }
+    },{passive:true});
+    const fin=()=>{
+      if(!gs) return;
+      const g=gs; gs=null;
+      if(g.mode==='ptr'){
+        ind.style.transition='';
+        if(g.d>=58){
+          busy=true;
+          ind.style.transform='translateY(14px)';
+          const spin=arrow.animate?arrow.animate([{transform:'rotate(0deg)'},{transform:'rotate(720deg)'}],{duration:850,easing:'ease-in-out'}):null;
+          Promise.resolve(this.refreshData&&this.refreshData()).finally(()=>{
+            setTimeout(()=>{ ind.style.opacity='0'; ind.style.transform='translateY(-56px)'; busy=false; },650);
+          });
+        } else {
+          ind.style.opacity='0'; ind.style.transform='translateY(-56px)';
+        }
+      } else if(g.mode==='swipe'){
+        const v=Math.abs(g.d)/Math.max(1,performance.now()-g.t0);
+        if(Math.abs(g.d)>64||(Math.abs(g.d)>28&&v>0.5)){
+          const order=['fantasy','matches','picks','predict','stats'];
+          const i=order.indexOf(this.state.tab);
+          const n=g.d<0?Math.min(order.length-1,i+1):Math.max(0,i-1);
+          if(n!==i&&this.state.loggedIn!==false) this.setTab(order[n]);
+        }
+      }
+    };
+    D.addEventListener('pointerup',fin,{passive:true});
+    D.addEventListener('pointercancel',fin,{passive:true});
   }
   determineActiveRound(){
     return this._apiData?.meta?.activeRound || 'r32';
@@ -1810,7 +1937,10 @@ class Component extends DCLogic {
   }
   animHero(target){
     const start=performance.now(), dur=950;
-    const tick=now=>{ const t=Math.min(1,(now-start)/dur); const e=1-Math.pow(1-t,3); this.setState({heroPts:Math.round(e*target)}); if(t<1) this.raf=requestAnimationFrame(tick); };
+    const tick=now=>{ const t=Math.min(1,(now-start)/dur); const e=1-Math.pow(1-t,3); this.setState({heroPts:Math.round(e*target)});
+      if(t<1) this.raf=requestAnimationFrame(tick);
+      else { const el=document.querySelector('.hero-pts'); if(el&&el.animate&&!matchMedia('(prefers-reduced-motion: reduce)').matches) el.animate([{transform:'scale(1)'},{transform:'scale(1.12)',offset:.45},{transform:'scale(1)'}],{duration:420,easing:'cubic-bezier(.34,1.56,.64,1)'}); }
+    };
     this.raf=requestAnimationFrame(tick);
   }
   initials(name){ const w=name.trim().split(/\s+/); return w.length>1 ? (w[0][0]+w[1][0]).toUpperCase() : name.slice(0,2).toUpperCase(); }
@@ -2051,12 +2181,27 @@ class Component extends DCLogic {
     const pill=on=>on?'linear-gradient(180deg,rgba(255,255,255,.2),rgba(255,255,255,.08))':'transparent';
     const pillT=on=>on?'#F5F5F7':'#8E8E93';
 
-    const decorate = (arr) => this.deepFlags(arr.map(p=>({
+    const MEDALS={
+      1:{bg:'linear-gradient(135deg,#FFE28A,#E8A93D)',glow:'0 0 10px rgba(255,211,80,.45)',c:'#3A2A05'},
+      2:{bg:'linear-gradient(135deg,#E8E8EE,#9FA2AD)',glow:'0 0 8px rgba(220,220,230,.3)',c:'#26262B'},
+      3:{bg:'linear-gradient(135deg,#E7A776,#A96A3B)',glow:'0 0 8px rgba(216,146,86,.32)',c:'#33190A'}
+    };
+    const decorate = (arr) => this.deepFlags(arr.map((p,i)=>{
+      const m=MEDALS[p.rank];
+      const dRaw=parseInt(p.delta)||0;
+      return {
       ...p,
       rowBg: p.you?'linear-gradient(90deg,rgba(255,45,120,.1),rgba(31,162,255,.06))':'transparent',
-      rankC: p.rank===1?'#FFD93D':(p.rank<=3?'#F5F5F7':'#7C7C82'),
+      rankC: m?m.c:'#7C7C82',
+      medalBg: m?m.bg:'rgba(255,255,255,.05)',
+      medalGlow: m?m.glow:'none',
+      delay: Math.min(i*32,360)+'ms',
+      dotDelay: (Math.min(i*32,360)+150)+'ms',
+      youCls: p.you?'you-shimmer':'',
+      deltaArrow: dRaw>0?'\u25B2':(dRaw<0?'\u25BC':''),
+      deltaC: dRaw>0?'#5BE584':(dRaw<0?'#FF6961':'#7C7C82'),
       open: ()=>this.setState({detailIdx:p.idx})
-    })));
+    };}));
     const leaderboard = decorate([...lb].sort((a,b)=>b.pts-a.pts).map((p,i)=>({...p,rank:i+1})));
 
     let detail = null;
@@ -2252,6 +2397,7 @@ class Component extends DCLogic {
         finished:r.finished, pending:!r.finished,
         actScore:r.actScore?('actual '+r.actScore):'',
         rowBg:st.bg, rowBd:st.bd, badgeC:st.c, badgeIcon:st.icon, badgeLabel:st.label,
+        burstCls:(r.finished&&/exact/i.test(st.label||''))?'exact-burst':'',
         ptsStr:r.finished?('+'+r.points):'', showPts:r.finished};
     }));
 
@@ -2390,11 +2536,15 @@ class Component extends DCLogic {
             const preds=this._apiData?.predictions||{};
             const fin=preds[p.id]?.finalists||[];
             const champ=preds[p.id]?.champion||null;
+            const KM={0:{bg:'linear-gradient(135deg,#FFE28A,#E8A93D)',glow:'0 0 10px rgba(255,211,80,.45)',c:'#3A2A05'},1:{bg:'linear-gradient(135deg,#E8E8EE,#9FA2AD)',glow:'0 0 8px rgba(220,220,230,.3)',c:'#26262B'},2:{bg:'linear-gradient(135deg,#E7A776,#A96A3B)',glow:'0 0 8px rgba(216,146,86,.32)',c:'#33190A'}}[i];
             return {
               koRank:i+1, name:p.name, you:p.id===uid, koPts, correctPicks, exactScores,
               koPtsBreakdown: sub,
+              delay: Math.min(i*32,360)+'ms',
+              medalBg: KM?KM.bg:'rgba(255,255,255,.05)',
+              medalGlow: KM?KM.glow:'none',
               rowBg:p.id===uid?'linear-gradient(90deg,rgba(255,45,120,.1),rgba(31,162,255,.06))':'transparent',
-              rankC:i===0?'#FFD93D':(i<3?'#F5F5F7':'#7C7C82'),
+              rankC:KM?KM.c:'#7C7C82',
               picksX:fin.map(c=>({fu:this.flagUrl(this.teams[c]?.f||''),name:this.teams[c]?.n||c,champ:c===champ})),
               open:()=>{ const idx=lb.findIndex(x=>x.pid===p.id); if(idx>=0) this.setState({detailIdx:idx}); },
               cpBg:correctPicks?'rgba(52,199,89,.2)':'rgba(255,255,255,.09)',
@@ -2411,13 +2561,18 @@ class Component extends DCLogic {
         const uid = this._userParticipantId;
         return this.deepFlags(rawLb.map((p,i)=>{
           const ko=(p.breakdown?.ko||0)+(p.breakdown?.finalist||0)+(p.breakdown?.champion||0);
+          const rk=p.rank||i+1;
+          const OM={1:{bg:'linear-gradient(135deg,#FFE28A,#E8A93D)',glow:'0 0 10px rgba(255,211,80,.45)',c:'#3A2A05'},2:{bg:'linear-gradient(135deg,#E8E8EE,#9FA2AD)',glow:'0 0 8px rgba(220,220,230,.3)',c:'#26262B'},3:{bg:'linear-gradient(135deg,#E7A776,#A96A3B)',glow:'0 0 8px rgba(216,146,86,.32)',c:'#33190A'}}[rk];
           return {
-            rank:p.rank||i+1, name:p.name, you:p.id===uid, pts:p.total||0,
+            rank:rk, name:p.name, you:p.id===uid, pts:p.total||0,
             groupPts:p.breakdown?.group||0,
             koBonusPts:ko,
             koBonusC: ko>0?'#A98BFF':'#7C7C82',
+            delay: Math.min(i*32,360)+'ms',
+            medalBg: OM?OM.bg:'rgba(255,255,255,.05)',
+            medalGlow: OM?OM.glow:'none',
             rowBg:p.id===uid?'linear-gradient(90deg,rgba(255,45,120,.1),rgba(31,162,255,.06))':'transparent',
-            rankC:(p.rank||i+1)===1?'#FFD93D':((p.rank||i+1)<=3?'#F5F5F7':'#7C7C82')
+            rankC:OM?OM.c:'#7C7C82'
           };
         }));
       })(),
@@ -2517,6 +2672,7 @@ class Component extends DCLogic {
           }catch(e){ this.showToast('Sheet unavailable — predictions saved to your device','warn'); }
         }
         this.setState({submitted:true});
+        try{ const l=document.querySelector('.save-label'); if(l&&l.animate&&!matchMedia('(prefers-reduced-motion: reduce)').matches) l.animate([{opacity:.4,filter:'blur(3px)'},{opacity:1,filter:'blur(0)'}],{duration:260,easing:'ease-out'}); }catch(_){}
         if(incompleteKo.length){
           this.showToast(koDone+' of '+koTotal+' saved · '+incompleteKo.length+' draw'+(incompleteKo.length>1?'s':'')+' still need a penalty winner','warn');
         } else {
