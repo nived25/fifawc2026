@@ -1768,9 +1768,9 @@ class Component extends DCLogic {
         });
         if(!anyLocked) continue;
       } else {
-        // match-level: app-data only ships a pick once its match is time-locked,
-        // so any present pick is safe to reveal
-        const anyPicks=parts.some(p=>{const pr=preds[p.id];return pr&&pr[rk]&&Object.keys(pr[rk]).length;});
+        // match-level: exposed picks appear post-lock; participation ids (no scores)
+        // let us show the matches + who's predicted before that
+        const anyPicks=parts.some(p=>{const pr=preds[p.id];return pr&&((pr[rk]&&Object.keys(pr[rk]).length)||(pr[rk+'Ids']&&pr[rk+'Ids'].length));});
         if(!anyPicks) continue;
       }
       const slots=rk==='r32'?null:TREE.rounds[rk].filter(m=>m.h&&m.a);
@@ -1791,7 +1791,7 @@ class Component extends DCLogic {
         // Bucket by status: finished → past (history); in-progress/started-today → today; else upcoming.
         const started=kickoffMs&&kickoffMs<=Date.now();
         const bucket=finished?'past':((started||dayS===todayS)?'today':'upcoming');
-        let aCount=0,bCount=0;
+        let aCount=0,bCount=0,hiddenCount=0;
         const rows=[];
         for(const p of parts){
           const pr=preds[p.id]; if(!pr) continue;
@@ -1799,22 +1799,35 @@ class Component extends DCLogic {
             const locked=typeof pr.locked==='object'?pr.locked[rk]:pr.locked;
             if(!locked) continue;
           }
-          if(!pr[rk]) continue;
-          const pick=pr[rk][keyOf(i)]; if(!pick) continue;
-          const adv=pick.adv||(pick.h>pick.a?'a':pick.a>pick.h?'b':null);
-          if(adv==='a') aCount++; else if(adv==='b') bCount++;
-          const pr2=this.koPickResult(rk,pick,res);
-          const st=this.koOutcomeStyle(pr2);
-          rows.push({
-            id:p.id, you:p.id===uid, name:p.name, initials:this.initials(p.name),
-            avBg:this.avPal[parts.indexOf(p)%this.avPal.length],
-            predScore:pick.h+' – '+pick.a, advName:adv==='a'?hn:(adv==='b'?an:'—'),
-            advFu:this.flagUrl(adv==='a'?hf:(adv==='b'?af:'')),
-            finished:pr2.finished, pts:pr2.points, ptsStr:pr2.finished?('+'+pr2.points):'',
-            badgeBg:st.bg, badgeC:st.c, badgeIcon:st.icon
-          });
+          const mkey=keyOf(i);
+          const pick=pr[rk]?pr[rk][mkey]:null;
+          if(pick){
+            const adv=pick.adv||(pick.h>pick.a?'a':pick.a>pick.h?'b':null);
+            if(adv==='a') aCount++; else if(adv==='b') bCount++;
+            const pr2=this.koPickResult(rk,pick,res);
+            const st=this.koOutcomeStyle(pr2);
+            rows.push({
+              id:p.id, you:p.id===uid, name:p.name, initials:this.initials(p.name),
+              avBg:this.avPal[parts.indexOf(p)%this.avPal.length],
+              predScore:pick.h+' – '+pick.a, advName:adv==='a'?hn:(adv==='b'?an:'—'),
+              advFu:this.flagUrl(adv==='a'?hf:(adv==='b'?af:'')),
+              finished:pr2.finished, pts:pr2.points, ptsStr:pr2.finished?('+'+pr2.points):'',
+              badgeBg:st.bg, badgeC:st.c, badgeIcon:st.icon
+            });
+          } else if(rk!=='r32'&&(pr[rk+'Ids']||[]).includes(String(mkey))){
+            // predicted but not yet locked: name shows, score stays hidden
+            hiddenCount++;
+            rows.push({
+              id:p.id, you:p.id===uid, name:p.name, initials:this.initials(p.name),
+              avBg:this.avPal[parts.indexOf(p)%this.avPal.length],
+              predScore:'? – ?', advName:'', advFu:this.flagUrl(''),
+              finished:false, pts:0, ptsStr:'',
+              badgeBg:'rgba(255,159,10,.12)', badgeC:'#FFB44C', badgeIcon:'\u2713'
+            });
+          }
         }
         const total=aCount+bCount;
+        const predicted=total+hiddenCount;
         const aPct=total?Math.round(aCount/total*100):50, bPct=100-aPct;
         const matchKey=rk+'-'+keyOf(i);
         out.push({
@@ -1824,9 +1837,9 @@ class Component extends DCLogic {
           statusLabel:finished?'FT':(dt&&dt.getTime()<Date.now()?'Live':'Upcoming'),
           live:!finished&&!!dt&&dt.getTime()<Date.now(),
           aCount,bCount,total,aPct:aPct+'%',bPct:bPct+'%',
-          crowdLabel: total?(aCount+' picked '+hn+' · '+bCount+' picked '+an):'No picks yet',
-          predictedOf: total+' of '+parts.length+' predicted',
-          hasPicks: total>0, noPicks: total===0,
+          crowdLabel: total?(aCount+' picked '+hn+' · '+bCount+' picked '+an):(hiddenCount?('Scores reveal 30 min before kickoff'):'No picks yet'),
+          predictedOf: predicted+' of '+parts.length+' predicted',
+          hasPicks: total>0, noPicks: total===0&&hiddenCount===0,
           open: openKey===matchKey,
           rows: rows.sort((a,b)=>(b.you-a.you)||((b.pts||0)-(a.pts||0)))
         });

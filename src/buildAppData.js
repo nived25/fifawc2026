@@ -57,6 +57,9 @@ export function buildAppData() {
         if (matchLocked(mid)) pub[mid] = pick;
       }
       if (Object.keys(pub).length) entry[rk] = pub;
+      // participation only (ids, never scores): lets the UI show "8 of 10 predicted"
+      // and who's in, while actual picks stay hidden until each match locks
+      entry[rk + 'Ids'] = Object.keys(picks);
     }
     // Expose bonus picks after r32 locks
     if (locked.r32 || locked.r16) {
