@@ -112,17 +112,18 @@ function handleSave(data) {
   const allData = sheet.getDataRange().getValues();
 
   function upsertRow(roundKey, picksObj, fins, champ) {
-    let targetRow = -1;
+    // Collect ALL matching rows: update the first, delete the rest (duplicates shadow
+    // updates because reads used to be last-wins; keep exactly one row per pid+round).
+    const matches = [];
     for (let i = 1; i < allData.length; i++) {
-      if (String(allData[i][0]) === pid && String(allData[i][1]) === roundKey) {
-        targetRow = i + 1;
-        break;
-      }
+      if (String(allData[i][0]) === pid && String(allData[i][1]) === roundKey) matches.push(i + 1);
     }
     const rowData = [pid, roundKey, JSON.stringify(picksObj || {}),
       JSON.stringify(fins || []), champ || '', Date.now()];
-    if (targetRow >= 1) {
-      sheet.getRange(targetRow, 1, 1, 6).setValues([rowData]);
+    if (matches.length >= 1) {
+      sheet.getRange(matches[0], 1, 1, 6).setValues([rowData]);
+      for (let j = matches.length - 1; j >= 1; j--) sheet.deleteRow(matches[j]);
+      if (matches.length > 1) allData.length = 0; // snapshot stale after deletes; force re-read on next use
     } else {
       sheet.appendRow(rowData);
       allData.push(rowData); // keep local copy in sync
@@ -146,9 +147,12 @@ function handleLoad(params) {
   const allData = sheet.getDataRange().getValues();
   const result = {};
 
+  const seenRounds = {};
   for (let i = 1; i < allData.length; i++) {
     if (String(allData[i][0]) !== participantId) continue;
     const round = String(allData[i][1]);
+    if (seenRounds[round]) continue; // first row wins — it is the one saves update
+    seenRounds[round] = true;
     try {
       const picks = JSON.parse(allData[i][2] || '{}');
       const fins = JSON.parse(allData[i][3] || '[]');
@@ -186,10 +190,13 @@ function handleExport() {
   if (allData.length < 2) return { ok: true, predictions: {} };
 
   const byParticipant = {};
+  const seenPR = {};
   for (let i = 1; i < allData.length; i++) {
     const pid = String(allData[i][0]);
     const round = String(allData[i][1]);
     if (!pid) continue;
+    if (seenPR[pid + '|' + round]) continue; // first row wins — it is the one saves update
+    seenPR[pid + '|' + round] = true;
     try {
       const picks = JSON.parse(allData[i][2] || '{}');
       const fins = JSON.parse(allData[i][3] || '[]');
