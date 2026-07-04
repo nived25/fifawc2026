@@ -2586,7 +2586,7 @@ class Component extends DCLogic {
       const isDraw=has&&pick.h===pick.a;
       const done=has&&(pick.h!==pick.a||!!pick.adv);
       return {
-        id:m.id, isGhost, isOpen, isLocked, isFinished,
+        id:m.id, kickoffMs:m.kickoffMs||0, isGhost, isOpen, isLocked, isFinished,
         showTeams:!isGhost, showSteppers:isOpen, showLockedRow:isLocked, showResult:isFinished,
         feederH:'Winner of '+m.feederH, feederA:'Winner of '+m.feederA,
         hN:ht.n, hFu:this.flagUrl(ht.f), aN:at.n, aFu:this.flagUrl(at.f),
@@ -2612,7 +2612,7 @@ class Component extends DCLogic {
       };
     });
     const ML_ORDER=['r16','qf','sf','final'];
-    const cardsByRound={}; ML_ORDER.forEach(rk=>{cardsByRound[rk]=mkCards(rk);});
+    const cardsByRound={}; ML_ORDER.forEach(rk=>{cardsByRound[rk]=mkCards(rk).sort((a,b)=>((a.kickoffMs||Infinity)-(b.kickoffMs||Infinity)));});
     const defRound=ML_ORDER.find(rk=>cardsByRound[rk].some(c=>c.isOpen))
       ||ML_ORDER.find(rk=>cardsByRound[rk].some(c=>!c.isGhost))||'r16';
     const selRound=s.predRound||defRound;
