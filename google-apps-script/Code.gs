@@ -39,6 +39,27 @@ function jsonResponse(obj) {
     .setMimeType(ContentService.MimeType.JSON);
 }
 
+// Self-healing dedupe: keep exactly one row per (participantId, round) — the one with the
+// newest submittedAtMs (that is the row every save updates) — and delete the stale extras.
+// Called on every read/write so duplicate rows from double-taps can never shadow an update.
+function dedupeSheet(sheet) {
+  const data = sheet.getDataRange().getValues();
+  const best = {};                 // key -> { row, ts }
+  const dead = [];                 // 1-based row numbers to delete
+  for (let i = 1; i < data.length; i++) {
+    const pid = String(data[i][0]);
+    const round = String(data[i][1]);
+    if (!pid) continue;
+    const key = pid + '|' + round;
+    const ts = Number(data[i][5]) || 0;
+    if (!best[key]) { best[key] = { row: i + 1, ts }; continue; }
+    if (ts >= best[key].ts) { dead.push(best[key].row); best[key] = { row: i + 1, ts }; }
+    else { dead.push(i + 1); }
+  }
+  dead.sort((a, b) => b - a).forEach(r => sheet.deleteRow(r));  // delete bottom-up
+  return dead.length;
+}
+
 function getOrCreatePredSheet() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   let sheet = ss.getSheetByName(PREDICTIONS_SHEET);
@@ -109,6 +130,7 @@ function handleSave(data) {
   if (!round) return { ok: false, error: 'Missing round' };
 
   const sheet = getOrCreatePredSheet();
+  dedupeSheet(sheet);
   const allData = sheet.getDataRange().getValues();
 
   function upsertRow(roundKey, picksObj, fins, champ) {
@@ -144,15 +166,13 @@ function handleLoad(params) {
   if (!participantId) return { ok: false, error: 'Missing participantId' };
 
   const sheet = getOrCreatePredSheet();
+  dedupeSheet(sheet);
   const allData = sheet.getDataRange().getValues();
   const result = {};
 
-  const seenRounds = {};
   for (let i = 1; i < allData.length; i++) {
     if (String(allData[i][0]) !== participantId) continue;
     const round = String(allData[i][1]);
-    if (seenRounds[round]) continue; // first row wins — it is the one saves update
-    seenRounds[round] = true;
     try {
       const picks = JSON.parse(allData[i][2] || '{}');
       const fins = JSON.parse(allData[i][3] || '[]');
@@ -186,17 +206,15 @@ function handleClear(params) {
 
 function handleExport() {
   const sheet = getOrCreatePredSheet();
+  dedupeSheet(sheet);
   const allData = sheet.getDataRange().getValues();
   if (allData.length < 2) return { ok: true, predictions: {} };
 
   const byParticipant = {};
-  const seenPR = {};
   for (let i = 1; i < allData.length; i++) {
     const pid = String(allData[i][0]);
     const round = String(allData[i][1]);
     if (!pid) continue;
-    if (seenPR[pid + '|' + round]) continue; // first row wins — it is the one saves update
-    seenPR[pid + '|' + round] = true;
     try {
       const picks = JSON.parse(allData[i][2] || '{}');
       const fins = JSON.parse(allData[i][3] || '[]');
