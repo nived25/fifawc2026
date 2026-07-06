@@ -1,10 +1,14 @@
 name: Refresh FIFA Data
 
 on:
-  schedule:
-    # Every 10 minutes — free on public repos, costs nothing
-    - cron: '*/10 * * * *'
-  workflow_dispatch:  # Also allows manual trigger from GitHub UI
+  # SCHEDULE PAUSED during the Apps Script backend cutover (2026-07-06). The cron builds
+  # app-data from the GitHub secrets; until those secrets hold the NEW backend URLs, a run
+  # would repoint the live app at the OLD replace-backend and the open-only save could wipe
+  # locked picks. Re-enable (uncomment) ONLY after APPS_SCRIPT_URL / _G1 / _G2 secrets are
+  # updated to the new URLs.
+  # schedule:
+  #   - cron: '*/10 * * * *'
+  workflow_dispatch:  # Manual trigger only while schedule is paused
 
 jobs:
   refresh:

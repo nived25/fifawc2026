@@ -2868,8 +2868,11 @@ class Component extends DCLogic {
         if(url&&pid){
           this._saving=true;
           try{
+            // send ONLY open matches — never re-send a locked match (its stored pick must
+            // not be clobbered by a stale display value); backend merges per match id.
+            const openPicks={}; for(const c of mlOpenCards){ if(s[selRound]&&s[selRound][c.id]) openPicks[c.id]=s[selRound][c.id]; }
             const r=await fetch(url,{method:'POST',headers:{'Content-Type':'text/plain'},
-              body:JSON.stringify({action:'save',participantId:pid,pin:(this._apiData?.meta?.loginPin||'5555'),round:selRound,picks:s[selRound]||{}})});
+              body:JSON.stringify({action:'save',participantId:pid,pin:(this._apiData?.meta?.loginPin||'5555'),round:selRound,picks:openPicks})});
             const j=await r.json();
             if(!j.ok){ this._saving=false; this.showToast(j.error||'Save failed \u2014 try again','warn'); return; }
           }catch(e){ this.showToast('Sheet unavailable \u2014 saved to your device','warn'); }
