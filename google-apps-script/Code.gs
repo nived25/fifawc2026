@@ -5,7 +5,7 @@
 
 const STATIC_PIN = '5555';
 const PREDICTIONS_SHEET = 'Predictions';
-const CODE_VERSION = '2026-07-06-audit';  // bump on every deploy so ?action=version proves what's live
+const CODE_VERSION = '2026-07-06-merge-nondestructive';  // ?action=version proves what's live
 
 function doPost(e) {
   try {
@@ -23,49 +23,27 @@ function doGet(e) {
     const action = e.parameter.action;
     if (action === 'version') return jsonResponse({ ok: true, version: CODE_VERSION });
     if (action === 'raw') {
-      // Full audit dump — EVERY row verbatim, no dedupe, so duplicate/shadowed edits
-      // are visible with their timestamps. PIN-gated (public URL).
       if (String(e.parameter.pin) !== STATIC_PIN) return jsonResponse({ ok: false, error: 'Invalid PIN' });
       return jsonResponse(handleRaw());
     }
     if (action === 'load') return jsonResponse(handleLoad(e.parameter));
     if (action === 'export') return jsonResponse(handleExport());
     if (action === 'clear') {
-      // Destructive — require the PIN (the web-app URL is public in app-data.json)
       if (String(e.parameter.pin) !== STATIC_PIN) return jsonResponse({ ok: false, error: 'Invalid PIN' });
       return jsonResponse(handleClear(e.parameter));
     }
-    return jsonResponse({ ok: false, error: 'Use action=load, action=export, or action=clear&participantId=...&pin=...' });
+    if (action === 'dedupe') {  // one-time cleanup, PIN-gated, run ONLY after recovery is done
+      if (String(e.parameter.pin) !== STATIC_PIN) return jsonResponse({ ok: false, error: 'Invalid PIN' });
+      return jsonResponse({ ok: true, deleted: dedupeSheet(getOrCreatePredSheet()) });
+    }
+    return jsonResponse({ ok: false, error: 'Use action=load, export, raw&pin=, version, clear&participantId=&pin=' });
   } catch(err) {
     return jsonResponse({ ok: false, error: err.toString() });
   }
 }
 
 function jsonResponse(obj) {
-  return ContentService
-    .createTextOutput(JSON.stringify(obj))
-    .setMimeType(ContentService.MimeType.JSON);
-}
-
-// Self-healing dedupe: keep exactly one row per (participantId, round) — the one with the
-// newest submittedAtMs (that is the row every save updates) — and delete the stale extras.
-// Called on every read/write so duplicate rows from double-taps can never shadow an update.
-function dedupeSheet(sheet) {
-  const data = sheet.getDataRange().getValues();
-  const best = {};                 // key -> { row, ts }
-  const dead = [];                 // 1-based row numbers to delete
-  for (let i = 1; i < data.length; i++) {
-    const pid = String(data[i][0]);
-    const round = String(data[i][1]);
-    if (!pid) continue;
-    const key = pid + '|' + round;
-    const ts = Number(data[i][5]) || 0;
-    if (!best[key]) { best[key] = { row: i + 1, ts }; continue; }
-    if (ts >= best[key].ts) { dead.push(best[key].row); best[key] = { row: i + 1, ts }; }
-    else { dead.push(i + 1); }
-  }
-  dead.sort((a, b) => b - a).forEach(r => sheet.deleteRow(r));  // delete bottom-up
-  return dead.length;
+  return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
 }
 
 function getOrCreatePredSheet() {
@@ -80,35 +58,39 @@ function getOrCreatePredSheet() {
   return sheet;
 }
 
+// Newest row (max submittedAtMs) per (pid,round). NON-DESTRUCTIVE — never deletes, so every
+// historical/duplicate row is preserved for audit + recovery. Reads pick the newest; that is
+// also the row saves update, so the value returned is always the member's latest.
+function newestRowMap(data) {
+  const best = {};                 // key -> { rowNum, ts }
+  for (let i = 1; i < data.length; i++) {
+    const pid = String(data[i][0]); if (!pid) continue;
+    const key = pid + '|' + String(data[i][1]);
+    const ts = Number(data[i][5]) || 0;
+    if (!best[key] || ts >= best[key].ts) best[key] = { rowNum: i + 1, ts };
+  }
+  return best;
+}
+
 function findParticipantByEmail(email) {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   const sheets = ss.getSheets();
   const target = email.toLowerCase().trim();
-
   for (const sheet of sheets) {
     if (sheet.getName() === PREDICTIONS_SHEET) continue;
     const data = sheet.getDataRange().getValues();
     if (data.length < 2) continue;
     const headers = data[0].map(h => String(h).toLowerCase().trim());
     const emailCol = headers.findIndex(h => h.includes('email'));
-    const nameCol = headers.findIndex(h =>
-      h === 'name' || h === 'player' || h === 'participant' || h.includes('name')
-    );
+    const nameCol = headers.findIndex(h => h === 'name' || h === 'player' || h === 'participant' || h.includes('name'));
     const idCol = headers.findIndex(h => h === 'id');
     if (emailCol < 0) continue;
-
     for (let i = 1; i < data.length; i++) {
-      const rowEmail = String(data[i][emailCol]).toLowerCase().trim();
-      if (rowEmail === target) {
+      if (String(data[i][emailCol]).toLowerCase().trim() === target) {
         const rawName = nameCol >= 0 ? String(data[i][nameCol]) : email;
-        // Prefer an explicit `id` column (group sheets) so renaming a player never
-        // changes their id; fall back to name-slug for sheets without one (LR).
         const explicitId = idCol >= 0 ? String(data[i][idCol]).trim() : '';
-        const id = explicitId || rawName.toLowerCase()
-          .replace(/[^a-z0-9]/g, '_')
-          .replace(/_+/g, '_')
-          .replace(/^_|_$/, '');
-        return { id, name: rawName, email: rowEmail };
+        const id = explicitId || rawName.toLowerCase().replace(/[^a-z0-9]/g, '_').replace(/_+/g, '_').replace(/^_|_$/, '');
+        return { id, name: rawName, email: String(data[i][emailCol]).toLowerCase().trim() };
       }
     }
   }
@@ -119,146 +101,115 @@ function handleAuth(data) {
   const { email, pin } = data;
   if (!email || !pin) return { ok: false, error: 'Missing email or pin' };
   if (String(pin) !== STATIC_PIN) return { ok: false, error: 'Invalid PIN. Use 5555.' };
-  const participant = findParticipantByEmail(email);
-  if (!participant) return { ok: false, error: 'Email not found. Check with Nived.' };
-  return { ok: true, participantId: participant.id, name: participant.name };
+  const p = findParticipantByEmail(email);
+  if (!p) return { ok: false, error: 'Email not found. Check with Nived.' };
+  return { ok: true, participantId: p.id, name: p.name };
 }
 
 function handleSave(data) {
   const { email, pin, participantId, round, picks, finalists, champion } = data;
   if (String(pin) !== STATIC_PIN) return { ok: false, error: 'Invalid PIN' };
-
   let pid = participantId;
-  if (!pid && email) {
-    const p = findParticipantByEmail(email);
-    if (!p) return { ok: false, error: 'Not authenticated' };
-    pid = p.id;
-  }
+  if (!pid && email) { const p = findParticipantByEmail(email); if (!p) return { ok: false, error: 'Not authenticated' }; pid = p.id; }
   if (!pid) return { ok: false, error: 'Missing participantId' };
   if (!round) return { ok: false, error: 'Missing round' };
 
   const sheet = getOrCreatePredSheet();
-  dedupeSheet(sheet);
-  const allData = sheet.getDataRange().getValues();
+  const data2 = sheet.getDataRange().getValues();
+  const best = newestRowMap(data2);
+  // r16 onward = match-level: MERGE incoming picks into the newest row per match id, so a
+  // save that only edited open matches never clobbers a locked match's stored value.
+  const MERGE = { r16: 1, qf: 1, sf: 1, final: 1 };
 
-  function upsertRow(roundKey, picksObj, fins, champ) {
-    // Collect ALL matching rows: update the first, delete the rest (duplicates shadow
-    // updates because reads used to be last-wins; keep exactly one row per pid+round).
-    const matches = [];
-    for (let i = 1; i < allData.length; i++) {
-      if (String(allData[i][0]) === pid && String(allData[i][1]) === roundKey) matches.push(i + 1);
+  function upsert(roundKey, picksObj, fins, champ) {
+    const hit = best[pid + '|' + roundKey];
+    let finalPicks = picksObj || {};
+    if (MERGE[roundKey] && hit) {
+      let existing = {};
+      try { existing = JSON.parse(data2[hit.rowNum - 1][2] || '{}'); } catch (e) {}
+      finalPicks = existing;
+      for (const k in (picksObj || {})) finalPicks[k] = picksObj[k];
     }
-    const rowData = [pid, roundKey, JSON.stringify(picksObj || {}),
-      JSON.stringify(fins || []), champ || '', Date.now()];
-    if (matches.length >= 1) {
-      sheet.getRange(matches[0], 1, 1, 6).setValues([rowData]);
-      for (let j = matches.length - 1; j >= 1; j--) sheet.deleteRow(matches[j]);
-      if (matches.length > 1) allData.length = 0; // snapshot stale after deletes; force re-read on next use
-    } else {
-      sheet.appendRow(rowData);
-      allData.push(rowData); // keep local copy in sync
-    }
+    const rowData = [pid, roundKey, JSON.stringify(finalPicks), JSON.stringify(fins || []), champ || '', Date.now()];
+    if (hit) sheet.getRange(hit.rowNum, 1, 1, 6).setValues([rowData]);
+    else sheet.appendRow(rowData);
   }
 
-  upsertRow(round, picks, finalists, champion);
-  // Always persist bonus picks (finalists + champion) independently
-  if (finalists !== undefined || champion !== undefined) {
-    upsertRow('bonus', {}, finalists, champion);
-  }
-
+  upsert(round, picks, finalists, champion);
+  if (finalists !== undefined || champion !== undefined) upsert('bonus', {}, finalists, champion);
   return { ok: true, saved: true };
 }
 
 function handleLoad(params) {
   const { participantId } = params;
   if (!participantId) return { ok: false, error: 'Missing participantId' };
-
-  const sheet = getOrCreatePredSheet();
-  dedupeSheet(sheet);
-  const allData = sheet.getDataRange().getValues();
+  const data = getOrCreatePredSheet().getDataRange().getValues();
+  const best = newestRowMap(data);
   const result = {};
-
-  for (let i = 1; i < allData.length; i++) {
-    if (String(allData[i][0]) !== participantId) continue;
-    const round = String(allData[i][1]);
+  for (const key in best) {
+    const [pid, round] = key.split('|');
+    if (pid !== participantId) continue;
+    const row = data[best[key].rowNum - 1];
     try {
-      const picks = JSON.parse(allData[i][2] || '{}');
-      const fins = JSON.parse(allData[i][3] || '[]');
-      const champ = String(allData[i][4]);
-      if (round === 'bonus') {
-        if (fins.length) result.finalists = fins;
-        if (champ) result.champion = champ;
-      } else {
-        result[round] = picks;
-      }
-    } catch(e) {}
+      const picks = JSON.parse(row[2] || '{}'), fins = JSON.parse(row[3] || '[]'), champ = String(row[4]);
+      if (round === 'bonus') { if (fins.length) result.finalists = fins; if (champ) result.champion = champ; }
+      else result[round] = picks;
+    } catch (e) {}
   }
-
   return { ok: true, predictions: result };
 }
 
-// Audit: every raw row (no dedupe), oldest→newest as stored, so we can see all duplicate
-// and shadowed edits with their save timestamps.
+function handleExport() {
+  const data = getOrCreatePredSheet().getDataRange().getValues();
+  if (data.length < 2) return { ok: true, predictions: {} };
+  const best = newestRowMap(data);
+  const byP = {};
+  for (const key in best) {
+    const [pid, round] = key.split('|');
+    const row = data[best[key].rowNum - 1];
+    try {
+      const picks = JSON.parse(row[2] || '{}'), fins = JSON.parse(row[3] || '[]'), champ = String(row[4]), ts = Number(row[5]);
+      if (!byP[pid]) byP[pid] = { submittedAtMs: {} };
+      if (round === 'bonus') { if (fins.length) byP[pid].finalists = fins; if (champ) byP[pid].champion = champ; }
+      else { byP[pid][round] = picks; byP[pid].submittedAtMs[round] = ts; }
+    } catch (e) {}
+  }
+  return { ok: true, predictions: byP };
+}
+
+// Audit: every raw row (no dedupe) with timestamps — reveals all duplicate/shadowed edits.
 function handleRaw() {
-  const sheet = getOrCreatePredSheet();
-  const data = sheet.getDataRange().getValues();
+  const data = getOrCreatePredSheet().getDataRange().getValues();
   const rows = [];
   for (let i = 1; i < data.length; i++) {
     if (!String(data[i][0])) continue;
     rows.push({
-      rowNum: i + 1,
-      participantId: String(data[i][0]),
-      round: String(data[i][1]),
-      picks: String(data[i][2] || ''),
-      finalists: String(data[i][3] || ''),
-      champion: String(data[i][4] || ''),
-      submittedAtMs: Number(data[i][5]) || 0
+      rowNum: i + 1, participantId: String(data[i][0]), round: String(data[i][1]),
+      picks: String(data[i][2] || ''), finalists: String(data[i][3] || ''),
+      champion: String(data[i][4] || ''), submittedAtMs: Number(data[i][5]) || 0
     });
   }
   return { ok: true, version: CODE_VERSION, count: rows.length, rows };
+}
+
+// One-time destructive cleanup (keep newest per key, delete rest). Run ONLY after recovery.
+function dedupeSheet(sheet) {
+  const data = sheet.getDataRange().getValues();
+  const best = newestRowMap(data);
+  const keep = {}; for (const k in best) keep[best[k].rowNum] = 1;
+  const dead = [];
+  for (let i = 1; i < data.length; i++) { if (String(data[i][0]) && !keep[i + 1]) dead.push(i + 1); }
+  dead.sort((a, b) => b - a).forEach(r => sheet.deleteRow(r));
+  return dead.length;
 }
 
 function handleClear(params) {
   const { participantId } = params;
   if (!participantId) return { ok: false, error: 'Missing participantId — wiping all rows is not allowed' };
   const sheet = getOrCreatePredSheet();
-  const allData = sheet.getDataRange().getValues();
-  const rowsToDelete = [];
-  for (let i = allData.length - 1; i >= 1; i--) {
-    if (!participantId || String(allData[i][0]) === participantId) {
-      rowsToDelete.push(i + 1);
-    }
-  }
-  rowsToDelete.forEach(r => sheet.deleteRow(r));
-  return { ok: true, deleted: rowsToDelete.length, participantId: participantId || 'ALL' };
-}
-
-function handleExport() {
-  const sheet = getOrCreatePredSheet();
-  dedupeSheet(sheet);
-  const allData = sheet.getDataRange().getValues();
-  if (allData.length < 2) return { ok: true, predictions: {} };
-
-  const byParticipant = {};
-  for (let i = 1; i < allData.length; i++) {
-    const pid = String(allData[i][0]);
-    const round = String(allData[i][1]);
-    if (!pid) continue;
-    try {
-      const picks = JSON.parse(allData[i][2] || '{}');
-      const fins = JSON.parse(allData[i][3] || '[]');
-      const champ = String(allData[i][4]);
-      const ts = Number(allData[i][5]);
-      if (!byParticipant[pid]) byParticipant[pid] = { submittedAtMs: {} };
-      if (round === 'bonus') {
-        if (fins.length) byParticipant[pid].finalists = fins;
-        if (champ) byParticipant[pid].champion = champ;
-      } else {
-        byParticipant[pid][round] = picks;
-        byParticipant[pid].submittedAtMs[round] = ts;
-      }
-    } catch(e) {}
-  }
-
-  return { ok: true, predictions: byParticipant };
+  const data = sheet.getDataRange().getValues();
+  const del = [];
+  for (let i = data.length - 1; i >= 1; i--) if (String(data[i][0]) === participantId) del.push(i + 1);
+  del.forEach(r => sheet.deleteRow(r));
+  return { ok: true, deleted: del.length, participantId };
 }
