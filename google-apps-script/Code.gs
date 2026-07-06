@@ -5,6 +5,7 @@
 
 const STATIC_PIN = '5555';
 const PREDICTIONS_SHEET = 'Predictions';
+const CODE_VERSION = '2026-07-06-audit';  // bump on every deploy so ?action=version proves what's live
 
 function doPost(e) {
   try {
@@ -20,6 +21,13 @@ function doPost(e) {
 function doGet(e) {
   try {
     const action = e.parameter.action;
+    if (action === 'version') return jsonResponse({ ok: true, version: CODE_VERSION });
+    if (action === 'raw') {
+      // Full audit dump — EVERY row verbatim, no dedupe, so duplicate/shadowed edits
+      // are visible with their timestamps. PIN-gated (public URL).
+      if (String(e.parameter.pin) !== STATIC_PIN) return jsonResponse({ ok: false, error: 'Invalid PIN' });
+      return jsonResponse(handleRaw());
+    }
     if (action === 'load') return jsonResponse(handleLoad(e.parameter));
     if (action === 'export') return jsonResponse(handleExport());
     if (action === 'clear') {
@@ -187,6 +195,27 @@ function handleLoad(params) {
   }
 
   return { ok: true, predictions: result };
+}
+
+// Audit: every raw row (no dedupe), oldest→newest as stored, so we can see all duplicate
+// and shadowed edits with their save timestamps.
+function handleRaw() {
+  const sheet = getOrCreatePredSheet();
+  const data = sheet.getDataRange().getValues();
+  const rows = [];
+  for (let i = 1; i < data.length; i++) {
+    if (!String(data[i][0])) continue;
+    rows.push({
+      rowNum: i + 1,
+      participantId: String(data[i][0]),
+      round: String(data[i][1]),
+      picks: String(data[i][2] || ''),
+      finalists: String(data[i][3] || ''),
+      champion: String(data[i][4] || ''),
+      submittedAtMs: Number(data[i][5]) || 0
+    });
+  }
+  return { ok: true, version: CODE_VERSION, count: rows.length, rows };
 }
 
 function handleClear(params) {
