@@ -3198,5 +3198,29 @@
     "reason": "ARG advances (R16)",
     "matchId": 95,
     "ts": 1783451942224
+  },
+  {
+    "key": "sreehari_nair|96|r16_m96",
+    "participantId": "sreehari_nair",
+    "points": 10,
+    "reason": "SUI correct + exact score 0-0 (2×R16)",
+    "matchId": 96,
+    "ts": 1783466127195
+  },
+  {
+    "key": "advaith_sreehari|96|r16_m96",
+    "participantId": "advaith_sreehari",
+    "points": 5,
+    "reason": "SUI advances (R16)",
+    "matchId": 96,
+    "ts": 1783466127196
+  },
+  {
+    "key": "kiransas|96|r16_m96",
+    "participantId": "kiransas",
+    "points": 5,
+    "reason": "SUI advances (R16)",
+    "matchId": 96,
+    "ts": 1783466127196
   }
 ]

@@ -1838,5 +1838,21 @@
     "reason": "ARG advances (R16)",
     "matchId": 95,
     "ts": 1783451939747
+  },
+  {
+    "key": "mathgean|96|r16_m96",
+    "participantId": "mathgean",
+    "points": 5,
+    "reason": "SUI advances (R16)",
+    "matchId": 96,
+    "ts": 1783466124670
+  },
+  {
+    "key": "shanu_chamathundil|96|r16_m96",
+    "participantId": "shanu_chamathundil",
+    "points": 5,
+    "reason": "SUI advances (R16)",
+    "matchId": 96,
+    "ts": 1783466124670
   }
 ]
