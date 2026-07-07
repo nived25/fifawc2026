@@ -938,130 +938,96 @@
     </div>
     </sc-if>
 
-    <!-- ===================== STATS ===================== -->
-    <sc-if value="{{ isStats }}" hint-placeholder-val="{{ true }}">
-    <div data-screen-label="Stats" class="tab-enter" style="padding:0 0 110px">
+    <!-- ===================== FEED ===================== -->
+    <sc-if value="{{ isFeed }}" hint-placeholder-val="{{ true }}">
+    <div data-screen-label="Feed" class="tab-enter" style="padding:0 0 110px">
       <div style="position:sticky;top:0;z-index:4;padding:6px 20px 12px;background:rgba(10,10,11,.72);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);display:flex;align-items:center;justify-content:space-between">
-        <div><div class="disp" style="color:#F5F5F7;font-size:27px;font-weight:600;letter-spacing:-.6px;line-height:1">Stats</div><div style="color:#7C7C82;font-size:12.5px;font-weight:500;margin-top:3px;white-space:nowrap">League &amp; player insights</div></div>
+        <div><div class="disp" style="color:#F5F5F7;font-size:27px;font-weight:600;letter-spacing:-.6px;line-height:1">Feed</div><div style="color:#7C7C82;font-size:12.5px;font-weight:500;margin-top:3px;white-space:nowrap">The Daily Gaffer &middot; new edition at noon</div></div>
         <div onClick="{{ openProfile }}" style-active="transform:scale(.9)" style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#FF2D78,#7A3CFF);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:14px;cursor:pointer">{{ userInitials }}</div>
       </div>
-      <div style="margin:6px 20px 0;display:flex;gap:4px;padding:4px;background:#161618;border-radius:13px;border:1px solid rgba(255,255,255,.05)">
-        <div onClick="{{ statLeague }}" style-active="transform:scale(.95)" style="flex:1;text-align:center;padding:9px 0;border-radius:9px;font-size:13.5px;font-weight:600;cursor:pointer;background:{{ statLeagueBg }};color:{{ statLeagueC }}">League</div>
-        <div onClick="{{ statPlayers }}" style-active="transform:scale(.95)" style="flex:1;text-align:center;padding:9px 0;border-radius:9px;font-size:13.5px;font-weight:600;cursor:pointer;background:{{ statPlayersBg }};color:{{ statPlayersC }}">Players</div>
-      </div>
 
-      <sc-if value="{{ statIsLeague }}" hint-placeholder-val="{{ true }}">
-      <div style="padding:12px 16px 0">
-        <div style="background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.022));backdrop-filter:blur(16px) saturate(1.25);-webkit-backdrop-filter:blur(16px) saturate(1.25);border:1px solid rgba(255,255,255,.09);box-shadow:inset 0 1px 0 0 rgba(255,255,255,.08),0 14px 32px -12px rgba(0,0,0,.62);border-radius:18px;padding:15px">
-          <div style="color:#F5F5F7;font-size:15px;font-weight:600;margin-bottom:13px">Most Picked Teams</div>
-          <sc-for list="{{ mostPicked }}" as="t" hint-placeholder-count="5">
-            <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
-              <img loading="lazy" decoding="async" src="{{ t.fu }}" style="width:24px;height:16px;border-radius:3px;object-fit:cover;display:block;flex:none;box-shadow:0 0 0 1px rgba(255,255,255,.14)"/>
-              <span style="width:74px;color:#F5F5F7;font-size:13px;font-weight:600">{{ t.n }}</span>
-              <div style="flex:1;height:9px;border-radius:5px;background:rgba(255,255,255,.06);overflow:hidden"><div style="height:100%;width:{{ t.w }};border-radius:5px;background:linear-gradient(90deg,#FF2D78,#7A3CFF)"></div></div>
-              <span class="disp" style="width:20px;text-align:right;color:#F5F5F7;font-size:13.5px;font-weight:600">{{ t.c }}</span>
-            </div>
-          </sc-for>
+      <sc-if value="{{ feedEmpty }}" hint-placeholder-val="{{ false }}">
+        <div style="margin:26px 16px 0;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.022));backdrop-filter:blur(16px) saturate(1.25);-webkit-backdrop-filter:blur(16px) saturate(1.25);border:1px solid rgba(255,255,255,.09);box-shadow:inset 0 1px 0 0 rgba(255,255,255,.08),0 14px 32px -12px rgba(0,0,0,.62);border-radius:18px;padding:26px 18px;text-align:center">
+          <div style="font-size:36px;margin-bottom:10px">&#127908;</div>
+          <div class="disp" style="color:#F5F5F7;font-size:16px;font-weight:600">The Gaffer is lacing his boots</div>
+          <div style="color:#7C7C82;font-size:12.5px;font-weight:500;margin-top:6px;line-height:1.5">First edition drops at 12:00 &mdash; daily takes on the leaders, the climbers and the frauds.</div>
         </div>
-
-        <div style="display:flex;gap:12px;margin-top:12px">
-          <div style="flex:1;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.022));backdrop-filter:blur(16px) saturate(1.25);-webkit-backdrop-filter:blur(16px) saturate(1.25);border:1px solid rgba(255,255,255,.09);box-shadow:inset 0 1px 0 0 rgba(255,255,255,.08),0 14px 32px -12px rgba(0,0,0,.62);border-radius:18px;padding:14px">
-            <div style="color:#34C759;font-size:12px;font-weight:600;margin-bottom:10px">▲ Risers today</div>
-            <sc-for list="{{ risers }}" as="m" hint-placeholder-count="5">
-              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><span style="color:#F5F5F7;font-size:12.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100px">{{ m.name }}</span><span style="color:#34C759;font-size:12.5px;font-weight:600">{{ m.delta }}</span></div>
-            </sc-for>
-          </div>
-          <div style="flex:1;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.022));backdrop-filter:blur(16px) saturate(1.25);-webkit-backdrop-filter:blur(16px) saturate(1.25);border:1px solid rgba(255,255,255,.09);box-shadow:inset 0 1px 0 0 rgba(255,255,255,.08),0 14px 32px -12px rgba(0,0,0,.62);border-radius:18px;padding:14px">
-            <div style="color:#FF453A;font-size:12px;font-weight:600;margin-bottom:10px">▼ Fallers today</div>
-            <sc-for list="{{ fallers }}" as="m" hint-placeholder-count="3">
-              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><span style="color:#F5F5F7;font-size:12.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100px">{{ m.name }}</span><span style="color:#FF453A;font-size:12.5px;font-weight:600">{{ m.delta }}</span></div>
-            </sc-for>
-          </div>
-        </div>
-
-        <div style="background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.022));backdrop-filter:blur(16px) saturate(1.25);-webkit-backdrop-filter:blur(16px) saturate(1.25);border:1px solid rgba(255,255,255,.09);box-shadow:inset 0 1px 0 0 rgba(255,255,255,.08),0 14px 32px -12px rgba(0,0,0,.62);border-radius:18px;padding:15px;margin-top:12px">
-          <div style="color:#F5F5F7;font-size:15px;font-weight:600;margin-bottom:13px">Points Distribution</div>
-          <div style="display:flex;align-items:flex-end;gap:6px;height:90px">
-            <sc-for list="{{ distribution }}" as="b" hint-placeholder-count="3">
-              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;height:100%;justify-content:flex-end"><div style="width:100%;height:{{ b.h }};border-radius:4px 4px 2px 2px;background:{{ b.bg }}"></div></div>
-            </sc-for>
-          </div>
-          <div style="color:#7C7C82;font-size:11px;font-weight:500;text-align:center;margin-top:10px">{{ distLabel }}</div>
-        </div>
-
-        <div style="background:linear-gradient(135deg,rgba(255,159,10,.14),rgba(255,45,120,.1));border:1px solid rgba(255,159,10,.25);border-radius:18px;padding:15px;margin-top:12px">
-          <div style="color:#FF9F0A;font-size:12px;font-weight:600;letter-spacing:.3px">LUCKIEST PICK OF THE DAY</div>
-          <div style="color:#F5F5F7;font-size:15px;font-weight:600;margin-top:8px">Rushabh's England</div>
-          <div style="color:#8E8E93;font-size:12.5px;font-weight:500;margin-top:3px">A late 4–2 over Croatia banked him +3 — nobody else backed the Three Lions.</div>
-        </div>
-      </div>
       </sc-if>
 
-      <sc-if value="{{ statIsPlayers }}" hint-placeholder-val="{{ true }}">
-      <div style="padding:12px 16px 0">
-        <!-- Golden Boot -->
-        <div style="background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.022));backdrop-filter:blur(16px) saturate(1.25);-webkit-backdrop-filter:blur(16px) saturate(1.25);border:1px solid rgba(255,255,255,.09);box-shadow:inset 0 1px 0 0 rgba(255,255,255,.08),0 14px 32px -12px rgba(0,0,0,.62);border-radius:18px;padding:14px">
-          <div style="display:flex;align-items:center;gap:7px;margin-bottom:12px">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="rgba(255,200,0,.25)" stroke="#FFD93D" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.86L12 17.77l-6.18 3.23L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-            <span style="color:#F5F5F7;font-size:15px;font-weight:600">Golden Boot</span>
-            <span style="color:#7C7C82;font-size:11.5px;font-weight:500">top scorers</span>
+      <div style="padding:6px 16px 0">
+        <sc-for list="{{ feedDays }}" as="d" hint-placeholder-count="1">
+          <div style="display:flex;align-items:center;gap:10px;margin:16px 2px 10px">
+            <div style="flex:1;height:1px;background:rgba(255,255,255,.07)"></div>
+            <span style="color:#7C7C82;font-size:10.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase">{{ d.label }}</span>
+            <div style="flex:1;height:1px;background:rgba(255,255,255,.07)"></div>
           </div>
-          <sc-for list="{{ scorers }}" as="s" hint-placeholder-count="5">
-            <div style="display:flex;align-items:center;gap:10px;padding:7px 0;border-top:1px solid rgba(255,255,255,.05)">
-              <div class="disp" style="width:22px;height:22px;border-radius:50%;background:{{ s.medalBg }};display:flex;align-items:center;justify-content:center;flex-shrink:0">
-                <span style="color:{{ s.medalC }};font-size:10px;font-weight:700">{{ s.rank }}</span>
+          <sc-for list="{{ d.posts }}" as="p" hint-placeholder-count="4">
+            <div style="background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.022));backdrop-filter:blur(16px) saturate(1.25);-webkit-backdrop-filter:blur(16px) saturate(1.25);border:1px solid rgba(255,255,255,.09);box-shadow:inset 0 1px 0 0 rgba(255,255,255,.08),0 14px 32px -12px rgba(0,0,0,.62);border-radius:18px;padding:13px 14px 11px;margin-bottom:10px">
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:9px">
+                <div style="width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#FF2D78,#7A3CFF);display:flex;align-items:center;justify-content:center;font-size:16px;flex:none">&#127908;</div>
+                <div style="flex:1;min-width:0;line-height:1.25">
+                  <div style="display:flex;align-items:center;gap:5px"><span style="color:#F5F5F7;font-size:13.5px;font-weight:700">The Gaffer</span><svg width="13" height="13" viewBox="0 0 24 24" fill="#1FA2FF"><path d="M12 2l2.4 2.4 3.3-.5.5 3.3L20.6 9 22 12l-1.4 3-2.4 1.8-.5 3.3-3.3-.5L12 22l-2.4-2.4-3.3.5-.5-3.3L3.4 15 2 12l1.4-3 2.4-1.8.5-3.3 3.3.5L12 2z"/><path d="M9.5 12.2l1.8 1.8 3.6-3.8" stroke="#0A0A0B" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg></div>
+                  <div style="color:#7C7C82;font-size:11.5px;font-weight:500">@the.gaffer &middot; {{ p.timeStr }}</div>
+                </div>
               </div>
-              <img loading="lazy" decoding="async" src="{{ s.fu }}" style="width:32px;height:21px;border-radius:3px;object-fit:cover;display:block;flex:none;box-shadow:0 0 0 1px rgba(255,255,255,.16)"/>
-              <div style="flex:1;min-width:0">
-                <div style="color:#F5F5F7;font-size:13.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ s.name }}</div>
-                <div style="display:flex;align-items:center;gap:6px;margin-top:4px">
-                  <div style="flex:1;height:3px;background:rgba(255,255,255,.07);border-radius:2px;overflow:hidden">
-                    <div class="disp" style="height:100%;width:{{ s.bar }};background:{{ s.barC }};border-radius:2px"></div>
+              <div style="font-size:13.5px;line-height:1.55;word-break:break-word"><sc-for list="{{ p.segs }}" as="sg" hint-placeholder-count="3"><span style="font-weight:{{ sg.w }};color:{{ sg.c }}">{{ sg.t }}</span></sc-for></div>
+
+              <sc-if value="{{ p.hasMove }}" hint-placeholder-val="{{ false }}">
+                <div style="margin-top:10px;display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:13px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06)">
+                  <div class="disp" style="width:30px;height:30px;border-radius:50%;background:{{ p.mv.avBg }};display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;flex:none">{{ p.mv.initials }}</div>
+                  <div style="flex:1;min-width:0"><div style="color:#F5F5F7;font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ p.mv.name }}</div><div style="color:#7C7C82;font-size:11px;font-weight:500">{{ p.mv.fromTo }}</div></div>
+                  <span class="disp" style="color:{{ p.mv.dC }};font-size:15px;font-weight:700;flex:none">{{ p.mv.arrow }}{{ p.mv.dN }}</span>
+                </div>
+              </sc-if>
+              <sc-if value="{{ p.hasStat }}" hint-placeholder-val="{{ false }}">
+                <div style="margin-top:10px;display:flex;align-items:baseline;gap:10px;padding:10px 12px;border-radius:13px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06)">
+                  <span class="disp" style="background:linear-gradient(135deg,#FF2D78,#7A3CFF);-webkit-background-clip:text;background-clip:text;color:transparent;font-size:26px;font-weight:700;line-height:1">{{ p.st.value }}</span>
+                  <span style="color:#7C7C82;font-size:12px;font-weight:500">{{ p.st.label }} &middot; {{ p.st.name }}</span>
+                </div>
+              </sc-if>
+              <sc-if value="{{ p.hasFixtures }}" hint-placeholder-val="{{ false }}">
+                <div style="margin-top:10px;border-radius:13px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);overflow:hidden">
+                  <sc-for list="{{ p.fx }}" as="fx" hint-placeholder-count="2">
+                    <div style="display:flex;align-items:center;gap:8px;padding:9px 12px;border-top:1px solid rgba(255,255,255,.045)">
+                      <img loading="lazy" decoding="async" src="{{ fx.h.fu }}" style="width:19px;height:13px;border-radius:2px;object-fit:cover;flex:none"/>
+                      <span style="color:#F5F5F7;font-size:12.5px;font-weight:600;flex:none">{{ fx.h.n }}</span>
+                      <span style="color:#48484A;font-size:11px;font-weight:600;flex:none">vs</span>
+                      <span style="color:#F5F5F7;font-size:12.5px;font-weight:600;flex:none">{{ fx.a.n }}</span>
+                      <img loading="lazy" decoding="async" src="{{ fx.a.fu }}" style="width:19px;height:13px;border-radius:2px;object-fit:cover;flex:none"/>
+                      <span style="flex:1;text-align:right;color:#7C7C82;font-size:10.5px;font-weight:500;white-space:nowrap">{{ fx.t }}</span>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
+              <sc-if value="{{ p.hasBoot }}" hint-placeholder-val="{{ false }}">
+                <div style="margin-top:10px;border-radius:13px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);overflow:hidden">
+                  <sc-for list="{{ p.bt }}" as="bt" hint-placeholder-count="3">
+                    <div style="display:flex;align-items:center;gap:9px;padding:8px 12px;border-top:1px solid rgba(255,255,255,.045)">
+                      <div class="disp" style="width:20px;height:20px;border-radius:50%;background:{{ bt.mBg }};display:flex;align-items:center;justify-content:center;color:{{ bt.mC }};font-size:10.5px;font-weight:700;flex:none">{{ bt.rank }}</div>
+                      <img loading="lazy" decoding="async" src="{{ bt.fu }}" style="width:19px;height:13px;border-radius:2px;object-fit:cover;flex:none"/>
+                      <span style="flex:1;color:#F5F5F7;font-size:12.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ bt.name }}</span>
+                      <span class="disp" style="color:#FFD700;font-size:13px;font-weight:700;flex:none">{{ bt.goals }} &#9917;</span>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
+
+              <div style="display:flex;gap:7px;margin-top:11px">
+                <sc-for list="{{ p.reacts }}" as="r" hint-placeholder-count="3">
+                  <div onClick="{{ r.tap }}" style-active="transform:scale(.9)" style="display:flex;align-items:center;gap:5px;padding:5px 11px;border-radius:99px;background:{{ r.bg }};border:1px solid {{ r.bd }};cursor:pointer;transition:background var(--dur-fast) var(--ease-out),transform var(--dur-press) var(--ease-out)">
+                    <span style="font-size:12.5px">{{ r.e }}</span><span style="color:{{ r.cC }};font-size:11.5px;font-weight:700;font-variant-numeric:tabular-nums">{{ r.n }}</span>
                   </div>
-                  <span style="color:#7C7C82;font-size:10px;font-weight:500;white-space:nowrap">{{ s.team }}</span>
-                </div>
-              </div>
-              <div style="text-align:right;flex-shrink:0">
-                <span class="disp" style="color:#F5F5F7;font-size:19px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1">{{ s.goals }}</span>
-                <div style="color:#7C7C82;font-size:8.5px;font-weight:600;letter-spacing:.3px;margin-top:1px">GOALS</div>
+                </sc-for>
               </div>
             </div>
           </sc-for>
-        </div>
-
-        <!-- Top Scoring Teams -->
-        <div style="margin-top:12px;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.022));backdrop-filter:blur(16px) saturate(1.25);-webkit-backdrop-filter:blur(16px) saturate(1.25);border:1px solid rgba(255,255,255,.09);box-shadow:inset 0 1px 0 0 rgba(255,255,255,.08),0 14px 32px -12px rgba(0,0,0,.62);border-radius:18px;padding:14px">
-          <div style="display:flex;align-items:center;gap:7px;margin-bottom:12px">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF6FA0" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-            <span style="color:#F5F5F7;font-size:15px;font-weight:600">Top attacks</span>
-            <span style="color:#7C7C82;font-size:11.5px;font-weight:500">goals scored</span>
-          </div>
-          <sc-for list="{{ topAttacks }}" as="t" hint-placeholder-count="5">
-            <div style="display:flex;align-items:center;gap:10px;padding:7px 0;border-top:1px solid rgba(255,255,255,.05)">
-              <div class="disp" style="width:22px;height:22px;border-radius:50%;background:{{ t.medalBg }};display:flex;align-items:center;justify-content:center;flex-shrink:0">
-                <span style="color:{{ t.medalC }};font-size:10px;font-weight:700">{{ t.rank }}</span>
-              </div>
-              <img loading="lazy" decoding="async" src="{{ t.fu }}" style="width:32px;height:21px;border-radius:3px;object-fit:cover;display:block;flex:none;box-shadow:0 0 0 1px rgba(255,255,255,.16)"/>
-              <div style="flex:1;min-width:0">
-                <div class="disp" style="color:#F5F5F7;font-size:13.5px;font-weight:600">{{ t.name }}</div>
-                <div style="height:3px;background:rgba(255,255,255,.07);border-radius:2px;overflow:hidden;margin-top:5px">
-                  <div class="disp" style="height:100%;width:{{ t.bar }};background:#FF6FA0;border-radius:2px"></div>
-                </div>
-              </div>
-              <div style="text-align:right;flex-shrink:0">
-                <span class="disp" style="color:#F5F5F7;font-size:19px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1">{{ t.goals }}</span>
-                <div style="color:#7C7C82;font-size:8.5px;font-weight:600;letter-spacing:.3px;margin-top:1px">GLS</div>
-              </div>
-            </div>
-          </sc-for>
-        </div>
-
-        <div style="text-align:center;color:#48484A;font-size:11px;font-weight:500;margin-top:14px;padding-bottom:4px">Live from worldcup26.ir · updated every 10 min</div>
+        </sc-for>
+        <sc-if value="{{ feedHasDays }}" hint-placeholder-val="{{ false }}">
+          <div style="text-align:center;color:#48484A;font-size:11px;font-weight:500;margin-top:14px;padding-bottom:4px">The Gaffer files a new edition every day at 12:00 &middot; opinions are his own</div>
+        </sc-if>
       </div>
-      </sc-if>
     </div>
     </sc-if>
-
   </div>
 
   <!-- ===================== TAB BAR ===================== -->
@@ -1077,10 +1043,7 @@
       <span style="position:absolute;bottom:-7px;width:4px;height:4px;border-radius:50%;background:#FF2D78;opacity:{{ dMatches }};transform:scale({{ dMatches }});transition:opacity var(--dur-fast) var(--ease-out),transform var(--dur-fast) var(--ease-pop)"></span>
     </div>
     <div onClick="{{ tabPicks }}" style-active="transform:scale(.85)" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;transition:transform .22s var(--ease-pop),color var(--dur-fast) var(--ease-out);color:{{ cPicks }};position:relative">
-      <div style="position:relative;display:flex">
-        <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.4"/><path d="M14.5 13.2c2.7.4 4.5 2.4 4.5 5.3" stroke-width="1.8"/></svg>
-        <span class="new-badge" style="position:absolute;top:-6px;left:14px;font-size:7px;font-weight:800;letter-spacing:.3px;color:#fff;background:#FF2D78;border-radius:5px;padding:1px 3px;line-height:1.1">NEW</span>
-      </div>
+      <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.4"/><path d="M14.5 13.2c2.7.4 4.5 2.4 4.5 5.3" stroke-width="1.8"/></svg>
       <span style="font-size:11px;font-weight:600">Picks</span>
       <span style="position:absolute;bottom:-7px;width:4px;height:4px;border-radius:50%;background:#FF2D78;opacity:{{ dPicks }};transform:scale({{ dPicks }});transition:opacity var(--dur-fast) var(--ease-out),transform var(--dur-fast) var(--ease-pop)"></span>
     </div>
@@ -1089,10 +1052,13 @@
       <span style="font-size:11px;font-weight:600">Predict</span>
       <span style="position:absolute;bottom:-7px;width:4px;height:4px;border-radius:50%;background:#FF2D78;opacity:{{ dPredict }};transform:scale({{ dPredict }});transition:opacity var(--dur-fast) var(--ease-out),transform var(--dur-fast) var(--ease-pop)"></span>
     </div>
-    <div onClick="{{ tabStats }}" style-active="transform:scale(.85)" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;transition:transform .22s var(--ease-pop),color var(--dur-fast) var(--ease-out);color:{{ cStats }};position:relative">
-      <svg width="25" height="25" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="12" width="4" height="9" rx="1.2"/><rect x="10" y="6" width="4" height="15" rx="1.2"/><rect x="17" y="9" width="4" height="12" rx="1.2"/></svg>
-      <span style="font-size:11px;font-weight:600">Stats</span>
-      <span style="position:absolute;bottom:-7px;width:4px;height:4px;border-radius:50%;background:#FF2D78;opacity:{{ dStats }};transform:scale({{ dStats }});transition:opacity var(--dur-fast) var(--ease-out),transform var(--dur-fast) var(--ease-pop)"></span>
+    <div onClick="{{ tabFeed }}" style-active="transform:scale(.85)" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;transition:transform .22s var(--ease-pop),color var(--dur-fast) var(--ease-out);color:{{ cFeed }};position:relative">
+      <div style="position:relative;display:flex">
+        <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        <span class="new-badge" style="position:absolute;top:-6px;left:14px;font-size:7px;font-weight:800;letter-spacing:.3px;color:#fff;background:#FF2D78;border-radius:5px;padding:1px 3px;line-height:1.1">NEW</span>
+      </div>
+      <span style="font-size:11px;font-weight:600">Feed</span>
+      <span style="position:absolute;bottom:-7px;width:4px;height:4px;border-radius:50%;background:#FF2D78;opacity:{{ dFeed }};transform:scale({{ dFeed }});transition:opacity var(--dur-fast) var(--ease-out),transform var(--dur-fast) var(--ease-pop)"></span>
     </div>
   </div>
 
@@ -1490,7 +1456,7 @@ class Component extends DCLogic {
     this._userName = null;
     this.state = {
       tab:'fantasy', fantSeg:'group', matchSub:'standings', dateTab:'today',
-      statSeg:'league', detailIdx:null, matchObj:null, profile:false,
+      detailIdx:null, matchObj:null, profile:false,
       heroPts:0, champ:null, finalists:[], r32:{}, r16:{}, qf:{}, sf:{}, final:{},
       submitted:false, koRoundOpen:0, koFilter:'remaining',
       loggedIn:false, loginError:'', loginLoading:false,
@@ -1502,12 +1468,12 @@ class Component extends DCLogic {
     this.scrollTop=()=>{ if(this.mainScroll) this.mainScroll.scrollTop=0; };
   }
   setTab(t){
-    const order=['fantasy','matches','picks','predict','stats'];
+    const order=['fantasy','matches','picks','predict','feed'];
     const from=order.indexOf(this.state.tab), to=order.indexOf(t);
     try{ document.documentElement.dataset.tabdir = to>from?'r':(to<from?'l':''); }catch(_){}
     this.setState({tab:t}); this.scrollTop();
     try{
-      const order=['fantasy','matches','picks','predict','stats'];
+      const order=['fantasy','matches','picks','predict','feed'];
       const nav=document.querySelectorAll('body [onclick]');
       const icons=document.querySelectorAll('div[style*="flex:none"][style*="env(safe-area-inset-bottom"] svg');
       const svg=icons[order.indexOf(t)];
@@ -1701,7 +1667,7 @@ class Component extends DCLogic {
       } else if(g.mode==='swipe'){
         const v=Math.abs(g.d)/Math.max(1,performance.now()-g.t0);
         if(Math.abs(g.d)>64||(Math.abs(g.d)>28&&v>0.5)){
-          const order=['fantasy','matches','picks','predict','stats'];
+          const order=['fantasy','matches','picks','predict','feed'];
           const i=order.indexOf(this.state.tab);
           const n=g.d<0?Math.min(order.length-1,i+1):Math.max(0,i-1);
           if(n!==i&&this.state.loggedIn!==false) this.setTab(order[n]);
@@ -2658,35 +2624,46 @@ class Component extends DCLogic {
     const bonusBorder = bonusIncomplete
       ? '1px solid rgba(255,159,10,.55)' : '1px solid rgba(255,255,255,.09)';
 
-    const counts={};
-    lb.forEach(p=>p.picks.forEach(c=>{counts[c]=(counts[c]||0)+1;}));
-    const sortedCounts=Object.entries(counts).sort(([,a],[,b])=>b-a).slice(0,6);
-    const maxCount=Math.max(...sortedCounts.map(([,n])=>n),1);
-    const mostPicked=this.deepFlags(sortedCounts.map(([c,n])=>({f:(this.teams[c]||{}).f||'',n:(this.teams[c]||{}).n||c,c:n,w:Math.round(n/maxCount*100)+'%'})));
-    const sortedDelta=[...lb].map(p=>({name:p.name,d:parseInt(p.delta)})).sort((a,b)=>b.d-a.d);
-    const risers=sortedDelta.filter(x=>x.d>0).slice(0,3).map(x=>({name:x.name,delta:'+'+x.d}));
-    const fallers=sortedDelta.filter(x=>x.d<0).slice(0,2).map(x=>({name:x.name,delta:String(x.d)}));
-    const ptsArr=lb.map(p=>p.pts);
-    const maxPts=Math.max(...ptsArr,1);
-    const minPts=Math.min(...ptsArr,0);
-    const range=maxPts-minPts||1;
-    const distribution=ptsArr.map(v=>({h:Math.round((v-minPts)/range*100)+'%', bg: v>=maxPts*0.75?'linear-gradient(180deg,#FF2D78,#7A3CFF)':'#2C2C2E'}));
-    const rawTopScorers = this._apiData?.topScorers || [];
-    const teamData = this._apiData?.teams || {};
-    const maxGoals = rawTopScorers.length ? rawTopScorers[0].goals : 1;
-    const medal = i => i===0?{bg:'rgba(255,200,0,.18)',c:'#FFD700'}:i===1?{bg:'rgba(190,190,190,.15)',c:'#B8B8B8'}:i===2?{bg:'rgba(160,100,50,.15)',c:'#CD7F32'}:{bg:'rgba(60,60,66,.35)',c:'#7C7C82'};
-    const scorers = rawTopScorers.slice(0, 8).map((s, i) => {
-      const m = medal(i);
-      return { rank: i+1, fu: teamData[s.team]?.flag||'', name: s.name, team: teamData[s.team]?.name||s.team, goals: s.goals, bar: Math.round(s.goals/maxGoals*100)+'%', barC: i===0?'#FFD700':i<3?'#30D158':'#1A6E31', medalBg: m.bg, medalC: m.c };
-    });
-    const allTeamStandings = [];
-    for(const teams of Object.values(this._apiData?.standings||{})) for(const t of teams) allTeamStandings.push(t);
-    const maxTeamGoals = allTeamStandings.reduce((m,t)=>Math.max(m,t.gf),1);
-    const topAttacks = allTeamStandings.filter(t=>t.gf>0).sort((a,b)=>b.gf-a.gf||b.played-a.played).slice(0,8).map((t,i)=>{
-      const m=medal(i);
-      return { rank:i+1, fu: teamData[t.code]?.flag||'', name:t.name, goals:t.gf, bar:Math.round(t.gf/maxTeamGoals*100)+'%', medalBg:m.bg, medalC:m.c };
-    });
-    const assists = [];
+    // ===== Daily Gaffer feed =====
+    const feedRawDays=(this._apiData?.feed?.days)||[];
+    const _fh=(str)=>{let h=2166136261;for(let i=0;i<str.length;i++){h^=str.charCodeAt(i);h=Math.imul(h,16777619);}return h>>>0;};
+    const rxKey=this._ns+'fifa_feed_rx';
+    let rxMap={}; try{ rxMap=JSON.parse(localStorage.getItem(rxKey)||'{}'); }catch(_){}
+    const nMembers=(this._apiData?.participants||[]).length||10;
+    const istKeyOf=(ms)=>new Date(ms+5.5*3600*1000).toISOString().slice(0,10);
+    const fmtAgo=(ms)=>{const m=Math.max(1,Math.round(ms/60000)); if(m<60)return m+'m'; const h=Math.round(m/60); if(h<24)return h+'h'; return Math.round(h/24)+'d';};
+    const dayLabel=(k)=>k===istKeyOf(Date.now())?'Today':(k===istKeyOf(Date.now()-86400000)?'Yesterday':new Date(k+'T00:00:00Z').toLocaleDateString('en-US',{day:'numeric',month:'short'}));
+    const parseSegs=(t)=>String(t||'').split('**').map((x,i)=>({t:x,w:i%2?'700':'500',c:i%2?'#F5F5F7':'#C7C7CC'})).filter(x=>x.t);
+    const feedDays=feedRawDays.map(day=>({
+      label:dayLabel(day.dateKey),
+      posts:(day.posts||[]).map(fp=>{
+        const c=fp.card||{};
+        const view={
+          id:fp.id, segs:parseSegs(fp.text), timeStr:fmtAgo(Math.max(60000,Date.now()-(fp.ts||day.generatedAtMs||Date.now()))),
+          hasMove:c.type==='movement', hasStat:c.type==='statline', hasFixtures:c.type==='fixtures', hasBoot:c.type==='boot'
+        };
+        if(view.hasMove) view.mv={ name:c.name, initials:this.initials(c.name||''), avBg:this.avPal[_fh(c.name||'')%this.avPal.length],
+          arrow:c.delta>0?'\u25B2':'\u25BC', dC:c.delta>0?'#34C759':'#FF453A', dN:Math.abs(c.delta), fromTo:'#'+c.fromRank+' \u2192 #'+c.toRank };
+        if(view.hasStat) view.st={ value:c.value, label:c.label, name:c.name };
+        if(view.hasFixtures) view.fx=this.deepFlags((c.items||[]).map(it=>({
+          h:{f:(this.teams[it.home]||{}).f||'', n:(this.teams[it.home]||{}).n||it.home},
+          a:{f:(this.teams[it.away]||{}).f||'', n:(this.teams[it.away]||{}).n||it.away},
+          round:it.round||'', t:new Date(it.kickoffMs).toLocaleString('en-US',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit',hour12:false,timeZone:'Asia/Kolkata'})
+        })));
+        if(view.hasBoot) view.bt=this.deepFlags((c.items||[]).map((it,i)=>({ rank:i+1, name:it.name, f:(this.teams[it.team]||{}).f||'', goals:it.goals,
+          mBg:i===0?'rgba(255,200,0,.18)':i===1?'rgba(190,190,190,.15)':'rgba(160,100,50,.15)', mC:i===0?'#FFD700':i===1?'#B8B8B8':'#CD7F32' })));
+        view.reacts=['\u{1F525}','\u{1F602}','\u{1F480}'].map(e=>{
+          const base=_fh(fp.id+e)%Math.max(2,Math.min(6,nMembers-2));
+          const on=rxMap[fp.id]===e;
+          return { e, n:base+(on?1:0), on,
+            bg:on?'rgba(255,45,120,.18)':'rgba(255,255,255,.05)', bd:on?'rgba(255,45,120,.45)':'rgba(255,255,255,.08)', cC:on?'#FF6FA0':'#8E8E93',
+            tap:()=>{ try{ const m=JSON.parse(localStorage.getItem(rxKey)||'{}'); if(m[fp.id]===e) delete m[fp.id]; else m[fp.id]=e; localStorage.setItem(rxKey,JSON.stringify(m)); }catch(_){}
+              this.setState({}); } };
+        });
+        return view;
+      })
+    })).filter(d=>d.posts.length);
+    const feedEmpty=!feedDays.length;
     const userP=lb[this.USER]||lb[0]||{picksX:[]};
     const userPicks=this.deepFlags((userP.picksX||[]).map(pk=>({flag:pk.flag,pts:pk.pts})));
     const userId=this._userParticipantId;
@@ -2729,15 +2706,15 @@ class Component extends DCLogic {
     const noMatchLog=!hasMatchLog;
 
     return {
-      isFantasy:s.tab==='fantasy', isMatches:s.tab==='matches', isPicks:s.tab==='picks', isPredict:s.tab==='predict', isStats:s.tab==='stats',
+      isFantasy:s.tab==='fantasy', isMatches:s.tab==='matches', isPicks:s.tab==='picks', isPredict:s.tab==='predict', isFeed:s.tab==='feed',
       cFantasy:s.tab==='fantasy'?'#FF2D78':'#7C7C82', cMatches:s.tab==='matches'?'#FF2D78':'#7C7C82',
       cPicks:s.tab==='picks'?'#FF2D78':'#7C7C82',
-      cPredict:s.tab==='predict'?'#FF2D78':'#7C7C82', cStats:s.tab==='stats'?'#FF2D78':'#7C7C82',
+      cPredict:s.tab==='predict'?'#FF2D78':'#7C7C82', cFeed:s.tab==='feed'?'#FF2D78':'#7C7C82',
       dFantasy:s.tab==='fantasy'?1:0, dMatches:s.tab==='matches'?1:0, dPicks:s.tab==='picks'?1:0,
-      dPredict:s.tab==='predict'?1:0, dStats:s.tab==='stats'?1:0,
+      dPredict:s.tab==='predict'?1:0, dFeed:s.tab==='feed'?1:0,
       tabFantasy:()=>this.setTab('fantasy'), tabMatches:()=>this.setTab('matches'),
       tabPicks:()=>this.setTab('picks'),
-      tabPredict:()=>this.setTab('predict'), tabStats:()=>this.setTab('stats'),
+      tabPredict:()=>this.setTab('predict'), tabFeed:()=>this.setTab('feed'),
       heroPts:s.heroPts, heroRank:this.USER+1, heroTotal:this.P.length,
       heroPhase: this._apiData?.meta?.phase==='ko'?'Knockout stage':'Group stage · in progress',
       heroDeltaStr: (()=>{ const d=parseInt(this.P[this.USER]?.[3]||'0'); return d>0?('▲ +'+d+' today'):(d<0?('▼ '+d+' today'):'— no change'); })(),
@@ -2953,12 +2930,7 @@ class Component extends DCLogic {
       },
       predStatusText: predBlocked ? 'Action needed' : (s.submitted?(koAllDone?'All saved':koDone+'/'+koTotal+' saved'):'Not submitted'),
       predStatusColor: predBlocked ? '#FF9F0A' : (s.submitted?(koAllDone?'#34C759':'#FFB44C'):'#FF9F0A'),
-      statIsLeague:s.statSeg==='league', statIsPlayers:s.statSeg==='players',
-      statLeagueBg:pill(s.statSeg==='league'), statLeagueC:pillT(s.statSeg==='league'),
-      statPlayersBg:pill(s.statSeg==='players'), statPlayersC:pillT(s.statSeg==='players'),
-      statLeague:()=>this.setState({statSeg:'league'}), statPlayers:()=>this.setState({statSeg:'players'}),
-      distLabel: this.P.length+' players · '+Math.min(...ptsArr)+' to '+Math.max(...ptsArr)+' pts spread',
-      mostPicked, risers, fallers, distribution, scorers, assists, topAttacks,
+      feedDays, feedEmpty, feedHasDays:!feedEmpty,
       userName: this.P[this.USER]?.[0]||'Player',
       userInitials: this.initials(this.P[this.USER]?.[0]||'??'),
       openProfile:()=>this.setState({profile:true}), closeProfile:()=>this.animClose('[data-sheet="y"]',()=>this.setState({profile:false})),

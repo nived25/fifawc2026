@@ -7,9 +7,13 @@ frontend-logic.js
 data/*
 !data/participants.json
 !data/predictions.json
+!data/feed.json
+!data/scoring_ledger.json
 # Per-group source-of-truth files (roster + predictions), generated group data stays ignored
 !data/groups/
 data/groups/*/*
 !data/groups/*/participants.json
 !data/groups/*/predictions.json
+!data/groups/*/feed.json
+!data/groups/*/scoring_ledger.json
 .vercel

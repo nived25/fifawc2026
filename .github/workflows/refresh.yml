@@ -44,5 +44,5 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add public data/predictions.json data/groups
+          git add public data/predictions.json data/feed.json data/scoring_ledger.json data/groups
           git diff --staged --quiet || (git commit -m "data: auto-refresh $(date -u '+%Y-%m-%d %H:%M UTC') [skip ci] [skip vercel]" && git push)

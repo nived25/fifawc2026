@@ -9,6 +9,7 @@ import { fileURLToPath } from 'url';
 import { write, readOr } from './store.js';
 import { computeScores } from './scoring.js';
 import { buildAppData } from './buildAppData.js';
+import { generateFeed } from './feed.js';
 import { syncPredictions } from './sync-predictions.js';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -118,6 +119,7 @@ async function run() {
   if (n) console.log(`[refresh-group] ${GROUP_ID}: auto-locked ${n} prediction(s)`);
   const lb = computeScores();
   console.log(`[refresh-group] ${GROUP_ID}: scored ${lb.length} participant(s)`);
+  generateFeed({ groupId: GROUP_ID });
   buildAppData();
   generateHtml();
   console.log(`[refresh-group] ${GROUP_ID}: public/${OUT_SUBDIR}/ ready`);

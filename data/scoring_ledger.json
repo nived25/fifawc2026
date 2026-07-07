@@ -1,0 +1,2490 @@
+[
+  {
+    "key": "praveen_kumar|10|group_win_GER",
+    "participantId": "praveen_kumar",
+    "points": 3,
+    "reason": "GER win (7-1)",
+    "matchId": 10,
+    "ts": 1782574153442
+  },
+  {
+    "key": "praveen_kumar|33|group_win_GER",
+    "participantId": "praveen_kumar",
+    "points": 3,
+    "reason": "GER win (2-1)",
+    "matchId": 33,
+    "ts": 1782574153442
+  },
+  {
+    "key": "praveen_kumar|17|group_win_FRA",
+    "participantId": "praveen_kumar",
+    "points": 3,
+    "reason": "FRA win (3-1)",
+    "matchId": 17,
+    "ts": 1782574153442
+  },
+  {
+    "key": "praveen_kumar|41|group_win_FRA",
+    "participantId": "praveen_kumar",
+    "points": 3,
+    "reason": "FRA win (3-0)",
+    "matchId": 41,
+    "ts": 1782574153442
+  },
+  {
+    "key": "praveen_kumar|62|group_win_FRA",
+    "participantId": "praveen_kumar",
+    "points": 3,
+    "reason": "FRA win (4-1)",
+    "matchId": 62,
+    "ts": 1782574153442
+  },
+  {
+    "key": "praveen_kumar|21|group_draw_POR",
+    "participantId": "praveen_kumar",
+    "points": 1,
+    "reason": "POR draw (1-1)",
+    "matchId": 21,
+    "ts": 1782574153442
+  },
+  {
+    "key": "praveen_kumar|45|group_win_POR",
+    "participantId": "praveen_kumar",
+    "points": 3,
+    "reason": "POR win (5-0)",
+    "matchId": 45,
+    "ts": 1782574153442
+  },
+  {
+    "key": "praveen_kumar|19|group_win_ARG",
+    "participantId": "praveen_kumar",
+    "points": 3,
+    "reason": "ARG win (3-0)",
+    "matchId": 19,
+    "ts": 1782574153442
+  },
+  {
+    "key": "praveen_kumar|43|group_win_ARG",
+    "participantId": "praveen_kumar",
+    "points": 3,
+    "reason": "ARG win (2-0)",
+    "matchId": 43,
+    "ts": 1782574153442
+  },
+  {
+    "key": "rushabh_jha|14|group_draw_ESP",
+    "participantId": "rushabh_jha",
+    "points": 1,
+    "reason": "ESP draw (0-0)",
+    "matchId": 14,
+    "ts": 1782574153442
+  },
+  {
+    "key": "rushabh_jha|39|group_win_ESP",
+    "participantId": "rushabh_jha",
+    "points": 3,
+    "reason": "ESP win (4-0)",
+    "matchId": 39,
+    "ts": 1782574153442
+  },
+  {
+    "key": "rushabh_jha|66|group_win_ESP",
+    "participantId": "rushabh_jha",
+    "points": 3,
+    "reason": "ESP win (1-0)",
+    "matchId": 66,
+    "ts": 1782574153442
+  },
+  {
+    "key": "rushabh_jha|10|group_win_GER",
+    "participantId": "rushabh_jha",
+    "points": 3,
+    "reason": "GER win (7-1)",
+    "matchId": 10,
+    "ts": 1782574153442
+  },
+  {
+    "key": "rushabh_jha|33|group_win_GER",
+    "participantId": "rushabh_jha",
+    "points": 3,
+    "reason": "GER win (2-1)",
+    "matchId": 33,
+    "ts": 1782574153442
+  },
+  {
+    "key": "rushabh_jha|22|group_win_ENG",
+    "participantId": "rushabh_jha",
+    "points": 3,
+    "reason": "ENG win (4-2)",
+    "matchId": 22,
+    "ts": 1782574153442
+  },
+  {
+    "key": "rushabh_jha|48|group_draw_ENG",
+    "participantId": "rushabh_jha",
+    "points": 1,
+    "reason": "ENG draw (0-0)",
+    "matchId": 48,
+    "ts": 1782574153442
+  },
+  {
+    "key": "rushabh_jha|19|group_win_ARG",
+    "participantId": "rushabh_jha",
+    "points": 3,
+    "reason": "ARG win (3-0)",
+    "matchId": 19,
+    "ts": 1782574153442
+  },
+  {
+    "key": "rushabh_jha|43|group_win_ARG",
+    "participantId": "rushabh_jha",
+    "points": 3,
+    "reason": "ARG win (2-0)",
+    "matchId": 43,
+    "ts": 1782574153442
+  },
+  {
+    "key": "avdhut_pure|19|group_win_ARG",
+    "participantId": "avdhut_pure",
+    "points": 3,
+    "reason": "ARG win (3-0)",
+    "matchId": 19,
+    "ts": 1782574153442
+  },
+  {
+    "key": "avdhut_pure|43|group_win_ARG",
+    "participantId": "avdhut_pure",
+    "points": 3,
+    "reason": "ARG win (2-0)",
+    "matchId": 43,
+    "ts": 1782574153442
+  },
+  {
+    "key": "avdhut_pure|7|group_draw_BRA",
+    "participantId": "avdhut_pure",
+    "points": 1,
+    "reason": "BRA draw (1-1)",
+    "matchId": 7,
+    "ts": 1782574153442
+  },
+  {
+    "key": "avdhut_pure|29|group_win_BRA",
+    "participantId": "avdhut_pure",
+    "points": 3,
+    "reason": "BRA win (3-0)",
+    "matchId": 29,
+    "ts": 1782574153442
+  },
+  {
+    "key": "avdhut_pure|49|group_win_BRA",
+    "participantId": "avdhut_pure",
+    "points": 3,
+    "reason": "BRA win (3-0)",
+    "matchId": 49,
+    "ts": 1782574153442
+  },
+  {
+    "key": "avdhut_pure|21|group_draw_POR",
+    "participantId": "avdhut_pure",
+    "points": 1,
+    "reason": "POR draw (1-1)",
+    "matchId": 21,
+    "ts": 1782574153442
+  },
+  {
+    "key": "avdhut_pure|45|group_win_POR",
+    "participantId": "avdhut_pure",
+    "points": 3,
+    "reason": "POR win (5-0)",
+    "matchId": 45,
+    "ts": 1782574153442
+  },
+  {
+    "key": "avdhut_pure|14|group_draw_ESP",
+    "participantId": "avdhut_pure",
+    "points": 1,
+    "reason": "ESP draw (0-0)",
+    "matchId": 14,
+    "ts": 1782574153442
+  },
+  {
+    "key": "avdhut_pure|39|group_win_ESP",
+    "participantId": "avdhut_pure",
+    "points": 3,
+    "reason": "ESP win (4-0)",
+    "matchId": 39,
+    "ts": 1782574153442
+  },
+  {
+    "key": "avdhut_pure|66|group_win_ESP",
+    "participantId": "avdhut_pure",
+    "points": 3,
+    "reason": "ESP win (1-0)",
+    "matchId": 66,
+    "ts": 1782574153442
+  },
+  {
+    "key": "dhruv_shah|19|group_win_ARG",
+    "participantId": "dhruv_shah",
+    "points": 3,
+    "reason": "ARG win (3-0)",
+    "matchId": 19,
+    "ts": 1782574153442
+  },
+  {
+    "key": "dhruv_shah|43|group_win_ARG",
+    "participantId": "dhruv_shah",
+    "points": 3,
+    "reason": "ARG win (2-0)",
+    "matchId": 43,
+    "ts": 1782574153442
+  },
+  {
+    "key": "dhruv_shah|10|group_win_GER",
+    "participantId": "dhruv_shah",
+    "points": 3,
+    "reason": "GER win (7-1)",
+    "matchId": 10,
+    "ts": 1782574153442
+  },
+  {
+    "key": "dhruv_shah|33|group_win_GER",
+    "participantId": "dhruv_shah",
+    "points": 3,
+    "reason": "GER win (2-1)",
+    "matchId": 33,
+    "ts": 1782574153442
+  },
+  {
+    "key": "dhruv_shah|7|group_draw_BRA",
+    "participantId": "dhruv_shah",
+    "points": 1,
+    "reason": "BRA draw (1-1)",
+    "matchId": 7,
+    "ts": 1782574153442
+  },
+  {
+    "key": "dhruv_shah|29|group_win_BRA",
+    "participantId": "dhruv_shah",
+    "points": 3,
+    "reason": "BRA win (3-0)",
+    "matchId": 29,
+    "ts": 1782574153442
+  },
+  {
+    "key": "dhruv_shah|49|group_win_BRA",
+    "participantId": "dhruv_shah",
+    "points": 3,
+    "reason": "BRA win (3-0)",
+    "matchId": 49,
+    "ts": 1782574153442
+  },
+  {
+    "key": "dhruv_shah|14|group_draw_ESP",
+    "participantId": "dhruv_shah",
+    "points": 1,
+    "reason": "ESP draw (0-0)",
+    "matchId": 14,
+    "ts": 1782574153442
+  },
+  {
+    "key": "dhruv_shah|39|group_win_ESP",
+    "participantId": "dhruv_shah",
+    "points": 3,
+    "reason": "ESP win (4-0)",
+    "matchId": 39,
+    "ts": 1782574153442
+  },
+  {
+    "key": "dhruv_shah|66|group_win_ESP",
+    "participantId": "dhruv_shah",
+    "points": 3,
+    "reason": "ESP win (1-0)",
+    "matchId": 66,
+    "ts": 1782574153442
+  },
+  {
+    "key": "sagar_vatkar|10|group_win_GER",
+    "participantId": "sagar_vatkar",
+    "points": 3,
+    "reason": "GER win (7-1)",
+    "matchId": 10,
+    "ts": 1782574153442
+  },
+  {
+    "key": "sagar_vatkar|33|group_win_GER",
+    "participantId": "sagar_vatkar",
+    "points": 3,
+    "reason": "GER win (2-1)",
+    "matchId": 33,
+    "ts": 1782574153442
+  },
+  {
+    "key": "sagar_vatkar|7|group_draw_BRA",
+    "participantId": "sagar_vatkar",
+    "points": 1,
+    "reason": "BRA draw (1-1)",
+    "matchId": 7,
+    "ts": 1782574153442
+  },
+  {
+    "key": "sagar_vatkar|29|group_win_BRA",
+    "participantId": "sagar_vatkar",
+    "points": 3,
+    "reason": "BRA win (3-0)",
+    "matchId": 29,
+    "ts": 1782574153442
+  },
+  {
+    "key": "sagar_vatkar|49|group_win_BRA",
+    "participantId": "sagar_vatkar",
+    "points": 3,
+    "reason": "BRA win (3-0)",
+    "matchId": 49,
+    "ts": 1782574153442
+  },
+  {
+    "key": "sagar_vatkar|21|group_draw_POR",
+    "participantId": "sagar_vatkar",
+    "points": 1,
+    "reason": "POR draw (1-1)",
+    "matchId": 21,
+    "ts": 1782574153442
+  },
+  {
+    "key": "sagar_vatkar|45|group_win_POR",
+    "participantId": "sagar_vatkar",
+    "points": 3,
+    "reason": "POR win (5-0)",
+    "matchId": 45,
+    "ts": 1782574153442
+  },
+  {
+    "key": "sagar_vatkar|19|group_win_ARG",
+    "participantId": "sagar_vatkar",
+    "points": 3,
+    "reason": "ARG win (3-0)",
+    "matchId": 19,
+    "ts": 1782574153442
+  },
+  {
+    "key": "sagar_vatkar|43|group_win_ARG",
+    "participantId": "sagar_vatkar",
+    "points": 3,
+    "reason": "ARG win (2-0)",
+    "matchId": 43,
+    "ts": 1782574153442
+  },
+  {
+    "key": "ranjit_nambiar|14|group_draw_ESP",
+    "participantId": "ranjit_nambiar",
+    "points": 1,
+    "reason": "ESP draw (0-0)",
+    "matchId": 14,
+    "ts": 1782574153442
+  },
+  {
+    "key": "ranjit_nambiar|39|group_win_ESP",
+    "participantId": "ranjit_nambiar",
+    "points": 3,
+    "reason": "ESP win (4-0)",
+    "matchId": 39,
+    "ts": 1782574153442
+  },
+  {
+    "key": "ranjit_nambiar|66|group_win_ESP",
+    "participantId": "ranjit_nambiar",
+    "points": 3,
+    "reason": "ESP win (1-0)",
+    "matchId": 66,
+    "ts": 1782574153442
+  },
+  {
+    "key": "ranjit_nambiar|19|group_win_ARG",
+    "participantId": "ranjit_nambiar",
+    "points": 3,
+    "reason": "ARG win (3-0)",
+    "matchId": 19,
+    "ts": 1782574153442
+  },
+  {
+    "key": "ranjit_nambiar|43|group_win_ARG",
+    "participantId": "ranjit_nambiar",
+    "points": 3,
+    "reason": "ARG win (2-0)",
+    "matchId": 43,
+    "ts": 1782574153442
+  },
+  {
+    "key": "ranjit_nambiar|21|group_draw_POR",
+    "participantId": "ranjit_nambiar",
+    "points": 1,
+    "reason": "POR draw (1-1)",
+    "matchId": 21,
+    "ts": 1782574153442
+  },
+  {
+    "key": "ranjit_nambiar|45|group_win_POR",
+    "participantId": "ranjit_nambiar",
+    "points": 3,
+    "reason": "POR win (5-0)",
+    "matchId": 45,
+    "ts": 1782574153442
+  },
+  {
+    "key": "ranjit_nambiar|15|group_draw_BEL",
+    "participantId": "ranjit_nambiar",
+    "points": 1,
+    "reason": "BEL draw (1-1)",
+    "matchId": 15,
+    "ts": 1782574153442
+  },
+  {
+    "key": "ranjit_nambiar|37|group_draw_BEL",
+    "participantId": "ranjit_nambiar",
+    "points": 1,
+    "reason": "BEL draw (0-0)",
+    "matchId": 37,
+    "ts": 1782574153442
+  },
+  {
+    "key": "ranjit_nambiar|64|group_win_BEL",
+    "participantId": "ranjit_nambiar",
+    "points": 3,
+    "reason": "BEL win (5-1)",
+    "matchId": 64,
+    "ts": 1782574153442
+  },
+  {
+    "key": "anurag_saxena|21|group_draw_POR",
+    "participantId": "anurag_saxena",
+    "points": 1,
+    "reason": "POR draw (1-1)",
+    "matchId": 21,
+    "ts": 1782574153442
+  },
+  {
+    "key": "anurag_saxena|45|group_win_POR",
+    "participantId": "anurag_saxena",
+    "points": 3,
+    "reason": "POR win (5-0)",
+    "matchId": 45,
+    "ts": 1782574153442
+  },
+  {
+    "key": "anurag_saxena|7|group_draw_BRA",
+    "participantId": "anurag_saxena",
+    "points": 1,
+    "reason": "BRA draw (1-1)",
+    "matchId": 7,
+    "ts": 1782574153442
+  },
+  {
+    "key": "anurag_saxena|29|group_win_BRA",
+    "participantId": "anurag_saxena",
+    "points": 3,
+    "reason": "BRA win (3-0)",
+    "matchId": 29,
+    "ts": 1782574153442
+  },
+  {
+    "key": "anurag_saxena|49|group_win_BRA",
+    "participantId": "anurag_saxena",
+    "points": 3,
+    "reason": "BRA win (3-0)",
+    "matchId": 49,
+    "ts": 1782574153442
+  },
+  {
+    "key": "anurag_saxena|19|group_win_ARG",
+    "participantId": "anurag_saxena",
+    "points": 3,
+    "reason": "ARG win (3-0)",
+    "matchId": 19,
+    "ts": 1782574153442
+  },
+  {
+    "key": "anurag_saxena|43|group_win_ARG",
+    "participantId": "anurag_saxena",
+    "points": 3,
+    "reason": "ARG win (2-0)",
+    "matchId": 43,
+    "ts": 1782574153442
+  },
+  {
+    "key": "anurag_saxena|14|group_draw_ESP",
+    "participantId": "anurag_saxena",
+    "points": 1,
+    "reason": "ESP draw (0-0)",
+    "matchId": 14,
+    "ts": 1782574153442
+  },
+  {
+    "key": "anurag_saxena|39|group_win_ESP",
+    "participantId": "anurag_saxena",
+    "points": 3,
+    "reason": "ESP win (4-0)",
+    "matchId": 39,
+    "ts": 1782574153442
+  },
+  {
+    "key": "anurag_saxena|66|group_win_ESP",
+    "participantId": "anurag_saxena",
+    "points": 3,
+    "reason": "ESP win (1-0)",
+    "matchId": 66,
+    "ts": 1782574153442
+  },
+  {
+    "key": "renu_verma|14|group_draw_ESP",
+    "participantId": "renu_verma",
+    "points": 1,
+    "reason": "ESP draw (0-0)",
+    "matchId": 14,
+    "ts": 1782574153442
+  },
+  {
+    "key": "renu_verma|39|group_win_ESP",
+    "participantId": "renu_verma",
+    "points": 3,
+    "reason": "ESP win (4-0)",
+    "matchId": 39,
+    "ts": 1782574153442
+  },
+  {
+    "key": "renu_verma|66|group_win_ESP",
+    "participantId": "renu_verma",
+    "points": 3,
+    "reason": "ESP win (1-0)",
+    "matchId": 66,
+    "ts": 1782574153442
+  },
+  {
+    "key": "renu_verma|17|group_win_FRA",
+    "participantId": "renu_verma",
+    "points": 3,
+    "reason": "FRA win (3-1)",
+    "matchId": 17,
+    "ts": 1782574153442
+  },
+  {
+    "key": "renu_verma|41|group_win_FRA",
+    "participantId": "renu_verma",
+    "points": 3,
+    "reason": "FRA win (3-0)",
+    "matchId": 41,
+    "ts": 1782574153442
+  },
+  {
+    "key": "renu_verma|62|group_win_FRA",
+    "participantId": "renu_verma",
+    "points": 3,
+    "reason": "FRA win (4-1)",
+    "matchId": 62,
+    "ts": 1782574153442
+  },
+  {
+    "key": "renu_verma|19|group_win_ARG",
+    "participantId": "renu_verma",
+    "points": 3,
+    "reason": "ARG win (3-0)",
+    "matchId": 19,
+    "ts": 1782574153442
+  },
+  {
+    "key": "renu_verma|43|group_win_ARG",
+    "participantId": "renu_verma",
+    "points": 3,
+    "reason": "ARG win (2-0)",
+    "matchId": 43,
+    "ts": 1782574153442
+  },
+  {
+    "key": "renu_verma|7|group_draw_BRA",
+    "participantId": "renu_verma",
+    "points": 1,
+    "reason": "BRA draw (1-1)",
+    "matchId": 7,
+    "ts": 1782574153442
+  },
+  {
+    "key": "renu_verma|29|group_win_BRA",
+    "participantId": "renu_verma",
+    "points": 3,
+    "reason": "BRA win (3-0)",
+    "matchId": 29,
+    "ts": 1782574153442
+  },
+  {
+    "key": "renu_verma|49|group_win_BRA",
+    "participantId": "renu_verma",
+    "points": 3,
+    "reason": "BRA win (3-0)",
+    "matchId": 49,
+    "ts": 1782574153442
+  },
+  {
+    "key": "nived|17|group_win_FRA",
+    "participantId": "nived",
+    "points": 3,
+    "reason": "FRA win (3-1)",
+    "matchId": 17,
+    "ts": 1782574153442
+  },
+  {
+    "key": "nived|41|group_win_FRA",
+    "participantId": "nived",
+    "points": 3,
+    "reason": "FRA win (3-0)",
+    "matchId": 41,
+    "ts": 1782574153442
+  },
+  {
+    "key": "nived|62|group_win_FRA",
+    "participantId": "nived",
+    "points": 3,
+    "reason": "FRA win (4-1)",
+    "matchId": 62,
+    "ts": 1782574153442
+  },
+  {
+    "key": "nived|19|group_win_ARG",
+    "participantId": "nived",
+    "points": 3,
+    "reason": "ARG win (3-0)",
+    "matchId": 19,
+    "ts": 1782574153442
+  },
+  {
+    "key": "nived|43|group_win_ARG",
+    "participantId": "nived",
+    "points": 3,
+    "reason": "ARG win (2-0)",
+    "matchId": 43,
+    "ts": 1782574153442
+  },
+  {
+    "key": "nived|14|group_draw_ESP",
+    "participantId": "nived",
+    "points": 1,
+    "reason": "ESP draw (0-0)",
+    "matchId": 14,
+    "ts": 1782574153442
+  },
+  {
+    "key": "nived|39|group_win_ESP",
+    "participantId": "nived",
+    "points": 3,
+    "reason": "ESP win (4-0)",
+    "matchId": 39,
+    "ts": 1782574153442
+  },
+  {
+    "key": "nived|66|group_win_ESP",
+    "participantId": "nived",
+    "points": 3,
+    "reason": "ESP win (1-0)",
+    "matchId": 66,
+    "ts": 1782574153442
+  },
+  {
+    "key": "nived|21|group_draw_POR",
+    "participantId": "nived",
+    "points": 1,
+    "reason": "POR draw (1-1)",
+    "matchId": 21,
+    "ts": 1782574153442
+  },
+  {
+    "key": "nived|45|group_win_POR",
+    "participantId": "nived",
+    "points": 3,
+    "reason": "POR win (5-0)",
+    "matchId": 45,
+    "ts": 1782574153442
+  },
+  {
+    "key": "fananio|19|group_win_ARG",
+    "participantId": "fananio",
+    "points": 3,
+    "reason": "ARG win (3-0)",
+    "matchId": 19,
+    "ts": 1782574153442
+  },
+  {
+    "key": "fananio|43|group_win_ARG",
+    "participantId": "fananio",
+    "points": 3,
+    "reason": "ARG win (2-0)",
+    "matchId": 43,
+    "ts": 1782574153442
+  },
+  {
+    "key": "fananio|14|group_draw_ESP",
+    "participantId": "fananio",
+    "points": 1,
+    "reason": "ESP draw (0-0)",
+    "matchId": 14,
+    "ts": 1782574153442
+  },
+  {
+    "key": "fananio|39|group_win_ESP",
+    "participantId": "fananio",
+    "points": 3,
+    "reason": "ESP win (4-0)",
+    "matchId": 39,
+    "ts": 1782574153442
+  },
+  {
+    "key": "fananio|66|group_win_ESP",
+    "participantId": "fananio",
+    "points": 3,
+    "reason": "ESP win (1-0)",
+    "matchId": 66,
+    "ts": 1782574153442
+  },
+  {
+    "key": "fananio|17|group_win_FRA",
+    "participantId": "fananio",
+    "points": 3,
+    "reason": "FRA win (3-1)",
+    "matchId": 17,
+    "ts": 1782574153442
+  },
+  {
+    "key": "fananio|41|group_win_FRA",
+    "participantId": "fananio",
+    "points": 3,
+    "reason": "FRA win (3-0)",
+    "matchId": 41,
+    "ts": 1782574153442
+  },
+  {
+    "key": "fananio|62|group_win_FRA",
+    "participantId": "fananio",
+    "points": 3,
+    "reason": "FRA win (4-1)",
+    "matchId": 62,
+    "ts": 1782574153442
+  },
+  {
+    "key": "fananio|21|group_draw_POR",
+    "participantId": "fananio",
+    "points": 1,
+    "reason": "POR draw (1-1)",
+    "matchId": 21,
+    "ts": 1782574153442
+  },
+  {
+    "key": "fananio|45|group_win_POR",
+    "participantId": "fananio",
+    "points": 3,
+    "reason": "POR win (5-0)",
+    "matchId": 45,
+    "ts": 1782574153442
+  },
+  {
+    "key": "neelkanth_vyas|14|group_draw_ESP",
+    "participantId": "neelkanth_vyas",
+    "points": 1,
+    "reason": "ESP draw (0-0)",
+    "matchId": 14,
+    "ts": 1782574153442
+  },
+  {
+    "key": "neelkanth_vyas|39|group_win_ESP",
+    "participantId": "neelkanth_vyas",
+    "points": 3,
+    "reason": "ESP win (4-0)",
+    "matchId": 39,
+    "ts": 1782574153442
+  },
+  {
+    "key": "neelkanth_vyas|66|group_win_ESP",
+    "participantId": "neelkanth_vyas",
+    "points": 3,
+    "reason": "ESP win (1-0)",
+    "matchId": 66,
+    "ts": 1782574153442
+  },
+  {
+    "key": "neelkanth_vyas|17|group_win_FRA",
+    "participantId": "neelkanth_vyas",
+    "points": 3,
+    "reason": "FRA win (3-1)",
+    "matchId": 17,
+    "ts": 1782574153442
+  },
+  {
+    "key": "neelkanth_vyas|41|group_win_FRA",
+    "participantId": "neelkanth_vyas",
+    "points": 3,
+    "reason": "FRA win (3-0)",
+    "matchId": 41,
+    "ts": 1782574153442
+  },
+  {
+    "key": "neelkanth_vyas|62|group_win_FRA",
+    "participantId": "neelkanth_vyas",
+    "points": 3,
+    "reason": "FRA win (4-1)",
+    "matchId": 62,
+    "ts": 1782574153442
+  },
+  {
+    "key": "neelkanth_vyas|7|group_draw_BRA",
+    "participantId": "neelkanth_vyas",
+    "points": 1,
+    "reason": "BRA draw (1-1)",
+    "matchId": 7,
+    "ts": 1782574153442
+  },
+  {
+    "key": "neelkanth_vyas|29|group_win_BRA",
+    "participantId": "neelkanth_vyas",
+    "points": 3,
+    "reason": "BRA win (3-0)",
+    "matchId": 29,
+    "ts": 1782574153442
+  },
+  {
+    "key": "neelkanth_vyas|49|group_win_BRA",
+    "participantId": "neelkanth_vyas",
+    "points": 3,
+    "reason": "BRA win (3-0)",
+    "matchId": 49,
+    "ts": 1782574153442
+  },
+  {
+    "key": "neelkanth_vyas|21|group_draw_POR",
+    "participantId": "neelkanth_vyas",
+    "points": 1,
+    "reason": "POR draw (1-1)",
+    "matchId": 21,
+    "ts": 1782574153442
+  },
+  {
+    "key": "neelkanth_vyas|45|group_win_POR",
+    "participantId": "neelkanth_vyas",
+    "points": 3,
+    "reason": "POR win (5-0)",
+    "matchId": 45,
+    "ts": 1782574153442
+  },
+  {
+    "key": "neerav_tipnis|10|group_win_GER",
+    "participantId": "neerav_tipnis",
+    "points": 3,
+    "reason": "GER win (7-1)",
+    "matchId": 10,
+    "ts": 1782574153442
+  },
+  {
+    "key": "neerav_tipnis|33|group_win_GER",
+    "participantId": "neerav_tipnis",
+    "points": 3,
+    "reason": "GER win (2-1)",
+    "matchId": 33,
+    "ts": 1782574153442
+  },
+  {
+    "key": "neerav_tipnis|11|group_draw_NED",
+    "participantId": "neerav_tipnis",
+    "points": 1,
+    "reason": "NED draw (2-2)",
+    "matchId": 11,
+    "ts": 1782574153442
+  },
+  {
+    "key": "neerav_tipnis|35|group_win_NED",
+    "participantId": "neerav_tipnis",
+    "points": 3,
+    "reason": "NED win (5-1)",
+    "matchId": 35,
+    "ts": 1782574153442
+  },
+  {
+    "key": "neerav_tipnis|60|group_win_NED",
+    "participantId": "neerav_tipnis",
+    "points": 3,
+    "reason": "NED win (3-1)",
+    "matchId": 60,
+    "ts": 1782574153442
+  },
+  {
+    "key": "neerav_tipnis|17|group_win_FRA",
+    "participantId": "neerav_tipnis",
+    "points": 3,
+    "reason": "FRA win (3-1)",
+    "matchId": 17,
+    "ts": 1782574153442
+  },
+  {
+    "key": "neerav_tipnis|41|group_win_FRA",
+    "participantId": "neerav_tipnis",
+    "points": 3,
+    "reason": "FRA win (3-0)",
+    "matchId": 41,
+    "ts": 1782574153442
+  },
+  {
+    "key": "neerav_tipnis|62|group_win_FRA",
+    "participantId": "neerav_tipnis",
+    "points": 3,
+    "reason": "FRA win (4-1)",
+    "matchId": 62,
+    "ts": 1782574153442
+  },
+  {
+    "key": "neerav_tipnis|19|group_win_ARG",
+    "participantId": "neerav_tipnis",
+    "points": 3,
+    "reason": "ARG win (3-0)",
+    "matchId": 19,
+    "ts": 1782574153442
+  },
+  {
+    "key": "neerav_tipnis|43|group_win_ARG",
+    "participantId": "neerav_tipnis",
+    "points": 3,
+    "reason": "ARG win (2-0)",
+    "matchId": 43,
+    "ts": 1782574153442
+  },
+  {
+    "key": "praveen_kumar|71|group_draw_POR",
+    "participantId": "praveen_kumar",
+    "points": 1,
+    "reason": "POR draw (0-0)",
+    "matchId": 71,
+    "ts": 1782618293546
+  },
+  {
+    "key": "rushabh_jha|67|group_win_ENG",
+    "participantId": "rushabh_jha",
+    "points": 3,
+    "reason": "ENG win (2-0)",
+    "matchId": 67,
+    "ts": 1782618293546
+  },
+  {
+    "key": "avdhut_pure|71|group_draw_POR",
+    "participantId": "avdhut_pure",
+    "points": 1,
+    "reason": "POR draw (0-0)",
+    "matchId": 71,
+    "ts": 1782618293546
+  },
+  {
+    "key": "sagar_vatkar|71|group_draw_POR",
+    "participantId": "sagar_vatkar",
+    "points": 1,
+    "reason": "POR draw (0-0)",
+    "matchId": 71,
+    "ts": 1782618293546
+  },
+  {
+    "key": "ranjit_nambiar|71|group_draw_POR",
+    "participantId": "ranjit_nambiar",
+    "points": 1,
+    "reason": "POR draw (0-0)",
+    "matchId": 71,
+    "ts": 1782618293546
+  },
+  {
+    "key": "anurag_saxena|71|group_draw_POR",
+    "participantId": "anurag_saxena",
+    "points": 1,
+    "reason": "POR draw (0-0)",
+    "matchId": 71,
+    "ts": 1782618293546
+  },
+  {
+    "key": "nived|71|group_draw_POR",
+    "participantId": "nived",
+    "points": 1,
+    "reason": "POR draw (0-0)",
+    "matchId": 71,
+    "ts": 1782618293546
+  },
+  {
+    "key": "fananio|71|group_draw_POR",
+    "participantId": "fananio",
+    "points": 1,
+    "reason": "POR draw (0-0)",
+    "matchId": 71,
+    "ts": 1782618293546
+  },
+  {
+    "key": "neelkanth_vyas|71|group_draw_POR",
+    "participantId": "neelkanth_vyas",
+    "points": 1,
+    "reason": "POR draw (0-0)",
+    "matchId": 71,
+    "ts": 1782618293546
+  },
+  {
+    "key": "praveen_kumar|70|group_win_ARG",
+    "participantId": "praveen_kumar",
+    "points": 3,
+    "reason": "ARG win (3-1)",
+    "matchId": 70,
+    "ts": 1782619422689
+  },
+  {
+    "key": "rushabh_jha|70|group_win_ARG",
+    "participantId": "rushabh_jha",
+    "points": 3,
+    "reason": "ARG win (3-1)",
+    "matchId": 70,
+    "ts": 1782619422689
+  },
+  {
+    "key": "avdhut_pure|70|group_win_ARG",
+    "participantId": "avdhut_pure",
+    "points": 3,
+    "reason": "ARG win (3-1)",
+    "matchId": 70,
+    "ts": 1782619422689
+  },
+  {
+    "key": "dhruv_shah|70|group_win_ARG",
+    "participantId": "dhruv_shah",
+    "points": 3,
+    "reason": "ARG win (3-1)",
+    "matchId": 70,
+    "ts": 1782619422689
+  },
+  {
+    "key": "sagar_vatkar|70|group_win_ARG",
+    "participantId": "sagar_vatkar",
+    "points": 3,
+    "reason": "ARG win (3-1)",
+    "matchId": 70,
+    "ts": 1782619422689
+  },
+  {
+    "key": "ranjit_nambiar|70|group_win_ARG",
+    "participantId": "ranjit_nambiar",
+    "points": 3,
+    "reason": "ARG win (3-1)",
+    "matchId": 70,
+    "ts": 1782619422689
+  },
+  {
+    "key": "anurag_saxena|70|group_win_ARG",
+    "participantId": "anurag_saxena",
+    "points": 3,
+    "reason": "ARG win (3-1)",
+    "matchId": 70,
+    "ts": 1782619422689
+  },
+  {
+    "key": "renu_verma|70|group_win_ARG",
+    "participantId": "renu_verma",
+    "points": 3,
+    "reason": "ARG win (3-1)",
+    "matchId": 70,
+    "ts": 1782619422689
+  },
+  {
+    "key": "nived|70|group_win_ARG",
+    "participantId": "nived",
+    "points": 3,
+    "reason": "ARG win (3-1)",
+    "matchId": 70,
+    "ts": 1782619422689
+  },
+  {
+    "key": "fananio|70|group_win_ARG",
+    "participantId": "fananio",
+    "points": 3,
+    "reason": "ARG win (3-1)",
+    "matchId": 70,
+    "ts": 1782619422689
+  },
+  {
+    "key": "neerav_tipnis|70|group_win_ARG",
+    "participantId": "neerav_tipnis",
+    "points": 3,
+    "reason": "ARG win (3-1)",
+    "matchId": 70,
+    "ts": 1782619422690
+  },
+  {
+    "key": "praveen_kumar|73|r32_match_0",
+    "participantId": "praveen_kumar",
+    "points": 4,
+    "reason": "CAN advances (R32)",
+    "matchId": 73,
+    "ts": 1782704822781
+  },
+  {
+    "key": "rushabh_jha|73|r32_match_0",
+    "participantId": "rushabh_jha",
+    "points": 8,
+    "reason": "CAN correct + exact score 0-1 (2×R32)",
+    "matchId": 73,
+    "ts": 1782704822781
+  },
+  {
+    "key": "avdhut_pure|73|r32_match_0",
+    "participantId": "avdhut_pure",
+    "points": 4,
+    "reason": "CAN advances (R32)",
+    "matchId": 73,
+    "ts": 1782704822781
+  },
+  {
+    "key": "dhruv_shah|73|r32_match_0",
+    "participantId": "dhruv_shah",
+    "points": 4,
+    "reason": "CAN advances (R32)",
+    "matchId": 73,
+    "ts": 1782704822781
+  },
+  {
+    "key": "ranjit_nambiar|73|r32_match_0",
+    "participantId": "ranjit_nambiar",
+    "points": 4,
+    "reason": "CAN advances (R32)",
+    "matchId": 73,
+    "ts": 1782704822781
+  },
+  {
+    "key": "nived|73|r32_match_0",
+    "participantId": "nived",
+    "points": 4,
+    "reason": "CAN advances (R32)",
+    "matchId": 73,
+    "ts": 1782704822781
+  },
+  {
+    "key": "fananio|73|r32_match_0",
+    "participantId": "fananio",
+    "points": 4,
+    "reason": "CAN advances (R32)",
+    "matchId": 73,
+    "ts": 1782704822781
+  },
+  {
+    "key": "neerav_tipnis|73|r32_match_0",
+    "participantId": "neerav_tipnis",
+    "points": 4,
+    "reason": "CAN advances (R32)",
+    "matchId": 73,
+    "ts": 1782704822781
+  },
+  {
+    "key": "praveen_kumar|76|r32_match_1",
+    "participantId": "praveen_kumar",
+    "points": 8,
+    "reason": "BRA correct + exact score 2-1 (2×R32)",
+    "matchId": 76,
+    "ts": 1782792814713
+  },
+  {
+    "key": "rushabh_jha|76|r32_match_1",
+    "participantId": "rushabh_jha",
+    "points": 8,
+    "reason": "BRA correct + exact score 2-1 (2×R32)",
+    "matchId": 76,
+    "ts": 1782792814713
+  },
+  {
+    "key": "dhruv_shah|76|r32_match_1",
+    "participantId": "dhruv_shah",
+    "points": 4,
+    "reason": "BRA advances (R32)",
+    "matchId": 76,
+    "ts": 1782792814714
+  },
+  {
+    "key": "ranjit_nambiar|76|r32_match_1",
+    "participantId": "ranjit_nambiar",
+    "points": 8,
+    "reason": "BRA correct + exact score 2-1 (2×R32)",
+    "matchId": 76,
+    "ts": 1782792814714
+  },
+  {
+    "key": "nived|76|r32_match_1",
+    "participantId": "nived",
+    "points": 4,
+    "reason": "BRA advances (R32)",
+    "matchId": 76,
+    "ts": 1782792814714
+  },
+  {
+    "key": "fananio|76|r32_match_1",
+    "participantId": "fananio",
+    "points": 8,
+    "reason": "BRA correct + exact score 2-1 (2×R32)",
+    "matchId": 76,
+    "ts": 1782792814714
+  },
+  {
+    "key": "neerav_tipnis|76|r32_match_1",
+    "participantId": "neerav_tipnis",
+    "points": 4,
+    "reason": "BRA advances (R32)",
+    "matchId": 76,
+    "ts": 1782792814714
+  },
+  {
+    "key": "renu_verma|76|r32_match_1",
+    "participantId": "renu_verma",
+    "points": 4,
+    "reason": "BRA advances (R32)",
+    "matchId": 76,
+    "ts": 1782847721690
+  },
+  {
+    "key": "neelkanth_vyas|76|r32_match_1",
+    "participantId": "neelkanth_vyas",
+    "points": 4,
+    "reason": "BRA advances (R32)",
+    "matchId": 76,
+    "ts": 1782847721690
+  },
+  {
+    "key": "praveen_kumar|78|r32_match_4",
+    "participantId": "praveen_kumar",
+    "points": 8,
+    "reason": "NOR correct + exact score 1-2 (2×R32)",
+    "matchId": 78,
+    "ts": 1782880296482
+  },
+  {
+    "key": "praveen_kumar|77|r32_match_5",
+    "participantId": "praveen_kumar",
+    "points": 8,
+    "reason": "FRA correct + exact score 3-0 (2×R32)",
+    "matchId": 77,
+    "ts": 1782880296482
+  },
+  {
+    "key": "praveen_kumar|79|r32_match_6",
+    "participantId": "praveen_kumar",
+    "points": 4,
+    "reason": "MEX advances (R32)",
+    "matchId": 79,
+    "ts": 1782880296482
+  },
+  {
+    "key": "rushabh_jha|75|r32_match_3",
+    "participantId": "rushabh_jha",
+    "points": 8,
+    "reason": "MAR correct + exact score 1-1 (2×R32)",
+    "matchId": 75,
+    "ts": 1782880296482
+  },
+  {
+    "key": "rushabh_jha|78|r32_match_4",
+    "participantId": "rushabh_jha",
+    "points": 8,
+    "reason": "NOR correct + exact score 1-2 (2×R32)",
+    "matchId": 78,
+    "ts": 1782880296482
+  },
+  {
+    "key": "rushabh_jha|77|r32_match_5",
+    "participantId": "rushabh_jha",
+    "points": 4,
+    "reason": "FRA advances (R32)",
+    "matchId": 77,
+    "ts": 1782880296482
+  },
+  {
+    "key": "rushabh_jha|79|r32_match_6",
+    "participantId": "rushabh_jha",
+    "points": 4,
+    "reason": "MEX advances (R32)",
+    "matchId": 79,
+    "ts": 1782880296482
+  },
+  {
+    "key": "avdhut_pure|75|r32_match_3",
+    "participantId": "avdhut_pure",
+    "points": 8,
+    "reason": "MAR correct + exact score 1-1 (2×R32)",
+    "matchId": 75,
+    "ts": 1782880296482
+  },
+  {
+    "key": "avdhut_pure|78|r32_match_4",
+    "participantId": "avdhut_pure",
+    "points": 8,
+    "reason": "NOR correct + exact score 1-2 (2×R32)",
+    "matchId": 78,
+    "ts": 1782880296482
+  },
+  {
+    "key": "avdhut_pure|77|r32_match_5",
+    "participantId": "avdhut_pure",
+    "points": 8,
+    "reason": "FRA correct + exact score 3-0 (2×R32)",
+    "matchId": 77,
+    "ts": 1782880296482
+  },
+  {
+    "key": "avdhut_pure|79|r32_match_6",
+    "participantId": "avdhut_pure",
+    "points": 8,
+    "reason": "MEX correct + exact score 2-0 (2×R32)",
+    "matchId": 79,
+    "ts": 1782880296482
+  },
+  {
+    "key": "dhruv_shah|78|r32_match_4",
+    "participantId": "dhruv_shah",
+    "points": 8,
+    "reason": "NOR correct + exact score 1-2 (2×R32)",
+    "matchId": 78,
+    "ts": 1782880296482
+  },
+  {
+    "key": "dhruv_shah|77|r32_match_5",
+    "participantId": "dhruv_shah",
+    "points": 8,
+    "reason": "FRA correct + exact score 3-0 (2×R32)",
+    "matchId": 77,
+    "ts": 1782880296482
+  },
+  {
+    "key": "sagar_vatkar|75|r32_match_3",
+    "participantId": "sagar_vatkar",
+    "points": 4,
+    "reason": "MAR advances (R32)",
+    "matchId": 75,
+    "ts": 1782880296482
+  },
+  {
+    "key": "sagar_vatkar|78|r32_match_4",
+    "participantId": "sagar_vatkar",
+    "points": 8,
+    "reason": "NOR correct + exact score 1-2 (2×R32)",
+    "matchId": 78,
+    "ts": 1782880296482
+  },
+  {
+    "key": "sagar_vatkar|77|r32_match_5",
+    "participantId": "sagar_vatkar",
+    "points": 4,
+    "reason": "FRA advances (R32)",
+    "matchId": 77,
+    "ts": 1782880296482
+  },
+  {
+    "key": "ranjit_nambiar|78|r32_match_4",
+    "participantId": "ranjit_nambiar",
+    "points": 8,
+    "reason": "NOR correct + exact score 1-2 (2×R32)",
+    "matchId": 78,
+    "ts": 1782880296482
+  },
+  {
+    "key": "ranjit_nambiar|77|r32_match_5",
+    "participantId": "ranjit_nambiar",
+    "points": 4,
+    "reason": "FRA advances (R32)",
+    "matchId": 77,
+    "ts": 1782880296482
+  },
+  {
+    "key": "ranjit_nambiar|79|r32_match_6",
+    "participantId": "ranjit_nambiar",
+    "points": 4,
+    "reason": "MEX advances (R32)",
+    "matchId": 79,
+    "ts": 1782880296482
+  },
+  {
+    "key": "renu_verma|78|r32_match_4",
+    "participantId": "renu_verma",
+    "points": 4,
+    "reason": "NOR advances (R32)",
+    "matchId": 78,
+    "ts": 1782880296482
+  },
+  {
+    "key": "renu_verma|77|r32_match_5",
+    "participantId": "renu_verma",
+    "points": 4,
+    "reason": "FRA advances (R32)",
+    "matchId": 77,
+    "ts": 1782880296482
+  },
+  {
+    "key": "renu_verma|79|r32_match_6",
+    "participantId": "renu_verma",
+    "points": 8,
+    "reason": "MEX correct + exact score 2-0 (2×R32)",
+    "matchId": 79,
+    "ts": 1782880296482
+  },
+  {
+    "key": "nived|77|r32_match_5",
+    "participantId": "nived",
+    "points": 4,
+    "reason": "FRA advances (R32)",
+    "matchId": 77,
+    "ts": 1782880296482
+  },
+  {
+    "key": "fananio|78|r32_match_4",
+    "participantId": "fananio",
+    "points": 8,
+    "reason": "NOR correct + exact score 1-2 (2×R32)",
+    "matchId": 78,
+    "ts": 1782880296482
+  },
+  {
+    "key": "fananio|77|r32_match_5",
+    "participantId": "fananio",
+    "points": 4,
+    "reason": "FRA advances (R32)",
+    "matchId": 77,
+    "ts": 1782880296482
+  },
+  {
+    "key": "fananio|79|r32_match_6",
+    "participantId": "fananio",
+    "points": 4,
+    "reason": "MEX advances (R32)",
+    "matchId": 79,
+    "ts": 1782880296482
+  },
+  {
+    "key": "neelkanth_vyas|78|r32_match_4",
+    "participantId": "neelkanth_vyas",
+    "points": 4,
+    "reason": "NOR advances (R32)",
+    "matchId": 78,
+    "ts": 1782880296482
+  },
+  {
+    "key": "neelkanth_vyas|77|r32_match_5",
+    "participantId": "neelkanth_vyas",
+    "points": 4,
+    "reason": "FRA advances (R32)",
+    "matchId": 77,
+    "ts": 1782880296482
+  },
+  {
+    "key": "neelkanth_vyas|79|r32_match_6",
+    "participantId": "neelkanth_vyas",
+    "points": 8,
+    "reason": "MEX correct + exact score 2-0 (2×R32)",
+    "matchId": 79,
+    "ts": 1782880296482
+  },
+  {
+    "key": "neerav_tipnis|77|r32_match_5",
+    "participantId": "neerav_tipnis",
+    "points": 4,
+    "reason": "FRA advances (R32)",
+    "matchId": 77,
+    "ts": 1782880296482
+  },
+  {
+    "key": "neerav_tipnis|79|r32_match_6",
+    "participantId": "neerav_tipnis",
+    "points": 8,
+    "reason": "MEX correct + exact score 2-0 (2×R32)",
+    "matchId": 79,
+    "ts": 1782880296482
+  },
+  {
+    "key": "praveen_kumar|80|r32_match_7",
+    "participantId": "praveen_kumar",
+    "points": 4,
+    "reason": "ENG advances (R32)",
+    "matchId": 80,
+    "ts": 1782962078329
+  },
+  {
+    "key": "praveen_kumar|82|r32_match_8",
+    "participantId": "praveen_kumar",
+    "points": 4,
+    "reason": "BEL advances (R32)",
+    "matchId": 82,
+    "ts": 1782962078329
+  },
+  {
+    "key": "praveen_kumar|81|r32_match_9",
+    "participantId": "praveen_kumar",
+    "points": 8,
+    "reason": "USA correct + exact score 2-0 (2×R32)",
+    "matchId": 81,
+    "ts": 1782962078329
+  },
+  {
+    "key": "rushabh_jha|80|r32_match_7",
+    "participantId": "rushabh_jha",
+    "points": 4,
+    "reason": "ENG advances (R32)",
+    "matchId": 80,
+    "ts": 1782962078329
+  },
+  {
+    "key": "rushabh_jha|82|r32_match_8",
+    "participantId": "rushabh_jha",
+    "points": 4,
+    "reason": "BEL advances (R32)",
+    "matchId": 82,
+    "ts": 1782962078329
+  },
+  {
+    "key": "rushabh_jha|81|r32_match_9",
+    "participantId": "rushabh_jha",
+    "points": 4,
+    "reason": "USA advances (R32)",
+    "matchId": 81,
+    "ts": 1782962078329
+  },
+  {
+    "key": "avdhut_pure|80|r32_match_7",
+    "participantId": "avdhut_pure",
+    "points": 4,
+    "reason": "ENG advances (R32)",
+    "matchId": 80,
+    "ts": 1782962078329
+  },
+  {
+    "key": "avdhut_pure|82|r32_match_8",
+    "participantId": "avdhut_pure",
+    "points": 4,
+    "reason": "BEL advances (R32)",
+    "matchId": 82,
+    "ts": 1782962078329
+  },
+  {
+    "key": "avdhut_pure|81|r32_match_9",
+    "participantId": "avdhut_pure",
+    "points": 8,
+    "reason": "USA correct + exact score 2-0 (2×R32)",
+    "matchId": 81,
+    "ts": 1782962078329
+  },
+  {
+    "key": "dhruv_shah|80|r32_match_7",
+    "participantId": "dhruv_shah",
+    "points": 4,
+    "reason": "ENG advances (R32)",
+    "matchId": 80,
+    "ts": 1782962078329
+  },
+  {
+    "key": "dhruv_shah|82|r32_match_8",
+    "participantId": "dhruv_shah",
+    "points": 4,
+    "reason": "BEL advances (R32)",
+    "matchId": 82,
+    "ts": 1782962078329
+  },
+  {
+    "key": "dhruv_shah|81|r32_match_9",
+    "participantId": "dhruv_shah",
+    "points": 4,
+    "reason": "USA advances (R32)",
+    "matchId": 81,
+    "ts": 1782962078329
+  },
+  {
+    "key": "sagar_vatkar|80|r32_match_7",
+    "participantId": "sagar_vatkar",
+    "points": 4,
+    "reason": "ENG advances (R32)",
+    "matchId": 80,
+    "ts": 1782962078329
+  },
+  {
+    "key": "sagar_vatkar|82|r32_match_8",
+    "participantId": "sagar_vatkar",
+    "points": 4,
+    "reason": "BEL advances (R32)",
+    "matchId": 82,
+    "ts": 1782962078329
+  },
+  {
+    "key": "sagar_vatkar|81|r32_match_9",
+    "participantId": "sagar_vatkar",
+    "points": 8,
+    "reason": "USA correct + exact score 2-0 (2×R32)",
+    "matchId": 81,
+    "ts": 1782962078329
+  },
+  {
+    "key": "ranjit_nambiar|80|r32_match_7",
+    "participantId": "ranjit_nambiar",
+    "points": 4,
+    "reason": "ENG advances (R32)",
+    "matchId": 80,
+    "ts": 1782962078329
+  },
+  {
+    "key": "ranjit_nambiar|81|r32_match_9",
+    "participantId": "ranjit_nambiar",
+    "points": 8,
+    "reason": "USA correct + exact score 2-0 (2×R32)",
+    "matchId": 81,
+    "ts": 1782962078329
+  },
+  {
+    "key": "renu_verma|80|r32_match_7",
+    "participantId": "renu_verma",
+    "points": 4,
+    "reason": "ENG advances (R32)",
+    "matchId": 80,
+    "ts": 1782962078329
+  },
+  {
+    "key": "nived|80|r32_match_7",
+    "participantId": "nived",
+    "points": 4,
+    "reason": "ENG advances (R32)",
+    "matchId": 80,
+    "ts": 1782962078329
+  },
+  {
+    "key": "nived|81|r32_match_9",
+    "participantId": "nived",
+    "points": 4,
+    "reason": "USA advances (R32)",
+    "matchId": 81,
+    "ts": 1782962078329
+  },
+  {
+    "key": "fananio|80|r32_match_7",
+    "participantId": "fananio",
+    "points": 4,
+    "reason": "ENG advances (R32)",
+    "matchId": 80,
+    "ts": 1782962078329
+  },
+  {
+    "key": "fananio|82|r32_match_8",
+    "participantId": "fananio",
+    "points": 4,
+    "reason": "BEL advances (R32)",
+    "matchId": 82,
+    "ts": 1782962078329
+  },
+  {
+    "key": "fananio|81|r32_match_9",
+    "participantId": "fananio",
+    "points": 4,
+    "reason": "USA advances (R32)",
+    "matchId": 81,
+    "ts": 1782962078329
+  },
+  {
+    "key": "neelkanth_vyas|80|r32_match_7",
+    "participantId": "neelkanth_vyas",
+    "points": 4,
+    "reason": "ENG advances (R32)",
+    "matchId": 80,
+    "ts": 1782962078329
+  },
+  {
+    "key": "neelkanth_vyas|82|r32_match_8",
+    "participantId": "neelkanth_vyas",
+    "points": 4,
+    "reason": "BEL advances (R32)",
+    "matchId": 82,
+    "ts": 1782962078329
+  },
+  {
+    "key": "neelkanth_vyas|81|r32_match_9",
+    "participantId": "neelkanth_vyas",
+    "points": 4,
+    "reason": "USA advances (R32)",
+    "matchId": 81,
+    "ts": 1782962078329
+  },
+  {
+    "key": "neerav_tipnis|80|r32_match_7",
+    "participantId": "neerav_tipnis",
+    "points": 4,
+    "reason": "ENG advances (R32)",
+    "matchId": 80,
+    "ts": 1782962078329
+  },
+  {
+    "key": "neerav_tipnis|82|r32_match_8",
+    "participantId": "neerav_tipnis",
+    "points": 4,
+    "reason": "BEL advances (R32)",
+    "matchId": 82,
+    "ts": 1782962078329
+  },
+  {
+    "key": "neerav_tipnis|81|r32_match_9",
+    "participantId": "neerav_tipnis",
+    "points": 8,
+    "reason": "USA correct + exact score 2-0 (2×R32)",
+    "matchId": 81,
+    "ts": 1782962078329
+  },
+  {
+    "key": "praveen_kumar|84|r32_match_10",
+    "participantId": "praveen_kumar",
+    "points": 4,
+    "reason": "ESP advances (R32)",
+    "matchId": 84,
+    "ts": 1783064091591
+  },
+  {
+    "key": "praveen_kumar|83|r32_match_11",
+    "participantId": "praveen_kumar",
+    "points": 4,
+    "reason": "POR advances (R32)",
+    "matchId": 83,
+    "ts": 1783064091591
+  },
+  {
+    "key": "praveen_kumar|85|r32_match_12",
+    "participantId": "praveen_kumar",
+    "points": 4,
+    "reason": "SUI advances (R32)",
+    "matchId": 85,
+    "ts": 1783064091591
+  },
+  {
+    "key": "rushabh_jha|84|r32_match_10",
+    "participantId": "rushabh_jha",
+    "points": 4,
+    "reason": "ESP advances (R32)",
+    "matchId": 84,
+    "ts": 1783064091592
+  },
+  {
+    "key": "rushabh_jha|83|r32_match_11",
+    "participantId": "rushabh_jha",
+    "points": 8,
+    "reason": "POR correct + exact score 2-1 (2×R32)",
+    "matchId": 83,
+    "ts": 1783064091592
+  },
+  {
+    "key": "rushabh_jha|85|r32_match_12",
+    "participantId": "rushabh_jha",
+    "points": 4,
+    "reason": "SUI advances (R32)",
+    "matchId": 85,
+    "ts": 1783064091592
+  },
+  {
+    "key": "avdhut_pure|84|r32_match_10",
+    "participantId": "avdhut_pure",
+    "points": 4,
+    "reason": "ESP advances (R32)",
+    "matchId": 84,
+    "ts": 1783064091592
+  },
+  {
+    "key": "avdhut_pure|83|r32_match_11",
+    "participantId": "avdhut_pure",
+    "points": 8,
+    "reason": "POR correct + exact score 2-1 (2×R32)",
+    "matchId": 83,
+    "ts": 1783064091592
+  },
+  {
+    "key": "dhruv_shah|84|r32_match_10",
+    "participantId": "dhruv_shah",
+    "points": 4,
+    "reason": "ESP advances (R32)",
+    "matchId": 84,
+    "ts": 1783064091592
+  },
+  {
+    "key": "dhruv_shah|83|r32_match_11",
+    "participantId": "dhruv_shah",
+    "points": 8,
+    "reason": "POR correct + exact score 2-1 (2×R32)",
+    "matchId": 83,
+    "ts": 1783064091592
+  },
+  {
+    "key": "sagar_vatkar|84|r32_match_10",
+    "participantId": "sagar_vatkar",
+    "points": 8,
+    "reason": "ESP correct + exact score 3-0 (2×R32)",
+    "matchId": 84,
+    "ts": 1783064091592
+  },
+  {
+    "key": "sagar_vatkar|83|r32_match_11",
+    "participantId": "sagar_vatkar",
+    "points": 8,
+    "reason": "POR correct + exact score 2-1 (2×R32)",
+    "matchId": 83,
+    "ts": 1783064091592
+  },
+  {
+    "key": "sagar_vatkar|85|r32_match_12",
+    "participantId": "sagar_vatkar",
+    "points": 4,
+    "reason": "SUI advances (R32)",
+    "matchId": 85,
+    "ts": 1783064091592
+  },
+  {
+    "key": "ranjit_nambiar|84|r32_match_10",
+    "participantId": "ranjit_nambiar",
+    "points": 4,
+    "reason": "ESP advances (R32)",
+    "matchId": 84,
+    "ts": 1783064091592
+  },
+  {
+    "key": "ranjit_nambiar|83|r32_match_11",
+    "participantId": "ranjit_nambiar",
+    "points": 4,
+    "reason": "POR advances (R32)",
+    "matchId": 83,
+    "ts": 1783064091592
+  },
+  {
+    "key": "ranjit_nambiar|85|r32_match_12",
+    "participantId": "ranjit_nambiar",
+    "points": 8,
+    "reason": "SUI correct + exact score 2-0 (2×R32)",
+    "matchId": 85,
+    "ts": 1783064091592
+  },
+  {
+    "key": "nived|84|r32_match_10",
+    "participantId": "nived",
+    "points": 4,
+    "reason": "ESP advances (R32)",
+    "matchId": 84,
+    "ts": 1783064091592
+  },
+  {
+    "key": "nived|83|r32_match_11",
+    "participantId": "nived",
+    "points": 4,
+    "reason": "POR advances (R32)",
+    "matchId": 83,
+    "ts": 1783064091592
+  },
+  {
+    "key": "nived|85|r32_match_12",
+    "participantId": "nived",
+    "points": 4,
+    "reason": "SUI advances (R32)",
+    "matchId": 85,
+    "ts": 1783064091592
+  },
+  {
+    "key": "fananio|84|r32_match_10",
+    "participantId": "fananio",
+    "points": 4,
+    "reason": "ESP advances (R32)",
+    "matchId": 84,
+    "ts": 1783064091592
+  },
+  {
+    "key": "fananio|83|r32_match_11",
+    "participantId": "fananio",
+    "points": 8,
+    "reason": "POR correct + exact score 2-1 (2×R32)",
+    "matchId": 83,
+    "ts": 1783064091592
+  },
+  {
+    "key": "neelkanth_vyas|84|r32_match_10",
+    "participantId": "neelkanth_vyas",
+    "points": 4,
+    "reason": "ESP advances (R32)",
+    "matchId": 84,
+    "ts": 1783064091592
+  },
+  {
+    "key": "neelkanth_vyas|83|r32_match_11",
+    "participantId": "neelkanth_vyas",
+    "points": 8,
+    "reason": "POR correct + exact score 2-1 (2×R32)",
+    "matchId": 83,
+    "ts": 1783064091592
+  },
+  {
+    "key": "neelkanth_vyas|85|r32_match_12",
+    "participantId": "neelkanth_vyas",
+    "points": 4,
+    "reason": "SUI advances (R32)",
+    "matchId": 85,
+    "ts": 1783064091592
+  },
+  {
+    "key": "neerav_tipnis|84|r32_match_10",
+    "participantId": "neerav_tipnis",
+    "points": 4,
+    "reason": "ESP advances (R32)",
+    "matchId": 84,
+    "ts": 1783064091592
+  },
+  {
+    "key": "neerav_tipnis|83|r32_match_11",
+    "participantId": "neerav_tipnis",
+    "points": 4,
+    "reason": "POR advances (R32)",
+    "matchId": 83,
+    "ts": 1783064091592
+  },
+  {
+    "key": "neerav_tipnis|85|r32_match_12",
+    "participantId": "neerav_tipnis",
+    "points": 4,
+    "reason": "SUI advances (R32)",
+    "matchId": 85,
+    "ts": 1783064091592
+  },
+  {
+    "key": "praveen_kumar|86|r32_match_14",
+    "participantId": "praveen_kumar",
+    "points": 4,
+    "reason": "ARG advances (R32)",
+    "matchId": 86,
+    "ts": 1783179688848
+  },
+  {
+    "key": "praveen_kumar|87|r32_match_15",
+    "participantId": "praveen_kumar",
+    "points": 8,
+    "reason": "COL correct + exact score 1-0 (2×R32)",
+    "matchId": 87,
+    "ts": 1783179688848
+  },
+  {
+    "key": "rushabh_jha|86|r32_match_14",
+    "participantId": "rushabh_jha",
+    "points": 4,
+    "reason": "ARG advances (R32)",
+    "matchId": 86,
+    "ts": 1783179688848
+  },
+  {
+    "key": "rushabh_jha|87|r32_match_15",
+    "participantId": "rushabh_jha",
+    "points": 4,
+    "reason": "COL advances (R32)",
+    "matchId": 87,
+    "ts": 1783179688848
+  },
+  {
+    "key": "avdhut_pure|86|r32_match_14",
+    "participantId": "avdhut_pure",
+    "points": 4,
+    "reason": "ARG advances (R32)",
+    "matchId": 86,
+    "ts": 1783179688848
+  },
+  {
+    "key": "avdhut_pure|87|r32_match_15",
+    "participantId": "avdhut_pure",
+    "points": 4,
+    "reason": "COL advances (R32)",
+    "matchId": 87,
+    "ts": 1783179688848
+  },
+  {
+    "key": "dhruv_shah|88|r32_match_13",
+    "participantId": "dhruv_shah",
+    "points": 4,
+    "reason": "EGY advances (R32)",
+    "matchId": 88,
+    "ts": 1783179688848
+  },
+  {
+    "key": "dhruv_shah|86|r32_match_14",
+    "participantId": "dhruv_shah",
+    "points": 4,
+    "reason": "ARG advances (R32)",
+    "matchId": 86,
+    "ts": 1783179688848
+  },
+  {
+    "key": "dhruv_shah|87|r32_match_15",
+    "participantId": "dhruv_shah",
+    "points": 4,
+    "reason": "COL advances (R32)",
+    "matchId": 87,
+    "ts": 1783179688848
+  },
+  {
+    "key": "sagar_vatkar|88|r32_match_13",
+    "participantId": "sagar_vatkar",
+    "points": 4,
+    "reason": "EGY advances (R32)",
+    "matchId": 88,
+    "ts": 1783179688848
+  },
+  {
+    "key": "sagar_vatkar|86|r32_match_14",
+    "participantId": "sagar_vatkar",
+    "points": 4,
+    "reason": "ARG advances (R32)",
+    "matchId": 86,
+    "ts": 1783179688848
+  },
+  {
+    "key": "sagar_vatkar|87|r32_match_15",
+    "participantId": "sagar_vatkar",
+    "points": 4,
+    "reason": "COL advances (R32)",
+    "matchId": 87,
+    "ts": 1783179688848
+  },
+  {
+    "key": "ranjit_nambiar|88|r32_match_13",
+    "participantId": "ranjit_nambiar",
+    "points": 4,
+    "reason": "EGY advances (R32)",
+    "matchId": 88,
+    "ts": 1783179688848
+  },
+  {
+    "key": "ranjit_nambiar|86|r32_match_14",
+    "participantId": "ranjit_nambiar",
+    "points": 4,
+    "reason": "ARG advances (R32)",
+    "matchId": 86,
+    "ts": 1783179688848
+  },
+  {
+    "key": "ranjit_nambiar|87|r32_match_15",
+    "participantId": "ranjit_nambiar",
+    "points": 4,
+    "reason": "COL advances (R32)",
+    "matchId": 87,
+    "ts": 1783179688848
+  },
+  {
+    "key": "nived|86|r32_match_14",
+    "participantId": "nived",
+    "points": 4,
+    "reason": "ARG advances (R32)",
+    "matchId": 86,
+    "ts": 1783179688848
+  },
+  {
+    "key": "nived|87|r32_match_15",
+    "participantId": "nived",
+    "points": 8,
+    "reason": "COL correct + exact score 1-0 (2×R32)",
+    "matchId": 87,
+    "ts": 1783179688848
+  },
+  {
+    "key": "fananio|88|r32_match_13",
+    "participantId": "fananio",
+    "points": 4,
+    "reason": "EGY advances (R32)",
+    "matchId": 88,
+    "ts": 1783179688848
+  },
+  {
+    "key": "fananio|86|r32_match_14",
+    "participantId": "fananio",
+    "points": 4,
+    "reason": "ARG advances (R32)",
+    "matchId": 86,
+    "ts": 1783179688848
+  },
+  {
+    "key": "fananio|87|r32_match_15",
+    "participantId": "fananio",
+    "points": 4,
+    "reason": "COL advances (R32)",
+    "matchId": 87,
+    "ts": 1783179688848
+  },
+  {
+    "key": "neelkanth_vyas|88|r32_match_13",
+    "participantId": "neelkanth_vyas",
+    "points": 4,
+    "reason": "EGY advances (R32)",
+    "matchId": 88,
+    "ts": 1783179688848
+  },
+  {
+    "key": "neelkanth_vyas|87|r32_match_15",
+    "participantId": "neelkanth_vyas",
+    "points": 4,
+    "reason": "COL advances (R32)",
+    "matchId": 87,
+    "ts": 1783179688848
+  },
+  {
+    "key": "neerav_tipnis|88|r32_match_13",
+    "participantId": "neerav_tipnis",
+    "points": 8,
+    "reason": "EGY correct + exact score 1-1 (2×R32)",
+    "matchId": 88,
+    "ts": 1783179688848
+  },
+  {
+    "key": "neerav_tipnis|86|r32_match_14",
+    "participantId": "neerav_tipnis",
+    "points": 4,
+    "reason": "ARG advances (R32)",
+    "matchId": 86,
+    "ts": 1783179688848
+  },
+  {
+    "key": "neerav_tipnis|87|r32_match_15",
+    "participantId": "neerav_tipnis",
+    "points": 4,
+    "reason": "COL advances (R32)",
+    "matchId": 87,
+    "ts": 1783179688848
+  },
+  {
+    "key": "praveen_kumar|90|r16_m90",
+    "participantId": "praveen_kumar",
+    "points": 10,
+    "reason": "MAR correct + exact score 0-3 (2×R16)",
+    "matchId": 90,
+    "ts": 1783200852820
+  },
+  {
+    "key": "rushabh_jha|90|r16_m90",
+    "participantId": "rushabh_jha",
+    "points": 5,
+    "reason": "MAR advances (R16)",
+    "matchId": 90,
+    "ts": 1783200852820
+  },
+  {
+    "key": "avdhut_pure|90|r16_m90",
+    "participantId": "avdhut_pure",
+    "points": 5,
+    "reason": "MAR advances (R16)",
+    "matchId": 90,
+    "ts": 1783200852820
+  },
+  {
+    "key": "dhruv_shah|90|r16_m90",
+    "participantId": "dhruv_shah",
+    "points": 5,
+    "reason": "MAR advances (R16)",
+    "matchId": 90,
+    "ts": 1783200852820
+  },
+  {
+    "key": "sagar_vatkar|90|r16_m90",
+    "participantId": "sagar_vatkar",
+    "points": 5,
+    "reason": "MAR advances (R16)",
+    "matchId": 90,
+    "ts": 1783200852820
+  },
+  {
+    "key": "ranjit_nambiar|90|r16_m90",
+    "participantId": "ranjit_nambiar",
+    "points": 10,
+    "reason": "MAR correct + exact score 0-3 (2×R16)",
+    "matchId": 90,
+    "ts": 1783200852820
+  },
+  {
+    "key": "nived|90|r16_m90",
+    "participantId": "nived",
+    "points": 5,
+    "reason": "MAR advances (R16)",
+    "matchId": 90,
+    "ts": 1783200852820
+  },
+  {
+    "key": "fananio|90|r16_m90",
+    "participantId": "fananio",
+    "points": 5,
+    "reason": "MAR advances (R16)",
+    "matchId": 90,
+    "ts": 1783200852821
+  },
+  {
+    "key": "neerav_tipnis|90|r16_m90",
+    "participantId": "neerav_tipnis",
+    "points": 5,
+    "reason": "MAR advances (R16)",
+    "matchId": 90,
+    "ts": 1783200852821
+  },
+  {
+    "key": "praveen_kumar|89|r16_m89",
+    "participantId": "praveen_kumar",
+    "points": 5,
+    "reason": "FRA advances (R16)",
+    "matchId": 89,
+    "ts": 1783350971871
+  },
+  {
+    "key": "rushabh_jha|89|r16_m89",
+    "participantId": "rushabh_jha",
+    "points": 5,
+    "reason": "FRA advances (R16)",
+    "matchId": 89,
+    "ts": 1783350971871
+  },
+  {
+    "key": "rushabh_jha|92|r16_m92",
+    "participantId": "rushabh_jha",
+    "points": 5,
+    "reason": "ENG advances (R16)",
+    "matchId": 92,
+    "ts": 1783350971871
+  },
+  {
+    "key": "avdhut_pure|89|r16_m89",
+    "participantId": "avdhut_pure",
+    "points": 5,
+    "reason": "FRA advances (R16)",
+    "matchId": 89,
+    "ts": 1783350971871
+  },
+  {
+    "key": "dhruv_shah|89|r16_m89",
+    "participantId": "dhruv_shah",
+    "points": 5,
+    "reason": "FRA advances (R16)",
+    "matchId": 89,
+    "ts": 1783350971871
+  },
+  {
+    "key": "dhruv_shah|92|r16_m92",
+    "participantId": "dhruv_shah",
+    "points": 5,
+    "reason": "ENG advances (R16)",
+    "matchId": 92,
+    "ts": 1783350971871
+  },
+  {
+    "key": "sagar_vatkar|89|r16_m89",
+    "participantId": "sagar_vatkar",
+    "points": 5,
+    "reason": "FRA advances (R16)",
+    "matchId": 89,
+    "ts": 1783350971871
+  },
+  {
+    "key": "sagar_vatkar|92|r16_m92",
+    "participantId": "sagar_vatkar",
+    "points": 5,
+    "reason": "ENG advances (R16)",
+    "matchId": 92,
+    "ts": 1783350971871
+  },
+  {
+    "key": "ranjit_nambiar|89|r16_m89",
+    "participantId": "ranjit_nambiar",
+    "points": 5,
+    "reason": "FRA advances (R16)",
+    "matchId": 89,
+    "ts": 1783350971871
+  },
+  {
+    "key": "nived|89|r16_m89",
+    "participantId": "nived",
+    "points": 5,
+    "reason": "FRA advances (R16)",
+    "matchId": 89,
+    "ts": 1783350971871
+  },
+  {
+    "key": "fananio|89|r16_m89",
+    "participantId": "fananio",
+    "points": 5,
+    "reason": "FRA advances (R16)",
+    "matchId": 89,
+    "ts": 1783350971871
+  },
+  {
+    "key": "fananio|92|r16_m92",
+    "participantId": "fananio",
+    "points": 5,
+    "reason": "ENG advances (R16)",
+    "matchId": 92,
+    "ts": 1783350971871
+  },
+  {
+    "key": "neelkanth_vyas|89|r16_m89",
+    "participantId": "neelkanth_vyas",
+    "points": 5,
+    "reason": "FRA advances (R16)",
+    "matchId": 89,
+    "ts": 1783350971871
+  },
+  {
+    "key": "neelkanth_vyas|91|r16_m91",
+    "participantId": "neelkanth_vyas",
+    "points": 5,
+    "reason": "NOR advances (R16)",
+    "matchId": 91,
+    "ts": 1783350971871
+  },
+  {
+    "key": "neerav_tipnis|89|r16_m89",
+    "participantId": "neerav_tipnis",
+    "points": 5,
+    "reason": "FRA advances (R16)",
+    "matchId": 89,
+    "ts": 1783350971871
+  },
+  {
+    "key": "neerav_tipnis|92|r16_m92",
+    "participantId": "neerav_tipnis",
+    "points": 5,
+    "reason": "ENG advances (R16)",
+    "matchId": 92,
+    "ts": 1783350971871
+  },
+  {
+    "key": "praveen_kumar|93|r16_m93",
+    "participantId": "praveen_kumar",
+    "points": 5,
+    "reason": "ESP advances (R16)",
+    "matchId": 93,
+    "ts": 1783399513403
+  },
+  {
+    "key": "rushabh_jha|93|r16_m93",
+    "participantId": "rushabh_jha",
+    "points": 5,
+    "reason": "ESP advances (R16)",
+    "matchId": 93,
+    "ts": 1783399513403
+  },
+  {
+    "key": "avdhut_pure|93|r16_m93",
+    "participantId": "avdhut_pure",
+    "points": 5,
+    "reason": "ESP advances (R16)",
+    "matchId": 93,
+    "ts": 1783399513403
+  },
+  {
+    "key": "avdhut_pure|94|r16_m94",
+    "participantId": "avdhut_pure",
+    "points": 5,
+    "reason": "BEL advances (R16)",
+    "matchId": 94,
+    "ts": 1783399513403
+  },
+  {
+    "key": "dhruv_shah|93|r16_m93",
+    "participantId": "dhruv_shah",
+    "points": 5,
+    "reason": "ESP advances (R16)",
+    "matchId": 93,
+    "ts": 1783399513403
+  },
+  {
+    "key": "dhruv_shah|94|r16_m94",
+    "participantId": "dhruv_shah",
+    "points": 5,
+    "reason": "BEL advances (R16)",
+    "matchId": 94,
+    "ts": 1783399513403
+  },
+  {
+    "key": "sagar_vatkar|93|r16_m93",
+    "participantId": "sagar_vatkar",
+    "points": 10,
+    "reason": "ESP correct + exact score 0-1 (2×R16)",
+    "matchId": 93,
+    "ts": 1783399513404
+  },
+  {
+    "key": "ranjit_nambiar|93|r16_m93",
+    "participantId": "ranjit_nambiar",
+    "points": 10,
+    "reason": "ESP correct + exact score 0-1 (2×R16)",
+    "matchId": 93,
+    "ts": 1783399513406
+  },
+  {
+    "key": "ranjit_nambiar|94|r16_m94",
+    "participantId": "ranjit_nambiar",
+    "points": 5,
+    "reason": "BEL advances (R16)",
+    "matchId": 94,
+    "ts": 1783399513406
+  },
+  {
+    "key": "renu_verma|93|r16_m93",
+    "participantId": "renu_verma",
+    "points": 5,
+    "reason": "ESP advances (R16)",
+    "matchId": 93,
+    "ts": 1783399513406
+  },
+  {
+    "key": "renu_verma|94|r16_m94",
+    "participantId": "renu_verma",
+    "points": 5,
+    "reason": "BEL advances (R16)",
+    "matchId": 94,
+    "ts": 1783399513406
+  },
+  {
+    "key": "nived|93|r16_m93",
+    "participantId": "nived",
+    "points": 5,
+    "reason": "ESP advances (R16)",
+    "matchId": 93,
+    "ts": 1783399513406
+  },
+  {
+    "key": "fananio|93|r16_m93",
+    "participantId": "fananio",
+    "points": 5,
+    "reason": "ESP advances (R16)",
+    "matchId": 93,
+    "ts": 1783399513407
+  },
+  {
+    "key": "neelkanth_vyas|94|r16_m94",
+    "participantId": "neelkanth_vyas",
+    "points": 5,
+    "reason": "BEL advances (R16)",
+    "matchId": 94,
+    "ts": 1783399513407
+  },
+  {
+    "key": "neerav_tipnis|93|r16_m93",
+    "participantId": "neerav_tipnis",
+    "points": 5,
+    "reason": "ESP advances (R16)",
+    "matchId": 93,
+    "ts": 1783399513407
+  },
+  {
+    "key": "neerav_tipnis|94|r16_m94",
+    "participantId": "neerav_tipnis",
+    "points": 5,
+    "reason": "BEL advances (R16)",
+    "matchId": 94,
+    "ts": 1783399513407
+  },
+  {
+    "key": "renu_verma|89|r16_m89",
+    "participantId": "renu_verma",
+    "points": 5,
+    "reason": "FRA advances (R16)",
+    "matchId": 89,
+    "ts": 1783433095825
+  },
+  {
+    "key": "praveen_kumar|94|r16_m94",
+    "participantId": "praveen_kumar",
+    "points": 5,
+    "reason": "BEL advances (R16)",
+    "matchId": 94,
+    "ts": 1783433353524
+  }
+]

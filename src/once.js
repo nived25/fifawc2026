@@ -7,6 +7,7 @@ import { updateBracket } from './bracket.js';
 import { buildAppData } from './buildAppData.js';
 import { syncPredictions } from './sync-predictions.js';
 import { resolveR32Teams } from './resolveR32.js';
+import { generateFeed } from './feed.js';
 
 const API_BASE = 'https://worldcup26.ir';
 
@@ -196,6 +197,8 @@ async function run() {
     const delta = row.delta > 0 ? `+${row.delta}` : String(row.delta);
     console.log(`  ${row.rank}. ${row.name.padEnd(18)} ${String(row.total).padStart(3)} pts  (${delta})`);
   }
+
+  generateFeed({ groupId: 'lr' });
 
   buildAppData();
 }

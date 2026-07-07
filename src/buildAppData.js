@@ -20,6 +20,7 @@ export function buildAppData() {
   const participants = readOr('participants.json', []);
   const r32tbd = readOr('r32_tbd.json', []);
   const scoringLedger = readOr('scoring_ledger.json', []);
+  const feedRaw = readOr('feed.json', { days: [] });
 
   const KO_ROUNDS = ['r32', 'r16', 'qf', 'sf', 'final'];
 
@@ -112,6 +113,8 @@ export function buildAppData() {
     bracket,
     _r32tbd: r32tbd,
     predictions: publicPredictions,
+    // Daily Gaffer feed — snapshot/keysAtGen are generator-internal diff state, never shipped
+    feed: { days: (feedRaw.days || []).map(d => ({ dateKey: d.dateKey, generatedAtMs: d.generatedAtMs, posts: d.posts })) },
     teams: Object.fromEntries(
       Object.entries(teams).map(([code, t]) => [code, { name: t.name, flag: t.flag, logo: t.logo }])
     ),
