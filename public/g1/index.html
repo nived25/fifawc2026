@@ -1734,7 +1734,7 @@ class Component extends DCLogic {
     const hG=resultMatch.homeGoals!=null?resultMatch.homeGoals:resultMatch.home?.goals;
     const aG=resultMatch.awayGoals!=null?resultMatch.awayGoals:resultMatch.away?.goals;
     const finished=!!resultMatch.finished&&hG!=null&&aG!=null;
-    const predAdv=pick.adv||(pick.h>pick.a?'a':pick.a>pick.h?'b':null);
+    const predAdv=pick.h!==pick.a?(pick.h>pick.a?'a':'b'):(pick.adv||null);
     const penH=resultMatch.penHome, penA=resultMatch.penAway;
     const actualAdv=!finished?null:(hG>aG?'a':aG>hG?'b':(penH!=null&&penA!=null?(penH>penA?'a':'b'):null));
     const winnerCorrect=finished&&!!predAdv&&predAdv===actualAdv;
@@ -1802,7 +1802,7 @@ class Component extends DCLogic {
           const mkey=keyOf(i);
           const pick=pr[rk]?pr[rk][mkey]:null;
           if(pick){
-            const adv=pick.adv||(pick.h>pick.a?'a':pick.a>pick.h?'b':null);
+            const adv=pick.h!==pick.a?(pick.h>pick.a?'a':'b'):(pick.adv||null);
             if(adv==='a') aCount++; else if(adv==='b') bCount++;
             const pr2=this.koPickResult(rk,pick,res);
             const st=this.koOutcomeStyle(pr2);
@@ -2585,6 +2585,9 @@ class Component extends DCLogic {
       const kickStr=dt?dt.toLocaleDateString('en-US',{day:'numeric',month:'short',timeZone:'Asia/Kolkata'})+' \u00b7 '+dt.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',hour12:false,timeZone:'Asia/Kolkata'}):'Date TBD';
       const isDraw=has&&pick.h===pick.a;
       const done=has&&(pick.h!==pick.a||!!pick.adv);
+      // Decisive scoreline always wins over a stored adv flag \u2014 adv only matters for a
+      // draw pick, and can go stale if h/a changed to a decisive score after adv was set.
+      const advResolved=has?(pick.h!==pick.a?(pick.h>pick.a?'a':'b'):pick.adv):null;
       return {
         id:m.id, kickoffMs:m.kickoffMs||0, isGhost, isOpen, isLocked, isFinished,
         showTeams:!isGhost, showSteppers:isOpen, showLockedRow:isLocked, showResult:isFinished,
@@ -2593,7 +2596,7 @@ class Component extends DCLogic {
         kickStr, lockIn:isOpen&&lockMs?('Locks in '+this.fmtDur(lockMs-nowMs)):'',
         hScore:pick.h, aScore:pick.a, isDraw, done, notDone:isOpen&&!done,
         myScore:has?(pick.h+' \u2013 '+pick.a):'no pick',
-        advName:pick.adv==='a'?ht.n:(pick.adv==='b'?at.n:''),
+        advName:advResolved==='a'?ht.n:(advResolved==='b'?at.n:''),
         resLabel:st2?st2.label:'', resC:st2?st2.c:'#8E8E93', resIcon:st2?st2.icon:'',
         resBg:st2?st2.bg:'rgba(255,255,255,.04)',
         actScore:(res&&res.actScore)?('actual '+res.actScore):'',

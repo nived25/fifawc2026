@@ -53,7 +53,9 @@ function scoreKoRound({ roundKey, roundName, configKey, picks, matchList, fixtur
       : (actualMatch.penHome != null ? (actualMatch.penHome > actualMatch.penAway ? 'a' : 'b') : null);
     if (!actualAdv) continue;
 
-    const predAdv = pick.adv || (pick.h > pick.a ? 'a' : (pick.a > pick.h ? 'b' : null));
+    // Decisive scoreline always wins over a stored adv flag — adv is only meaningful
+    // for an actual draw pick, and can go stale if h/a changed after adv was once set.
+    const predAdv = pick.h !== pick.a ? (pick.h > pick.a ? 'a' : 'b') : (pick.adv || null);
     if (!predAdv || predAdv !== actualAdv) continue;
 
     const predWinCode = predAdv === 'a' ? actualMatch.home.code : actualMatch.away.code;
