@@ -209,9 +209,9 @@
               <span style="color:rgba(255,255,255,.5);font-size:13px;font-weight:500;margin-left:3px">of {{ heroTotal }}</span>
             </div>
             <div style="display:flex;align-items:center;gap:5px;margin-top:10px">
-              <sc-for list="{{ heroFlags }}" as="hf" hint-placeholder-count="4">
-                <img src="{{ hf.fu }}" style="width:23px;height:16px;border-radius:3.5px;object-fit:cover;border:1px solid rgba(255,255,255,.25);box-shadow:0 2px 6px rgba(0,0,0,.4)"/>
-              </sc-for>
+              <div style="display:inline-flex;align-items:baseline;gap:4px;padding:3px 8px;border-radius:8px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.13)"><span style="color:rgba(255,255,255,.55);font-size:9px;font-weight:700;letter-spacing:.8px">GRP</span><span class="disp" style="color:#fff;font-size:12px;font-weight:600;font-variant-numeric:tabular-nums">{{ heroBrkGroup }}</span></div>
+              <div style="display:inline-flex;align-items:baseline;gap:4px;padding:3px 8px;border-radius:8px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.13)"><span style="color:rgba(255,255,255,.55);font-size:9px;font-weight:700;letter-spacing:.8px">KO</span><span class="disp" style="color:#fff;font-size:12px;font-weight:600;font-variant-numeric:tabular-nums">{{ heroBrkKo }}</span></div>
+              <div style="display:inline-flex;align-items:baseline;gap:4px;padding:3px 8px;border-radius:8px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.13)"><span style="color:rgba(255,255,255,.55);font-size:9px;font-weight:700;letter-spacing:.8px">BON</span><span class="disp" style="color:#fff;font-size:12px;font-weight:600;font-variant-numeric:tabular-nums">{{ heroBrkBonus }}</span></div>
             </div>
             <div style="color:rgba(255,255,255,.55);font-size:11px;font-weight:500;margin-top:7px">{{ heroPhase }}</div>
           </div>
@@ -1753,6 +1753,9 @@ class Component extends DCLogic {
           const nb=neighbors();
           const want=dx<0?nb.right:nb.left;
           if(want) this.setState({gExtra:want});
+          // pin entrance animation off (inline survives .swiping removal — prevents
+          // tabIn replaying at opacity:0 after the gesture ends)
+          Object.values(this._panes).forEach(el=>{ const te=el&&el.querySelector('.tab-enter'); if(te) te.style.animation='none'; });
         }
         const raw=gs.base+(e.clientX-gs.xa);
         const nb=neighbors(), w=W();
@@ -1770,7 +1773,10 @@ class Component extends DCLogic {
             gs.raf=0;
             setX(activePane(),gs.d);
             const xp=extraPane();
-            if(xp){ const right=ORDER.indexOf(this.state.gExtra)>neighbors().i; setX(xp, gs.d+(right?W():-W())); }
+            if(xp){
+              const te=xp.querySelector('.tab-enter'); if(te&&te.style.animation!=='none') te.style.animation='none';
+              const right=ORDER.indexOf(this.state.gExtra)>neighbors().i; setX(xp, gs.d+(right?W():-W()));
+            }
           });
         }
       }
@@ -1813,10 +1819,10 @@ class Component extends DCLogic {
         const commit=!!next&&(Math.abs(d)>w*0.35||(Math.abs(d)>28&&Math.abs(v)>0.5&&Math.sign(v)===Math.sign(d)));
         const a=activePane(), xp=extraPane();
         const right=this.state.gExtra?ORDER.indexOf(this.state.gExtra)>nb.i:d<0;
-        const ease='cubic-bezier(.22,1,.36,1)';
+        const ease='cubic-bezier(.32,.72,0,1)'; /* iOS drawer curve — fast start, long soft landing */
         const anims=[];
         const target=commit?(right?-w:w):0;
-        const dur=commit?Math.min(300,Math.max(140,Math.abs(target-d)/Math.max(Math.abs(v),0.55))):200;
+        const dur=commit?Math.min(380,Math.max(220,Math.abs(target-d)/Math.max(Math.abs(v),0.45))):280;
         if(commit){
           if(a) anims.push(a.animate([{transform:`translate3d(${d}px,0,0)`},{transform:`translate3d(${target}px,0,0)`}],{duration:dur,easing:ease,fill:'forwards'}));
           if(xp) anims.push(xp.animate([{transform:`translate3d(${d+(right?w:-w)}px,0,0)`},{transform:'translate3d(0px,0,0)'}],{duration:dur,easing:ease,fill:'forwards'}));
@@ -2883,7 +2889,9 @@ class Component extends DCLogic {
       tabPredict:()=>this.setTab('predict'), tabFeed:()=>this.setTab('feed'),
       heroPts:s.heroPts, heroRank:this.USER+1, heroTotal:this.P.length,
       heroPhase: this._apiData?.meta?.phase==='ko'?'Knockout stage':'Group stage · in progress',
-      heroFlags: this.deepFlags((this.P[this.USER]?.[1]||[]).map(c=>({ f:this.teams[c]?.f||'', n:this.teams[c]?.n||c }))),
+      heroBrkGroup: this.P[this.USER]?.[4]?.group||0,
+      heroBrkKo: this.P[this.USER]?.[4]?.ko||0,
+      heroBrkBonus: (this.P[this.USER]?.[4]?.finalist||0)+(this.P[this.USER]?.[4]?.champion||0),
       heroGapLabel: this.USER===0?'LEAGUE LEADER':'TO TOP SPOT',
       heroGapStr: (()=>{ const lead=this.P[0]?.[2]||0, mine=this.P[this.USER]?.[2]||0, gap=lead-mine;
         if(this.USER===0) return 'You lead the league';
