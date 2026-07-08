@@ -83,6 +83,9 @@
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
   html,body{margin:0;padding:0;background:#000;font-family:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;letter-spacing:-.011em;-webkit-font-smoothing:antialiased}
   @media (max-width:500px){.app-frame{width:100vw!important;height:100dvh!important;max-height:none!important;box-shadow:none!important}}
+  .hdr-eyebrow{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;background:linear-gradient(90deg,#FF2D78,#7A3CFF,#1FA2FF);-webkit-background-clip:text;background-clip:text;color:transparent;opacity:.85;line-height:1;white-space:nowrap}
+  .hdr-title{font-family:"Space Grotesk","Hanken Grotesk",sans-serif;font-size:28px;font-weight:700;letter-spacing:-.8px;line-height:1.05;background:linear-gradient(180deg,#FFFFFF,rgba(255,255,255,.68));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hdr-line{position:absolute;left:0;right:0;bottom:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,45,120,.35),rgba(122,60,255,.35),rgba(31,162,255,.35),transparent);pointer-events:none}
   ::-webkit-scrollbar{display:none}
   [onclick],button,input{touch-action:manipulation}
   input:focus{outline:none}
@@ -179,14 +182,15 @@
 
     <!-- ===================== FANTASY ===================== -->
     <sc-if value="{{ isFantasy }}" hint-placeholder-val="{{ true }}">
-    <div data-screen-label="Fantasy" class="tab-enter" style="padding:0 0 110px">
+    <div data-screen-label="Fantasy" class="tab-enter" style="padding:0 0 calc(84px + env(safe-area-inset-bottom,0px))">
       <!-- header -->
-      <div style="position:sticky;top:0;z-index:4;padding:6px 20px 12px;background:rgba(10,10,11,.72);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);display:flex;align-items:center;justify-content:space-between">
-        <div style="display:flex;align-items:center;gap:10px">
-          <img src="./wc2026-trophy.png" style="height:38px;width:auto;filter:drop-shadow(0 2px 8px rgba(255,190,0,.35))"/>
-          <div><div class="disp" style="color:#F5F5F7;font-size:24px;font-weight:600;letter-spacing:-.6px;line-height:1">LR World Cup</div><div style="color:#7C7C82;font-size:12px;font-weight:500;margin-top:2px;white-space:nowrap">Office World Cup League</div></div>
+      <div style="position:sticky;top:0;z-index:4;padding:8px 20px 12px;background:rgba(10,10,11,.72);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);display:flex;align-items:center;justify-content:space-between">
+        <div style="display:flex;align-items:center;gap:11px">
+          <img src="./wc2026-logo-dark.png" style="height:40px;width:auto;filter:drop-shadow(0 2px 10px rgba(255,190,0,.3))"/>
+          <div><div class="hdr-eyebrow" style="margin-bottom:4px">Office World Cup League</div><div class="hdr-title" style="font-size:26px">LR World Cup</div></div>
         </div>
         <div onClick="{{ openProfile }}" style-active="transform:scale(.9)" style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#FF2D78,#7A3CFF);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:14px;cursor:pointer;box-shadow:0 4px 14px rgba(122,60,255,.4)">{{ userInitials }}</div>
+        <div class="hdr-line"></div>
       </div>
 
       <!-- hero (compact glass) -->
@@ -328,10 +332,10 @@
 
     <!-- ===================== MATCHES ===================== -->
     <sc-if value="{{ isMatches }}" hint-placeholder-val="{{ true }}">
-    <div data-screen-label="Matches" class="tab-enter" style="padding:0 0 110px">
+    <div data-screen-label="Matches" class="tab-enter" style="padding:0 0 calc(84px + env(safe-area-inset-bottom,0px))">
       <div style="position:sticky;top:0;z-index:4;background:rgba(10,10,11,.72);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)">
-        <div style="padding:6px 20px 10px;display:flex;align-items:center;justify-content:space-between">
-          <div><div class="disp" style="color:#F5F5F7;font-size:27px;font-weight:600;letter-spacing:-.6px;line-height:1">Matches</div><div style="color:#7C7C82;font-size:12.5px;font-weight:500;margin-top:3px;white-space:nowrap">FIFA World Cup 2026</div></div>
+        <div style="padding:8px 20px 10px;display:flex;align-items:center;justify-content:space-between">
+          <div><div class="hdr-eyebrow" style="margin-bottom:4px">FIFA World Cup 2026</div><div class="hdr-title">Matches</div></div>
           <div onClick="{{ openProfile }}" style-active="transform:scale(.9)" style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#FF2D78,#7A3CFF);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:14px;cursor:pointer">{{ userInitials }}</div>
         </div>
         <!-- sub tabs -->
@@ -340,6 +344,7 @@
           <div onClick="{{ subStandings }}" style="font-size:15.5px;font-weight:600;cursor:pointer;color:{{ subStandingsC }};border-bottom:2px solid {{ subStandingsB }};padding-bottom:6px">Standings</div>
           <div onClick="{{ subBracket }}" style="font-size:15.5px;font-weight:600;cursor:pointer;color:{{ subBracketC }};border-bottom:2px solid {{ subBracketB }};padding-bottom:6px">Bracket</div>
         </div>
+        <div class="hdr-line"></div>
       </div>
 
       <!-- FIXTURES -->
@@ -468,10 +473,10 @@
 
     <!-- ===================== PICKS ===================== -->
     <sc-if value="{{ isPicks }}" hint-placeholder-val="{{ false }}">
-    <div data-screen-label="Picks" class="tab-enter" style="padding:0 0 110px">
+    <div data-screen-label="Picks" class="tab-enter" style="padding:0 0 calc(84px + env(safe-area-inset-bottom,0px))">
       <div style="position:sticky;top:0;z-index:4;background:rgba(10,10,11,.72);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)">
-        <div style="padding:6px 20px 10px;display:flex;align-items:center;justify-content:space-between">
-          <div><div class="disp" style="color:#F5F5F7;font-size:27px;font-weight:600;letter-spacing:-.6px;line-height:1">Picks</div><div style="color:#7C7C82;font-size:12.5px;font-weight:500;margin-top:3px;white-space:nowrap">See what everyone predicted</div></div>
+        <div style="padding:8px 20px 10px;display:flex;align-items:center;justify-content:space-between">
+          <div><div class="hdr-eyebrow" style="margin-bottom:4px">Everyone's predictions</div><div class="hdr-title">Picks</div></div>
           <div onClick="{{ openProfile }}" style-active="transform:scale(.9)" style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#FF2D78,#7A3CFF);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:14px;cursor:pointer">{{ userInitials }}</div>
         </div>
         <div style="display:flex;gap:6px;padding:2px 16px 12px">
@@ -479,6 +484,7 @@
           <div onClick="{{ pickDateT }}" style-active="transform:scale(.94)" style="flex:1;text-align:center;padding:8px 0;border-radius:11px;font-size:13px;font-weight:600;cursor:pointer;background:{{ pickDateTBg }};color:{{ pickDateTC }}">Today</div>
           <div onClick="{{ pickDateU }}" style-active="transform:scale(.94)" style="flex:1;text-align:center;padding:8px 0;border-radius:11px;font-size:13px;font-weight:600;cursor:pointer;background:{{ pickDateUBg }};color:{{ pickDateUC }}">Upcoming</div>
         </div>
+        <div class="hdr-line"></div>
       </div>
 
       <sc-if value="{{ picksEmptyAtAll }}" hint-placeholder-val="{{ false }}">
@@ -562,10 +568,11 @@
 
     <!-- ===================== PREDICT ===================== -->
     <sc-if value="{{ isPredict }}" hint-placeholder-val="{{ true }}">
-    <div data-screen-label="Predict" class="tab-enter" style="padding:0 0 110px">
-      <div style="position:sticky;top:0;z-index:4;padding:6px 20px 12px;background:rgba(10,10,11,.72);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);display:flex;align-items:center;justify-content:space-between">
-        <div><div class="disp" style="color:#F5F5F7;font-size:27px;font-weight:600;letter-spacing:-.6px;line-height:1">Predict</div><div style="color:#7C7C82;font-size:12.5px;font-weight:500;margin-top:3px;white-space:nowrap">Prediction Centre</div></div>
+    <div data-screen-label="Predict" class="tab-enter" style="padding:0 0 calc(84px + env(safe-area-inset-bottom,0px))">
+      <div style="position:sticky;top:0;z-index:4;padding:8px 20px 12px;background:rgba(10,10,11,.72);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);display:flex;align-items:center;justify-content:space-between">
+        <div><div class="hdr-eyebrow" style="margin-bottom:4px">Prediction Centre</div><div class="hdr-title">Predict</div></div>
         <div onClick="{{ openProfile }}" style-active="transform:scale(.9)" style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#FF2D78,#7A3CFF);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:14px;cursor:pointer">{{ userInitials }}</div>
+        <div class="hdr-line"></div>
       </div>
 
       <div style="padding:6px 16px 0">
@@ -949,10 +956,11 @@
 
     <!-- ===================== FEED ===================== -->
     <sc-if value="{{ isFeed }}" hint-placeholder-val="{{ true }}">
-    <div data-screen-label="Feed" class="tab-enter" style="padding:0 0 110px">
-      <div style="position:sticky;top:0;z-index:4;padding:6px 20px 12px;background:rgba(10,10,11,.72);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);display:flex;align-items:center;justify-content:space-between">
-        <div><div class="disp" style="color:#F5F5F7;font-size:27px;font-weight:600;letter-spacing:-.6px;line-height:1">Feed</div><div style="color:#7C7C82;font-size:12.5px;font-weight:500;margin-top:3px;white-space:nowrap">The Daily Gaffer &middot; new edition at noon</div></div>
+    <div data-screen-label="Feed" class="tab-enter" style="padding:0 0 calc(84px + env(safe-area-inset-bottom,0px))">
+      <div style="position:sticky;top:0;z-index:4;padding:8px 20px 12px;background:rgba(10,10,11,.72);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);display:flex;align-items:center;justify-content:space-between">
+        <div><div class="hdr-eyebrow" style="margin-bottom:4px">The Daily Gaffer</div><div class="hdr-title">Feed</div></div>
         <div onClick="{{ openProfile }}" style-active="transform:scale(.9)" style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#FF2D78,#7A3CFF);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:14px;cursor:pointer">{{ userInitials }}</div>
+        <div class="hdr-line"></div>
       </div>
 
       <sc-if value="{{ feedEmpty }}" hint-placeholder-val="{{ false }}">
@@ -1040,7 +1048,7 @@
   </div>
 
   <!-- ===================== TAB BAR ===================== -->
-  <div style="flex:none;width:100%;height:calc(64px + env(safe-area-inset-bottom,0px));background:rgba(10,10,11,.85);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-top:1px solid rgba(255,255,255,.07);display:flex;padding:10px 8px env(safe-area-inset-bottom,18px);z-index:8;box-sizing:border-box">
+  <div style="flex:none;width:100%;height:calc(64px + env(safe-area-inset-bottom,0px));background:rgba(10,10,11,.85);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-top:1px solid rgba(255,255,255,.07);display:flex;padding:8px 8px env(safe-area-inset-bottom,18px);z-index:8;box-sizing:border-box">
     <div onClick="{{ tabFantasy }}" style-active="transform:scale(.85)" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;transition:transform .22s var(--ease-pop),color var(--dur-fast) var(--ease-out);color:{{ cFantasy }};position:relative">
       <svg width="25" height="25" viewBox="0 0 24 24" fill="currentColor"><path d="M6 4h12v3a4 4 0 0 1-4 4h-.2A3 3 0 0 1 13 12.9V15h2a1 1 0 0 1 1 1v2H8v-2a1 1 0 0 1 1-1h2v-2.1A3 3 0 0 1 10.2 11H10a4 4 0 0 1-4-4V4Zm-3 1h2v2a3 3 0 0 1-2-2.8V5Zm16 0h2v.2A3 3 0 0 1 19 7V5Z"/></svg>
       <span style="font-size:11px;font-weight:600">Leaderboard</span>
@@ -1372,7 +1380,7 @@
   <sc-if value="{{ showLogin }}" hint-placeholder-val="{{ true }}">
   <div style="position:absolute;inset:0;z-index:28;background:#0A0A0B;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px;animation:fadeIn .3s ease">
     <div style="text-align:center;margin-bottom:36px">
-      <img src="./wc2026-trophy.png" style="height:110px;width:auto;filter:drop-shadow(0 8px 28px rgba(255,190,0,.45)) drop-shadow(0 0 60px rgba(255,160,0,.2));margin-bottom:12px"/>
+      <img src="./wc2026-logo-dark.png" style="height:110px;width:auto;filter:drop-shadow(0 8px 28px rgba(255,190,0,.45)) drop-shadow(0 0 60px rgba(255,160,0,.2));margin-bottom:12px"/>
       <div class="disp" style="color:#F5F5F7;font-size:24px;font-weight:700;letter-spacing:-.5px">LR World Cup</div>
       <div style="color:#7C7C82;font-size:13px;font-weight:500;margin-top:3px">2026 · Office League</div>
     </div>
