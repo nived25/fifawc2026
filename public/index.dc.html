@@ -86,6 +86,8 @@
   .hdr-eyebrow{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;background:linear-gradient(90deg,#FF2D78,#7A3CFF,#1FA2FF);-webkit-background-clip:text;background-clip:text;color:transparent;opacity:.85;line-height:1;white-space:nowrap}
   .hdr-title{font-family:"Space Grotesk","Hanken Grotesk",sans-serif;font-size:28px;font-weight:700;letter-spacing:-.8px;line-height:1.05;background:linear-gradient(180deg,#FFFFFF,rgba(255,255,255,.68));-webkit-background-clip:text;background-clip:text;color:transparent}
   .hdr-line{position:absolute;left:0;right:0;bottom:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,45,120,.35),rgba(122,60,255,.35),rgba(31,162,255,.35),transparent);pointer-events:none}
+  .tab-pane{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;overscroll-behavior-y:contain;-webkit-overflow-scrolling:touch}
+  html.swiping .tab-enter{animation:none}
   ::-webkit-scrollbar{display:none}
   [onclick],button,input{touch-action:manipulation}
   input:focus{outline:none}
@@ -178,10 +180,11 @@
 
 
   <!-- ===== MAIN SCROLL ===== -->
-  <div ref="{{ mainScrollRef }}" style="flex:1;overflow-y:auto;overflow-x:hidden;position:relative;overscroll-behavior-y:contain;-webkit-overflow-scrolling:touch">
+  <div ref="{{ mainHostRef }}" style="flex:1;overflow:hidden;position:relative">
 
     <!-- ===================== FANTASY ===================== -->
     <sc-if value="{{ isFantasy }}" hint-placeholder-val="{{ true }}">
+    <div ref="{{ paneRefFantasy }}" data-pane="fantasy" class="tab-pane" style="transform:translate3d({{ pxFantasy }},0,0)">
     <div data-screen-label="Fantasy" class="tab-enter" style="padding:0 0 calc(84px + env(safe-area-inset-bottom,0px))">
       <!-- header -->
       <div style="position:sticky;top:0;z-index:4;padding:8px 20px 12px;background:rgba(10,10,11,.72);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);display:flex;align-items:center;justify-content:space-between">
@@ -342,10 +345,12 @@
       </div>
       </sc-if>
     </div>
+    </div>
     </sc-if>
 
     <!-- ===================== MATCHES ===================== -->
     <sc-if value="{{ isMatches }}" hint-placeholder-val="{{ true }}">
+    <div ref="{{ paneRefMatches }}" data-pane="matches" class="tab-pane" style="transform:translate3d({{ pxMatches }},0,0)">
     <div data-screen-label="Matches" class="tab-enter" style="padding:0 0 calc(84px + env(safe-area-inset-bottom,0px))">
       <div style="position:sticky;top:0;z-index:4;background:rgba(10,10,11,.72);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)">
         <div style="padding:8px 20px 10px;display:flex;align-items:center;justify-content:space-between">
@@ -483,10 +488,12 @@
       </div>
       </sc-if>
     </div>
+    </div>
     </sc-if>
 
     <!-- ===================== PICKS ===================== -->
     <sc-if value="{{ isPicks }}" hint-placeholder-val="{{ false }}">
+    <div ref="{{ paneRefPicks }}" data-pane="picks" class="tab-pane" style="transform:translate3d({{ pxPicks }},0,0)">
     <div data-screen-label="Picks" class="tab-enter" style="padding:0 0 calc(84px + env(safe-area-inset-bottom,0px))">
       <div style="position:sticky;top:0;z-index:4;background:rgba(10,10,11,.72);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)">
         <div style="padding:8px 20px 10px;display:flex;align-items:center;justify-content:space-between">
@@ -578,10 +585,12 @@
         </sc-for>
       </div>
     </div>
+    </div>
     </sc-if>
 
     <!-- ===================== PREDICT ===================== -->
     <sc-if value="{{ isPredict }}" hint-placeholder-val="{{ true }}">
+    <div ref="{{ paneRefPredict }}" data-pane="predict" class="tab-pane" style="transform:translate3d({{ pxPredict }},0,0)">
     <div data-screen-label="Predict" class="tab-enter" style="padding:0 0 calc(84px + env(safe-area-inset-bottom,0px))">
       <div style="position:sticky;top:0;z-index:4;padding:8px 20px 12px;background:rgba(10,10,11,.72);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);display:flex;align-items:center;justify-content:space-between">
         <div><div class="hdr-eyebrow" style="margin-bottom:4px">Prediction Centre</div><div class="hdr-title">Predict</div></div>
@@ -966,10 +975,12 @@
         </sc-if>
       </div>
     </div>
+    </div>
     </sc-if>
 
     <!-- ===================== FEED ===================== -->
     <sc-if value="{{ isFeed }}" hint-placeholder-val="{{ true }}">
+    <div ref="{{ paneRefFeed }}" data-pane="feed" class="tab-pane" style="transform:translate3d({{ pxFeed }},0,0)">
     <div data-screen-label="Feed" class="tab-enter" style="padding:0 0 calc(84px + env(safe-area-inset-bottom,0px))">
       <div style="position:sticky;top:0;z-index:4;padding:8px 20px 12px;background:rgba(10,10,11,.72);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);display:flex;align-items:center;justify-content:space-between">
         <div><div class="hdr-eyebrow" style="margin-bottom:4px">The Daily Gaffer</div><div class="hdr-title">Feed</div></div>
@@ -1057,6 +1068,7 @@
           <div style="text-align:center;color:#48484A;font-size:11px;font-weight:500;margin-top:14px;padding-bottom:4px">The Gaffer files a new edition every day at 12:00 &middot; opinions are his own</div>
         </sc-if>
       </div>
+    </div>
     </div>
     </sc-if>
   </div>
@@ -1494,15 +1506,25 @@ class Component extends DCLogic {
       expandedPick:{}, rulesOpen:false,
       lockMs:(2*86400+14*3600+9*60)*1000,
       toast:null,
-      pickDate:'past', pickOpen:'', picksUser:null
+      pickDate:'past', pickOpen:'', picksUser:null,
+      gExtra:null
     };
-    this.scrollTop=()=>{ if(this.mainScroll) this.mainScroll.scrollTop=0; };
+    this._panes={};
+    this._swipeActive=false;
+    this._pendingLiveData=null;
+    this.scrollTop=()=>{ requestAnimationFrame(()=>{ if(this.mainScroll) this.mainScroll.scrollTop=0; }); };
   }
-  setTab(t){
+  get mainScroll(){ return this._panes[this.state.tab]||null; }
+  _panePos(name,s){
+    if(name===s.tab) return '0px';
+    const O=['fantasy','matches','picks','predict','feed'];
+    return O.indexOf(name)<O.indexOf(s.tab)?'-100%':'100%';
+  }
+  setTab(t,opts={}){
     const order=['fantasy','matches','picks','predict','feed'];
     const from=order.indexOf(this.state.tab), to=order.indexOf(t);
-    try{ document.documentElement.dataset.tabdir = to>from?'r':(to<from?'l':''); }catch(_){}
-    this.setState({tab:t}); this.scrollTop();
+    try{ document.documentElement.dataset.tabdir = opts.fromSwipe?'':(to>from?'r':(to<from?'l':'')); }catch(_){}
+    this.setState({tab:t, gExtra:null}); this.scrollTop();
     try{
       const order=['fantasy','matches','picks','predict','feed'];
       const nav=document.querySelectorAll('body [onclick]');
@@ -1519,7 +1541,7 @@ class Component extends DCLogic {
   }
   componentDidMount(){
     this.checkStoredLogin();
-    this.timer = setInterval(()=>this.setState(s=>({lockMs:Math.max(0,s.lockMs-1000)})),1000);
+    this.timer = setInterval(()=>{ if(!this._swipeActive) this.setState(s=>({lockMs:Math.max(0,s.lockMs-1000)})); },1000);
     this.fetchLiveData();
     this._initMicro();
   }
@@ -1654,14 +1676,59 @@ class Component extends DCLogic {
     D.body.appendChild(ind);
     const arrow=ind.querySelector('svg');
     let gs=null, busy=false;
+    const ORDER=['fantasy','matches','picks','predict','feed'];
     const H_SCROLL='[class*="snap-x"],[style*="overflow-x:auto"],[style*="overflow-x: auto"]';
+    const W=()=>this._host?this._host.clientWidth:390;
+    const setX=(el,x)=>{ if(el) el.style.transform='translate3d('+x+'px,0,0)'; };
+    const activePane=()=>this._panes[this.state.tab]||null;
+    const extraPane=()=>this.state.gExtra?(this._panes[this.state.gExtra]||null):null;
+    const neighbors=()=>{ const i=ORDER.indexOf(this.state.tab); return { left:i>0?ORDER[i-1]:null, right:i<ORDER.length-1?ORDER[i+1]:null, i }; };
+    const cleanupSwipe=()=>{
+      document.documentElement.classList.remove('swiping');
+      Object.values(this._panes).forEach(el=>{ if(el) el.style.willChange=''; });
+      this._swipeActive=false;
+      if(this._pendingLiveData){ const d=this._pendingLiveData; this._pendingLiveData=null; this.applyLiveData(d); }
+    };
+    const clearAnims=st=>{ (st&&st.anims||[]).forEach(a=>{ try{ a.onfinish=null; a.cancel(); }catch(_){} }); };
+    const finishSwipe=(next)=>{
+      const st=this._settle; this._settle=null;
+      this.setTab(next,{fromSwipe:true});
+      requestAnimationFrame(()=>requestAnimationFrame(()=>{
+        clearAnims(st);
+        Object.values(this._panes).forEach(el=>{ if(el) el.style.transform=''; });
+        cleanupSwipe();
+      }));
+    };
+    const cancelSwipe=()=>{
+      const st=this._settle; this._settle=null;
+      this.setState({gExtra:null});
+      requestAnimationFrame(()=>requestAnimationFrame(()=>{
+        clearAnims(st);
+        const p=activePane(); if(p) setX(p,0);
+        cleanupSwipe();
+      }));
+    };
     D.addEventListener('pointerdown',e=>{
-      if(gs||busy||reduce) return;
+      if(gs||busy) return;
       if(e.target.closest&&(e.target.closest('[data-sheet]')||e.target.closest('.scrim'))) return;
+      if(!this._host||!this._host.contains(e.target)) return;
+      if(this._settle){
+        // interrupt an in-flight settle: freeze panes at current offset, resume drag
+        const st=this._settle; this._settle=null;
+        let base=0;
+        const p=activePane();
+        try{ st.anims.forEach(a=>{ a.onfinish=null; a.pause(); }); base=new DOMMatrixReadOnly(getComputedStyle(p).transform).m41; }catch(_){ base=0; }
+        clearAnims(st);
+        setX(p,base);
+        const xp=extraPane();
+        if(xp) setX(xp, base+(st.right?W():-W()));
+        gs={x0:e.clientX,y0:e.clientY,xa:e.clientX,mode:'swipe',armed:true,base,d:base,ptrOK:false,hGuard:false,t0:performance.now(),trail:[[performance.now(),base]],raf:0};
+        return;
+      }
       const ms=this.mainScroll;
-      if(!ms||!ms.contains(e.target)) return;
-      gs={x0:e.clientX,y0:e.clientY,mode:null,ptrOK:ms.scrollTop<=0,hGuard:!!(e.target.closest&&e.target.closest(H_SCROLL)),d:0,t0:performance.now()};
+      gs={x0:e.clientX,y0:e.clientY,xa:e.clientX,mode:null,armed:false,base:0,ptrOK:!!(ms&&ms.scrollTop<=0),hGuard:!!(e.target.closest&&e.target.closest(H_SCROLL)),d:0,t0:performance.now(),trail:[],raf:0};
     },{passive:true});
+    D.addEventListener('touchmove',e=>{ if(gs&&gs.mode==='swipe'&&gs.armed) e.preventDefault(); },{passive:false});
     D.addEventListener('pointermove',e=>{
       if(!gs) return;
       const dx=e.clientX-gs.x0, dy=e.clientY-gs.y0;
@@ -1677,12 +1744,41 @@ class Component extends DCLogic {
         ind.style.opacity=String(Math.min(1,d/34));
         ind.style.transform=`translateY(${d-46}px) rotate(${d*3.4}deg)`;
       } else if(gs.mode==='swipe'){
-        gs.d=dx;
+        if(reduce||this.state.loggedIn===false){ gs.d=dx; return; }
+        if(!gs.armed){
+          gs.armed=true; gs.xa=e.clientX;
+          document.documentElement.classList.add('swiping');
+          this._swipeActive=true;
+          Object.values(this._panes).forEach(el=>{ if(el) el.style.willChange='transform'; });
+          const nb=neighbors();
+          const want=dx<0?nb.right:nb.left;
+          if(want) this.setState({gExtra:want});
+        }
+        const raw=gs.base+(e.clientX-gs.xa);
+        const nb=neighbors(), w=W();
+        let d=raw;
+        if(d<0&&!nb.right) d=-w*0.28*Math.tanh(-raw/(w*0.6));
+        else if(d>0&&!nb.left) d=w*0.28*Math.tanh(raw/(w*0.6));
+        const want=d<0?nb.right:(d>0?nb.left:this.state.gExtra);
+        if(want&&want!==this.state.gExtra) this.setState({gExtra:want});
+        gs.d=d;
+        const now=performance.now();
+        gs.trail.push([now,d]); if(gs.trail.length>8) gs.trail.shift();
+        if(!gs.raf){
+          gs.raf=requestAnimationFrame(()=>{
+            if(!gs) return;
+            gs.raf=0;
+            setX(activePane(),gs.d);
+            const xp=extraPane();
+            if(xp){ const right=ORDER.indexOf(this.state.gExtra)>neighbors().i; setX(xp, gs.d+(right?W():-W())); }
+          });
+        }
       }
     },{passive:true});
     const fin=()=>{
       if(!gs) return;
       const g=gs; gs=null;
+      if(g.raf) cancelAnimationFrame(g.raf);
       if(g.mode==='ptr'){
         ind.style.transition='';
         if(g.d>=58){
@@ -1696,13 +1792,49 @@ class Component extends DCLogic {
           ind.style.opacity='0'; ind.style.transform='translateY(-56px)';
         }
       } else if(g.mode==='swipe'){
-        const v=Math.abs(g.d)/Math.max(1,performance.now()-g.t0);
-        if(Math.abs(g.d)>64||(Math.abs(g.d)>28&&v>0.5)){
-          const order=['fantasy','matches','picks','predict','feed'];
-          const i=order.indexOf(this.state.tab);
-          const n=g.d<0?Math.min(order.length-1,i+1):Math.max(0,i-1);
-          if(n!==i&&this.state.loggedIn!==false) this.setTab(order[n]);
+        if(reduce||this.state.loggedIn===false){
+          // reduced-motion / logged-out fallback: instant swap past threshold
+          const v=Math.abs(g.d)/Math.max(1,performance.now()-g.t0);
+          if(Math.abs(g.d)>64||(Math.abs(g.d)>28&&v>0.5)){
+            const i=ORDER.indexOf(this.state.tab);
+            const n=g.d<0?Math.min(ORDER.length-1,i+1):Math.max(0,i-1);
+            if(n!==i&&this.state.loggedIn!==false) this.setTab(ORDER[n]);
+          }
+          return;
         }
+        if(!g.armed) return;
+        const w=W(), d=g.d;
+        const now=performance.now();
+        const tr=g.trail.filter(t=>now-t[0]<110);
+        let v=0;
+        if(tr.length>=2){ const a=tr[0], b=tr[tr.length-1]; v=(b[1]-a[1])/Math.max(1,b[0]-a[0]); }
+        const nb=neighbors();
+        const next=d<0?nb.right:(d>0?nb.left:null);
+        const commit=!!next&&(Math.abs(d)>w*0.35||(Math.abs(d)>28&&Math.abs(v)>0.5&&Math.sign(v)===Math.sign(d)));
+        const a=activePane(), xp=extraPane();
+        const right=this.state.gExtra?ORDER.indexOf(this.state.gExtra)>nb.i:d<0;
+        const ease='cubic-bezier(.22,1,.36,1)';
+        const anims=[];
+        const target=commit?(right?-w:w):0;
+        const dur=commit?Math.min(300,Math.max(140,Math.abs(target-d)/Math.max(Math.abs(v),0.55))):200;
+        if(commit){
+          if(a) anims.push(a.animate([{transform:`translate3d(${d}px,0,0)`},{transform:`translate3d(${target}px,0,0)`}],{duration:dur,easing:ease,fill:'forwards'}));
+          if(xp) anims.push(xp.animate([{transform:`translate3d(${d+(right?w:-w)}px,0,0)`},{transform:'translate3d(0px,0,0)'}],{duration:dur,easing:ease,fill:'forwards'}));
+        } else {
+          if(a) anims.push(a.animate([{transform:`translate3d(${d}px,0,0)`},{transform:'translate3d(0px,0,0)'}],{duration:dur,easing:ease,fill:'forwards'}));
+          if(xp) anims.push(xp.animate([{transform:`translate3d(${d+(right?w:-w)}px,0,0)`},{transform:`translate3d(${right?w:-w}px,0,0)`}],{duration:dur,easing:ease,fill:'forwards'}));
+        }
+        const st={anims,right};
+        this._settle=st;
+        let settled=false;
+        const done=()=>{
+          if(settled||this._settle!==st) return; settled=true;
+          clearTimeout(fallbackT);
+          if(commit) finishSwipe(next); else cancelSwipe();
+        };
+        // safety net: if WAAPI never finishes (page hidden mid-settle), force completion
+        const fallbackT=setTimeout(done,dur+220);
+        if(anims.length) anims[0].onfinish=done; else done();
       }
     };
     D.addEventListener('pointerup',fin,{passive:true});
@@ -1979,6 +2111,7 @@ class Component extends DCLogic {
     } catch(e){}
   }
   applyLiveData(d){
+    if(this._swipeActive){ this._pendingLiveData=d; return; }
     if(d.teams && Object.keys(d.teams).length){
       const t={};
       for(const[code,v]of Object.entries(d.teams)) t[code]={n:v.name,f:this._CODE_EMOJI[code]||''};
@@ -2738,7 +2871,8 @@ class Component extends DCLogic {
     const noMatchLog=!hasMatchLog;
 
     return {
-      isFantasy:s.tab==='fantasy', isMatches:s.tab==='matches', isPicks:s.tab==='picks', isPredict:s.tab==='predict', isFeed:s.tab==='feed',
+      isFantasy:s.tab==='fantasy'||s.gExtra==='fantasy', isMatches:s.tab==='matches'||s.gExtra==='matches', isPicks:s.tab==='picks'||s.gExtra==='picks', isPredict:s.tab==='predict'||s.gExtra==='predict', isFeed:s.tab==='feed'||s.gExtra==='feed',
+      pxFantasy:this._panePos('fantasy',s), pxMatches:this._panePos('matches',s), pxPicks:this._panePos('picks',s), pxPredict:this._panePos('predict',s), pxFeed:this._panePos('feed',s),
       cFantasy:s.tab==='fantasy'?'#FF2D78':'#7C7C82', cMatches:s.tab==='matches'?'#FF2D78':'#7C7C82',
       cPicks:s.tab==='picks'?'#FF2D78':'#7C7C82',
       cPredict:s.tab==='predict'?'#FF2D78':'#7C7C82', cFeed:s.tab==='feed'?'#FF2D78':'#7C7C82',
@@ -2977,7 +3111,12 @@ class Component extends DCLogic {
       stopProp:(e)=>{ if(e&&e.stopPropagation) e.stopPropagation(); },
       profileOpen:s.profile, userPicks, userMatchLog, hasMatchLog, noMatchLog,
       rulesOpen:s.rulesOpen, openRules:()=>this.setState({rulesOpen:true}), closeRules:()=>this.animClose('[data-sheet="y"]',()=>this.setState({rulesOpen:false})),
-      mainScrollRef:el=>{this.mainScroll=el;},
+      mainHostRef:el=>{this._host=el;},
+      paneRefFantasy:el=>{ if(el)this._panes.fantasy=el; else delete this._panes.fantasy; },
+      paneRefMatches:el=>{ if(el)this._panes.matches=el; else delete this._panes.matches; },
+      paneRefPicks:el=>{ if(el)this._panes.picks=el; else delete this._panes.picks; },
+      paneRefPredict:el=>{ if(el)this._panes.predict=el; else delete this._panes.predict; },
+      paneRefFeed:el=>{ if(el)this._panes.feed=el; else delete this._panes.feed; },
       toast:s.toast, toastOpen:!!s.toast,
       toastBg: s.toast&&s.toast.tone==='warn'?'rgba(255,159,10,.16)':'rgba(52,199,89,.16)',
       toastBd: s.toast&&s.toast.tone==='warn'?'rgba(255,159,10,.4)':'rgba(52,199,89,.4)',
