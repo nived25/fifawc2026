@@ -1739,10 +1739,11 @@ class Component extends DCLogic {
         });
         if(!anyLocked) continue;
       } else {
-        // match-level: exposed picks appear post-lock; participation ids (no scores)
-        // let us show the matches + who's predicted before that
-        const anyPicks=parts.some(p=>{const pr=preds[p.id];return pr&&((pr[rk]&&Object.keys(pr[rk]).length)||(pr[rk+'Ids']&&pr[rk+'Ids'].length));});
-        if(!anyPicks) continue;
+        // match-level: show the round as soon as any of its pairings are resolved, even before
+        // anyone has predicted — an empty round otherwise never appears under Upcoming at all.
+        // Picks themselves stay gated per-row below (locked reveal / participation-only ids).
+        const anyMatch=(TREE.rounds[rk]||[]).some(m=>m.h&&m.a);
+        if(!anyMatch) continue;
       }
       const slots=rk==='r32'?null:TREE.rounds[rk].filter(m=>m.h&&m.a);
       const defs=rk==='r32'?this.getRoundMatchList(rk):slots.map(m=>{

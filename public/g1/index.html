@@ -175,7 +175,7 @@
       <div style="position:sticky;top:0;z-index:4;padding:6px 20px 12px;background:rgba(10,10,11,.72);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);display:flex;align-items:center;justify-content:space-between">
         <div style="display:flex;align-items:center;gap:10px">
           <img src="/wc2026-trophy.png" style="height:38px;width:auto;filter:drop-shadow(0 2px 8px rgba(255,190,0,.35))"/>
-          <div><div class="disp" style="color:#F5F5F7;font-size:24px;font-weight:600;letter-spacing:-.6px;line-height:1">Group 1</div><div style="color:#7C7C82;font-size:12px;font-weight:500;margin-top:2px;white-space:nowrap">World Cup League</div></div>
+          <div><div class="disp" style="color:#F5F5F7;font-size:24px;font-weight:600;letter-spacing:-.6px;line-height:1">Group 1</div><div style="color:#7C7C82;font-size:12px;font-weight:500;margin-top:2px;white-space:nowrap">Office World Cup League</div></div>
         </div>
         <div onClick="{{ openProfile }}" style-active="transform:scale(.9)" style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#FF2D78,#7A3CFF);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:14px;cursor:pointer;box-shadow:0 4px 14px rgba(122,60,255,.4)">{{ userInitials }}</div>
       </div>
@@ -1739,10 +1739,11 @@ class Component extends DCLogic {
         });
         if(!anyLocked) continue;
       } else {
-        // match-level: exposed picks appear post-lock; participation ids (no scores)
-        // let us show the matches + who's predicted before that
-        const anyPicks=parts.some(p=>{const pr=preds[p.id];return pr&&((pr[rk]&&Object.keys(pr[rk]).length)||(pr[rk+'Ids']&&pr[rk+'Ids'].length));});
-        if(!anyPicks) continue;
+        // match-level: show the round as soon as any of its pairings are resolved, even before
+        // anyone has predicted — an empty round otherwise never appears under Upcoming at all.
+        // Picks themselves stay gated per-row below (locked reveal / participation-only ids).
+        const anyMatch=(TREE.rounds[rk]||[]).some(m=>m.h&&m.a);
+        if(!anyMatch) continue;
       }
       const slots=rk==='r32'?null:TREE.rounds[rk].filter(m=>m.h&&m.a);
       const defs=rk==='r32'?this.getRoundMatchList(rk):slots.map(m=>{
@@ -2971,7 +2972,7 @@ class Component extends DCLogic {
       <circle cx="0" cy="0" r="30" fill="url(#tg)"/>
     </g>
     <text x="600" y="600" font-family="Space Grotesk, sans-serif" font-size="64" font-weight="600" letter-spacing="-2" fill="#F5F5F7" text-anchor="middle">Group 1</text>
-    <text x="600" y="650" font-family="Hanken Grotesk, sans-serif" font-size="26" font-weight="500" fill="#7C7C82" text-anchor="middle">World Cup League</text>
+    <text x="600" y="650" font-family="Hanken Grotesk, sans-serif" font-size="26" font-weight="500" fill="#7C7C82" text-anchor="middle">Office World Cup League</text>
   </svg>
 </template>
 </body>
