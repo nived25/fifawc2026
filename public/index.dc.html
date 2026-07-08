@@ -1684,6 +1684,11 @@ class Component extends DCLogic {
     const extraPane=()=>this.state.gExtra?(this._panes[this.state.gExtra]||null):null;
     const neighbors=()=>{ const i=ORDER.indexOf(this.state.tab); return { left:i>0?ORDER[i-1]:null, right:i<ORDER.length-1?ORDER[i+1]:null, i }; };
     const cleanupSwipe=()=>{
+      // pin entrance animation off on every mounted pane BEFORE removing the
+      // .swiping class — otherwise tabIn replays from opacity:0 (blank flash).
+      // Must happen here, not only in rAF: a fast flick can commit before any
+      // frame ran, leaving the surviving pane unpinned.
+      Object.values(this._panes).forEach(el=>{ const te=el&&el.querySelector('.tab-enter'); if(te) te.style.animation='none'; });
       document.documentElement.classList.remove('swiping');
       Object.values(this._panes).forEach(el=>{ if(el) el.style.willChange=''; });
       this._swipeActive=false;
