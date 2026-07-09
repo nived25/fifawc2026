@@ -1396,7 +1396,12 @@
       <div style="display:flex;align-items:center;justify-content:space-between;padding:13px 14px;background:#1A1A1E;border-radius:13px;margin-bottom:10px"><span style="color:#F5F5F7;font-size:14px;font-weight:600">Prediction status</span><span style="display:flex;align-items:center;gap:6px;color:{{ predStatusColor }};font-size:13px;font-weight:600"><span style="width:7px;height:7px;border-radius:50%;background:{{ predStatusColor }}"></span>{{ predStatusText }}</span></div>
       <div style="display:flex;gap:10px">
         <div onClick="{{ openSettings }}" style-active="transform:scale(.96)" style="flex:1;text-align:center;padding:13px;background:#1A1A1E;border-radius:13px;color:#8E8E93;font-size:14px;font-weight:600;cursor:pointer">Settings</div>
+        <sc-if value="{{ notDemo }}" hint-placeholder-val="{{ true }}">
         <div onClick="{{ signOut }}" style-active="transform:scale(.96)" style="flex:1;text-align:center;padding:13px;background:rgba(255,69,58,.14);border-radius:13px;color:#FF453A;font-size:14px;font-weight:600;cursor:pointer">Sign out</div>
+        </sc-if>
+        <sc-if value="{{ isDemo }}" hint-placeholder-val="{{ false }}">
+        <div style="flex:1;text-align:center;padding:13px;background:#1A1A1E;border-radius:13px;color:#8E8E93;font-size:14px;font-weight:600">Demo &middot; view only</div>
+        </sc-if>
       </div>
     </div>
   </div>
@@ -1494,6 +1499,8 @@ class Component extends DCLogic {
     // localStorage namespace — '' for LR root; group builds inject 'g1_'/'g2_' so sessions
     // and prediction drafts never collide across groups on the shared origin.
     this._ns = 'g2_';
+    // read-only public demo (/demo or /?demo): fixed viewer identity, all writes disabled
+    this._demo = (()=>{ try{ return location.pathname.replace(/\/$/,'')==='/demo' || new URLSearchParams(location.search).has('demo'); }catch(_){ return false; } })();
     this._userParticipantId = null;
     this._userPin = null;
     this._userName = null;
@@ -1540,7 +1547,14 @@ class Component extends DCLogic {
     this.toastT=setTimeout(()=>this.setState({toast:null}),2600);
   }
   componentDidMount(){
-    this.checkStoredLogin();
+    if(this._demo){
+      // fixed read-only identity — no localStorage session, no auth round-trip
+      this._userParticipantId='nived'; this._userName='Nived'; this._userPin=null;
+      this.setState({loggedIn:true});
+      this.loadStoredPredictions&&this.loadStoredPredictions();
+    } else {
+      this.checkStoredLogin();
+    }
     this.timer = setInterval(()=>{ if(!this._swipeActive) this.setState(s=>({lockMs:Math.max(0,s.lockMs-1000)})); },1000);
     this.fetchLiveData();
     this._initMicro();
@@ -2248,6 +2262,7 @@ class Component extends DCLogic {
     });
   }
   _savePredictionsToLocal(){
+    if(this._demo) return;
     if(!this._userParticipantId) return;
     const s=this.state;
     try{ localStorage.setItem(this._ns+'fifa_preds_'+this._userParticipantId,
@@ -2833,7 +2848,8 @@ class Component extends DCLogic {
           const on=rxMap[fp.id]===e;
           return { e, n:base+(on?1:0), on,
             bg:on?'rgba(255,45,120,.18)':'rgba(255,255,255,.05)', bd:on?'rgba(255,45,120,.45)':'rgba(255,255,255,.08)', cC:on?'#FF6FA0':'#8E8E93',
-            tap:()=>{ try{ const m=JSON.parse(localStorage.getItem(rxKey)||'{}'); if(m[fp.id]===e) delete m[fp.id]; else m[fp.id]=e; localStorage.setItem(rxKey,JSON.stringify(m)); }catch(_){}
+            tap:()=>{ if(this._demo) return;
+              try{ const m=JSON.parse(localStorage.getItem(rxKey)||'{}'); if(m[fp.id]===e) delete m[fp.id]; else m[fp.id]=e; localStorage.setItem(rxKey,JSON.stringify(m)); }catch(_){}
               this.setState({}); } };
         });
         return view;
@@ -3033,6 +3049,7 @@ class Component extends DCLogic {
       mlSubmitBg:(mlDone>0)?'linear-gradient(135deg,#FF2D78,#7A3CFF,#1FA2FF)':'rgba(255,255,255,.07)',
       mlSubmitC:(mlDone>0)?'#fff':'#7C7C82',
       mlSubmit:(this._mlSubmitFn=async()=>{
+        if(this._demo){ this.showToast('Demo view — read-only','warn'); return; }
         if(this._saving) return;                        // double-tap appends duplicate sheet rows
         if(!mlTotal){ this.showToast('No open matches in this round yet','warn'); return; }
         if(!mlDone){ this.showToast('Set at least one scoreline first','warn'); return; }
@@ -3064,6 +3081,7 @@ class Component extends DCLogic {
       koAllChipBg:s.koFilter==='all'?'rgba(122,60,255,.22)':'#1A1A1E', koAllChipC:s.koFilter==='all'?'#F5F5F7':'#8E8E93',
       setKoRemaining:()=>this.setState({koFilter:'remaining'}), setKoAll:()=>this.setState({koFilter:'all'}),
       showLogin:!s.loggedIn,
+      isDemo:!!this._demo, notDemo:!this._demo,
       loginBtnLabel:s.loginLoading?'Signing in…':'Sign in',
       loginError:s.loginError,
       doLogin:()=>{
@@ -3087,6 +3105,7 @@ class Component extends DCLogic {
       submitHint: blockMsg,
       showSubmitHint: predBlocked,
       submit:async()=>{
+        if(this._demo){ this.showToast('Demo view — read-only','warn'); return; }
         if(this._saving) return;
         if(finPartial){ this.showToast('Pick your second finalist, or remove the first','warn'); return; }
         if(champMissing){ this.showToast('Crown a champion to complete your bonus','warn'); return; }
@@ -3137,6 +3156,7 @@ class Component extends DCLogic {
       toastMsg: s.toast?s.toast.msg:'',
       openSettings:()=>this.showToast('Settings open in the full build','ok'),
       signOut:()=>{
+        if(this._demo){ this.showToast('Demo view — read-only','warn'); return; }
         try{ localStorage.removeItem(this._ns+'fifa_auth'); }catch(e){}
         this._clearPredictionsLocal();
         this._userParticipantId=null; this._userPin=null; this._userName=null;
