@@ -3222,5 +3222,85 @@
     "reason": "SUI advances (R16)",
     "matchId": 96,
     "ts": 1783466127196
+  },
+  {
+    "key": "sanjarj|97|qf_m97",
+    "participantId": "sanjarj",
+    "points": 10,
+    "reason": "FRA advances (QF)",
+    "matchId": 97,
+    "ts": 1783637840248
+  },
+  {
+    "key": "ranjitn15|97|qf_m97",
+    "participantId": "ranjitn15",
+    "points": 20,
+    "reason": "FRA correct + exact score 2-0 (2×QF)",
+    "matchId": 97,
+    "ts": 1783637840248
+  },
+  {
+    "key": "kumarsudhish5|97|qf_m97",
+    "participantId": "kumarsudhish5",
+    "points": 10,
+    "reason": "FRA advances (QF)",
+    "matchId": 97,
+    "ts": 1783637840248
+  },
+  {
+    "key": "priya1074|97|qf_m97",
+    "participantId": "priya1074",
+    "points": 10,
+    "reason": "FRA advances (QF)",
+    "matchId": 97,
+    "ts": 1783637840248
+  },
+  {
+    "key": "sreehari_nair|97|qf_m97",
+    "participantId": "sreehari_nair",
+    "points": 10,
+    "reason": "FRA advances (QF)",
+    "matchId": 97,
+    "ts": 1783637840248
+  },
+  {
+    "key": "nambiarnvg|97|qf_m97",
+    "participantId": "nambiarnvg",
+    "points": 10,
+    "reason": "FRA advances (QF)",
+    "matchId": 97,
+    "ts": 1783637840248
+  },
+  {
+    "key": "rohitsnair2002|97|qf_m97",
+    "participantId": "rohitsnair2002",
+    "points": 10,
+    "reason": "FRA advances (QF)",
+    "matchId": 97,
+    "ts": 1783637840248
+  },
+  {
+    "key": "arjsanj214|97|qf_m97",
+    "participantId": "arjsanj214",
+    "points": 10,
+    "reason": "FRA advances (QF)",
+    "matchId": 97,
+    "ts": 1783637840248
+  },
+  {
+    "key": "advaith_sreehari|97|qf_m97",
+    "participantId": "advaith_sreehari",
+    "points": 10,
+    "reason": "FRA advances (QF)",
+    "matchId": 97,
+    "ts": 1783637840249
+  },
+  {
+    "key": "kiransas|97|qf_m97",
+    "participantId": "kiransas",
+    "points": 10,
+    "reason": "FRA advances (QF)",
+    "matchId": 97,
+    "ts": 1783637840249
   }
 ]

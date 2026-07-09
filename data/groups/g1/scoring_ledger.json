@@ -1854,5 +1854,53 @@
     "reason": "SUI advances (R16)",
     "matchId": 96,
     "ts": 1783466124670
+  },
+  {
+    "key": "sunny55|97|qf_m97",
+    "participantId": "sunny55",
+    "points": 20,
+    "reason": "FRA correct + exact score 2-0 (2×QF)",
+    "matchId": 97,
+    "ts": 1783637837845
+  },
+  {
+    "key": "unairgmail|97|qf_m97",
+    "participantId": "unairgmail",
+    "points": 20,
+    "reason": "FRA correct + exact score 2-0 (2×QF)",
+    "matchId": 97,
+    "ts": 1783637837845
+  },
+  {
+    "key": "sreek_iyer|97|qf_m97",
+    "participantId": "sreek_iyer",
+    "points": 10,
+    "reason": "FRA advances (QF)",
+    "matchId": 97,
+    "ts": 1783637837845
+  },
+  {
+    "key": "mathgean|97|qf_m97",
+    "participantId": "mathgean",
+    "points": 20,
+    "reason": "FRA correct + exact score 2-0 (2×QF)",
+    "matchId": 97,
+    "ts": 1783637837845
+  },
+  {
+    "key": "ranjitn15|97|qf_m97",
+    "participantId": "ranjitn15",
+    "points": 10,
+    "reason": "FRA advances (QF)",
+    "matchId": 97,
+    "ts": 1783637837845
+  },
+  {
+    "key": "rejathnair|97|qf_m97",
+    "participantId": "rejathnair",
+    "points": 20,
+    "reason": "FRA correct + exact score 2-0 (2×QF)",
+    "matchId": 97,
+    "ts": 1783637837846
   }
 ]

@@ -2566,5 +2566,93 @@
     "reason": "ARG advances (R16)",
     "matchId": 95,
     "ts": 1783451927118
+  },
+  {
+    "key": "praveen_kumar|97|qf_m97",
+    "participantId": "praveen_kumar",
+    "points": 10,
+    "reason": "FRA advances (QF)",
+    "matchId": 97,
+    "ts": 1783637834631
+  },
+  {
+    "key": "rushabh_jha|97|qf_m97",
+    "participantId": "rushabh_jha",
+    "points": 10,
+    "reason": "FRA advances (QF)",
+    "matchId": 97,
+    "ts": 1783637834631
+  },
+  {
+    "key": "avdhut_pure|97|qf_m97",
+    "participantId": "avdhut_pure",
+    "points": 20,
+    "reason": "FRA correct + exact score 2-0 (2×QF)",
+    "matchId": 97,
+    "ts": 1783637834631
+  },
+  {
+    "key": "dhruv_shah|97|qf_m97",
+    "participantId": "dhruv_shah",
+    "points": 10,
+    "reason": "FRA advances (QF)",
+    "matchId": 97,
+    "ts": 1783637834631
+  },
+  {
+    "key": "sagar_vatkar|97|qf_m97",
+    "participantId": "sagar_vatkar",
+    "points": 10,
+    "reason": "FRA advances (QF)",
+    "matchId": 97,
+    "ts": 1783637834631
+  },
+  {
+    "key": "ranjit_nambiar|97|qf_m97",
+    "participantId": "ranjit_nambiar",
+    "points": 10,
+    "reason": "FRA advances (QF)",
+    "matchId": 97,
+    "ts": 1783637834631
+  },
+  {
+    "key": "renu_verma|97|qf_m97",
+    "participantId": "renu_verma",
+    "points": 10,
+    "reason": "FRA advances (QF)",
+    "matchId": 97,
+    "ts": 1783637834632
+  },
+  {
+    "key": "nived|97|qf_m97",
+    "participantId": "nived",
+    "points": 10,
+    "reason": "FRA advances (QF)",
+    "matchId": 97,
+    "ts": 1783637834632
+  },
+  {
+    "key": "fananio|97|qf_m97",
+    "participantId": "fananio",
+    "points": 10,
+    "reason": "FRA advances (QF)",
+    "matchId": 97,
+    "ts": 1783637834632
+  },
+  {
+    "key": "neelkanth_vyas|97|qf_m97",
+    "participantId": "neelkanth_vyas",
+    "points": 10,
+    "reason": "FRA advances (QF)",
+    "matchId": 97,
+    "ts": 1783637834632
+  },
+  {
+    "key": "neerav_tipnis|97|qf_m97",
+    "participantId": "neerav_tipnis",
+    "points": 10,
+    "reason": "FRA advances (QF)",
+    "matchId": 97,
+    "ts": 1783637834632
   }
 ]
