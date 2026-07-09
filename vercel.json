@@ -3,5 +3,8 @@
   "outputDirectory": "public",
   "installCommand": "npm ci",
   "buildCommand": "node src/bootstrap.js && node src/once.js && npm run refresh:groups",
-  "rewrites": [{ "source": "/", "destination": "/index.dc.html" }]
+  "rewrites": [
+    { "source": "/", "destination": "/index.dc.html" },
+    { "source": "/demo", "destination": "/index.dc.html" }
+  ]
 }
