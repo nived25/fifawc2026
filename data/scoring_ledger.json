@@ -2654,5 +2654,77 @@
     "reason": "FRA advances (QF)",
     "matchId": 97,
     "ts": 1783637834632
+  },
+  {
+    "key": "praveen_kumar|98|qf_m98",
+    "participantId": "praveen_kumar",
+    "points": 10,
+    "reason": "ESP advances (QF)",
+    "matchId": 98,
+    "ts": 1783718183947
+  },
+  {
+    "key": "rushabh_jha|98|qf_m98",
+    "participantId": "rushabh_jha",
+    "points": 10,
+    "reason": "ESP advances (QF)",
+    "matchId": 98,
+    "ts": 1783718183947
+  },
+  {
+    "key": "avdhut_pure|98|qf_m98",
+    "participantId": "avdhut_pure",
+    "points": 10,
+    "reason": "ESP advances (QF)",
+    "matchId": 98,
+    "ts": 1783718183948
+  },
+  {
+    "key": "dhruv_shah|98|qf_m98",
+    "participantId": "dhruv_shah",
+    "points": 20,
+    "reason": "ESP correct + exact score 2-1 (2×QF)",
+    "matchId": 98,
+    "ts": 1783718183948
+  },
+  {
+    "key": "sagar_vatkar|98|qf_m98",
+    "participantId": "sagar_vatkar",
+    "points": 20,
+    "reason": "ESP correct + exact score 2-1 (2×QF)",
+    "matchId": 98,
+    "ts": 1783718183948
+  },
+  {
+    "key": "ranjit_nambiar|98|qf_m98",
+    "participantId": "ranjit_nambiar",
+    "points": 20,
+    "reason": "ESP correct + exact score 2-1 (2×QF)",
+    "matchId": 98,
+    "ts": 1783718183948
+  },
+  {
+    "key": "renu_verma|98|qf_m98",
+    "participantId": "renu_verma",
+    "points": 20,
+    "reason": "ESP correct + exact score 2-1 (2×QF)",
+    "matchId": 98,
+    "ts": 1783718183949
+  },
+  {
+    "key": "nived|98|qf_m98",
+    "participantId": "nived",
+    "points": 10,
+    "reason": "ESP advances (QF)",
+    "matchId": 98,
+    "ts": 1783718183949
+  },
+  {
+    "key": "fananio|98|qf_m98",
+    "participantId": "fananio",
+    "points": 20,
+    "reason": "ESP correct + exact score 2-1 (2×QF)",
+    "matchId": 98,
+    "ts": 1783718183949
   }
 ]

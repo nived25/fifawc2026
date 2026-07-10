@@ -1902,5 +1902,37 @@
     "reason": "FRA correct + exact score 2-0 (2×QF)",
     "matchId": 97,
     "ts": 1783637837846
+  },
+  {
+    "key": "unairgmail|98|qf_m98",
+    "participantId": "unairgmail",
+    "points": 20,
+    "reason": "ESP correct + exact score 2-1 (2×QF)",
+    "matchId": 98,
+    "ts": 1783718187059
+  },
+  {
+    "key": "sreek_iyer|98|qf_m98",
+    "participantId": "sreek_iyer",
+    "points": 10,
+    "reason": "ESP advances (QF)",
+    "matchId": 98,
+    "ts": 1783718187060
+  },
+  {
+    "key": "mathgean|98|qf_m98",
+    "participantId": "mathgean",
+    "points": 20,
+    "reason": "ESP correct + exact score 2-1 (2×QF)",
+    "matchId": 98,
+    "ts": 1783718187060
+  },
+  {
+    "key": "ranjitn15|98|qf_m98",
+    "participantId": "ranjitn15",
+    "points": 10,
+    "reason": "ESP advances (QF)",
+    "matchId": 98,
+    "ts": 1783718187060
   }
 ]
