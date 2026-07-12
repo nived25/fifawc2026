@@ -2790,5 +2790,85 @@
     "reason": "ENG advances (QF)",
     "matchId": 99,
     "ts": 1783827862938
+  },
+  {
+    "key": "praveen_kumar|100|qf_m100",
+    "participantId": "praveen_kumar",
+    "points": 10,
+    "reason": "ARG advances (QF)",
+    "matchId": 100,
+    "ts": 1783837277433
+  },
+  {
+    "key": "rushabh_jha|100|qf_m100",
+    "participantId": "rushabh_jha",
+    "points": 10,
+    "reason": "ARG advances (QF)",
+    "matchId": 100,
+    "ts": 1783837277434
+  },
+  {
+    "key": "avdhut_pure|100|qf_m100",
+    "participantId": "avdhut_pure",
+    "points": 20,
+    "reason": "ARG correct + exact score 3-1 (2×QF)",
+    "matchId": 100,
+    "ts": 1783837277434
+  },
+  {
+    "key": "dhruv_shah|100|qf_m100",
+    "participantId": "dhruv_shah",
+    "points": 10,
+    "reason": "ARG advances (QF)",
+    "matchId": 100,
+    "ts": 1783837277434
+  },
+  {
+    "key": "sagar_vatkar|100|qf_m100",
+    "participantId": "sagar_vatkar",
+    "points": 10,
+    "reason": "ARG advances (QF)",
+    "matchId": 100,
+    "ts": 1783837277434
+  },
+  {
+    "key": "ranjit_nambiar|100|qf_m100",
+    "participantId": "ranjit_nambiar",
+    "points": 10,
+    "reason": "ARG advances (QF)",
+    "matchId": 100,
+    "ts": 1783837277434
+  },
+  {
+    "key": "renu_verma|100|qf_m100",
+    "participantId": "renu_verma",
+    "points": 10,
+    "reason": "ARG advances (QF)",
+    "matchId": 100,
+    "ts": 1783837277435
+  },
+  {
+    "key": "nived|100|qf_m100",
+    "participantId": "nived",
+    "points": 10,
+    "reason": "ARG advances (QF)",
+    "matchId": 100,
+    "ts": 1783837277435
+  },
+  {
+    "key": "fananio|100|qf_m100",
+    "participantId": "fananio",
+    "points": 10,
+    "reason": "ARG advances (QF)",
+    "matchId": 100,
+    "ts": 1783837277435
+  },
+  {
+    "key": "neerav_tipnis|100|qf_m100",
+    "participantId": "neerav_tipnis",
+    "points": 10,
+    "reason": "ARG advances (QF)",
+    "matchId": 100,
+    "ts": 1783837277435
   }
 ]

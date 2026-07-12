@@ -3430,5 +3430,85 @@
     "reason": "ENG correct + exact score 1-2 (2×QF)",
     "matchId": 99,
     "ts": 1783814710082
+  },
+  {
+    "key": "sanjarj|100|qf_m100",
+    "participantId": "sanjarj",
+    "points": 10,
+    "reason": "ARG advances (QF)",
+    "matchId": 100,
+    "ts": 1783837281711
+  },
+  {
+    "key": "ranjitn15|100|qf_m100",
+    "participantId": "ranjitn15",
+    "points": 10,
+    "reason": "ARG advances (QF)",
+    "matchId": 100,
+    "ts": 1783837281711
+  },
+  {
+    "key": "kumarsudhish5|100|qf_m100",
+    "participantId": "kumarsudhish5",
+    "points": 10,
+    "reason": "ARG advances (QF)",
+    "matchId": 100,
+    "ts": 1783837281711
+  },
+  {
+    "key": "priya1074|100|qf_m100",
+    "participantId": "priya1074",
+    "points": 10,
+    "reason": "ARG advances (QF)",
+    "matchId": 100,
+    "ts": 1783837281712
+  },
+  {
+    "key": "sreehari_nair|100|qf_m100",
+    "participantId": "sreehari_nair",
+    "points": 10,
+    "reason": "ARG advances (QF)",
+    "matchId": 100,
+    "ts": 1783837281712
+  },
+  {
+    "key": "nambiarnvg|100|qf_m100",
+    "participantId": "nambiarnvg",
+    "points": 20,
+    "reason": "ARG correct + exact score 3-1 (2×QF)",
+    "matchId": 100,
+    "ts": 1783837281712
+  },
+  {
+    "key": "rohitsnair2002|100|qf_m100",
+    "participantId": "rohitsnair2002",
+    "points": 20,
+    "reason": "ARG correct + exact score 3-1 (2×QF)",
+    "matchId": 100,
+    "ts": 1783837281712
+  },
+  {
+    "key": "arjsanj214|100|qf_m100",
+    "participantId": "arjsanj214",
+    "points": 10,
+    "reason": "ARG advances (QF)",
+    "matchId": 100,
+    "ts": 1783837281712
+  },
+  {
+    "key": "advaith_sreehari|100|qf_m100",
+    "participantId": "advaith_sreehari",
+    "points": 20,
+    "reason": "ARG correct + exact score 3-1 (2×QF)",
+    "matchId": 100,
+    "ts": 1783837281712
+  },
+  {
+    "key": "kiransas|100|qf_m100",
+    "participantId": "kiransas",
+    "points": 10,
+    "reason": "ARG advances (QF)",
+    "matchId": 100,
+    "ts": 1783837281712
   }
 ]

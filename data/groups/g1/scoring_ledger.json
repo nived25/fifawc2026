@@ -1974,5 +1974,45 @@
     "reason": "ENG correct + exact score 1-2 (2×QF)",
     "matchId": 99,
     "ts": 1783814707259
+  },
+  {
+    "key": "sunny55|100|qf_m100",
+    "participantId": "sunny55",
+    "points": 10,
+    "reason": "ARG advances (QF)",
+    "matchId": 100,
+    "ts": 1783837279577
+  },
+  {
+    "key": "unairgmail|100|qf_m100",
+    "participantId": "unairgmail",
+    "points": 10,
+    "reason": "ARG advances (QF)",
+    "matchId": 100,
+    "ts": 1783837279577
+  },
+  {
+    "key": "sreek_iyer|100|qf_m100",
+    "participantId": "sreek_iyer",
+    "points": 10,
+    "reason": "ARG advances (QF)",
+    "matchId": 100,
+    "ts": 1783837279578
+  },
+  {
+    "key": "mathgean|100|qf_m100",
+    "participantId": "mathgean",
+    "points": 10,
+    "reason": "ARG advances (QF)",
+    "matchId": 100,
+    "ts": 1783837279578
+  },
+  {
+    "key": "ranjitn15|100|qf_m100",
+    "participantId": "ranjitn15",
+    "points": 10,
+    "reason": "ARG advances (QF)",
+    "matchId": 100,
+    "ts": 1783837279578
   }
 ]
