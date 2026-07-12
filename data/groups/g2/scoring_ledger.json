@@ -3374,5 +3374,61 @@
     "reason": "ESP advances (QF)",
     "matchId": 98,
     "ts": 1783718189828
+  },
+  {
+    "key": "sanjarj|99|qf_m99",
+    "participantId": "sanjarj",
+    "points": 10,
+    "reason": "ENG advances (QF)",
+    "matchId": 99,
+    "ts": 1783814710081
+  },
+  {
+    "key": "ranjitn15|99|qf_m99",
+    "participantId": "ranjitn15",
+    "points": 20,
+    "reason": "ENG correct + exact score 1-2 (2×QF)",
+    "matchId": 99,
+    "ts": 1783814710081
+  },
+  {
+    "key": "kumarsudhish5|99|qf_m99",
+    "participantId": "kumarsudhish5",
+    "points": 20,
+    "reason": "ENG correct + exact score 1-2 (2×QF)",
+    "matchId": 99,
+    "ts": 1783814710081
+  },
+  {
+    "key": "sreehari_nair|99|qf_m99",
+    "participantId": "sreehari_nair",
+    "points": 20,
+    "reason": "ENG correct + exact score 1-2 (2×QF)",
+    "matchId": 99,
+    "ts": 1783814710082
+  },
+  {
+    "key": "rohitsnair2002|99|qf_m99",
+    "participantId": "rohitsnair2002",
+    "points": 10,
+    "reason": "ENG advances (QF)",
+    "matchId": 99,
+    "ts": 1783814710082
+  },
+  {
+    "key": "arjsanj214|99|qf_m99",
+    "participantId": "arjsanj214",
+    "points": 20,
+    "reason": "ENG correct + exact score 1-2 (2×QF)",
+    "matchId": 99,
+    "ts": 1783814710082
+  },
+  {
+    "key": "kiransas|99|qf_m99",
+    "participantId": "kiransas",
+    "points": 20,
+    "reason": "ENG correct + exact score 1-2 (2×QF)",
+    "matchId": 99,
+    "ts": 1783814710082
   }
 ]

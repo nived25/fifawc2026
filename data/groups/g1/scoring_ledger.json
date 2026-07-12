@@ -1934,5 +1934,45 @@
     "reason": "ESP advances (QF)",
     "matchId": 98,
     "ts": 1783718187060
+  },
+  {
+    "key": "unairgmail|99|qf_m99",
+    "participantId": "unairgmail",
+    "points": 20,
+    "reason": "ENG correct + exact score 1-2 (2×QF)",
+    "matchId": 99,
+    "ts": 1783814707258
+  },
+  {
+    "key": "sreek_iyer|99|qf_m99",
+    "participantId": "sreek_iyer",
+    "points": 10,
+    "reason": "ENG advances (QF)",
+    "matchId": 99,
+    "ts": 1783814707259
+  },
+  {
+    "key": "mathgean|99|qf_m99",
+    "participantId": "mathgean",
+    "points": 10,
+    "reason": "ENG advances (QF)",
+    "matchId": 99,
+    "ts": 1783814707259
+  },
+  {
+    "key": "ranjitn15|99|qf_m99",
+    "participantId": "ranjitn15",
+    "points": 20,
+    "reason": "ENG correct + exact score 1-2 (2×QF)",
+    "matchId": 99,
+    "ts": 1783814707259
+  },
+  {
+    "key": "rejathnair|99|qf_m99",
+    "participantId": "rejathnair",
+    "points": 20,
+    "reason": "ENG correct + exact score 1-2 (2×QF)",
+    "matchId": 99,
+    "ts": 1783814707259
   }
 ]
