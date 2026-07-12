@@ -41,7 +41,7 @@ The frontend fetches `./app-data.json` on load and re-fetches every 60 seconds. 
 | `config/scoring.json` | Point values (group win=3, finalist=25, champion=50, KO by round) |
 | `google-apps-script/Code.gs` | Apps Script backend for auth + prediction storage |
 | `vercel.json` | `framework:null`, outputDirectory:public, buildCommand |
-| `.github/workflows/refresh.yml` | 10-min cron, commits updated app-data.json with `[skip vercel]` |
+| `.github/workflows/refresh.yml` | Refresh workflow (fetch → score → build → commit with `[skip vercel]`). Triggered every 10 min by an **external cron via `workflow_dispatch`** — GitHub's own `schedule:` is throttled to ~100 min and left only as a fallback. See `docs/refresh-trigger.md`. |
 
 ## Frontend framework: DC Logic
 
