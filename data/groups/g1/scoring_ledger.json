@@ -2014,5 +2014,13 @@
     "reason": "ARG advances (QF)",
     "matchId": 100,
     "ts": 1783837279578
+  },
+  {
+    "key": "mathgean|101|sf_m101",
+    "participantId": "mathgean",
+    "points": 15,
+    "reason": "ESP advances (SF)",
+    "matchId": 101,
+    "ts": 1784065139664
   }
 ]
