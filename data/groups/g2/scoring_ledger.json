@@ -3510,5 +3510,53 @@
     "reason": "ARG advances (QF)",
     "matchId": 100,
     "ts": 1783837281712
+  },
+  {
+    "key": "ranjitn15|102|sf_m102",
+    "participantId": "ranjitn15",
+    "points": 30,
+    "reason": "ARG correct + exact score 1-2 (2×SF)",
+    "matchId": 102,
+    "ts": 1784151710932
+  },
+  {
+    "key": "kumarsudhish5|102|sf_m102",
+    "participantId": "kumarsudhish5",
+    "points": 30,
+    "reason": "ARG correct + exact score 1-2 (2×SF)",
+    "matchId": 102,
+    "ts": 1784151710932
+  },
+  {
+    "key": "priya1074|102|sf_m102",
+    "participantId": "priya1074",
+    "points": 15,
+    "reason": "ARG advances (SF)",
+    "matchId": 102,
+    "ts": 1784151710932
+  },
+  {
+    "key": "sreehari_nair|102|sf_m102",
+    "participantId": "sreehari_nair",
+    "points": 15,
+    "reason": "ARG advances (SF)",
+    "matchId": 102,
+    "ts": 1784151710932
+  },
+  {
+    "key": "nambiarnvg|102|sf_m102",
+    "participantId": "nambiarnvg",
+    "points": 30,
+    "reason": "ARG correct + exact score 1-2 (2×SF)",
+    "matchId": 102,
+    "ts": 1784151710932
+  },
+  {
+    "key": "rohitsnair2002|102|sf_m102",
+    "participantId": "rohitsnair2002",
+    "points": 30,
+    "reason": "ARG correct + exact score 1-2 (2×SF)",
+    "matchId": 102,
+    "ts": 1784151710933
   }
 ]

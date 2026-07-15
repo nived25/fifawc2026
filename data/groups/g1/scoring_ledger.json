@@ -2022,5 +2022,37 @@
     "reason": "ESP advances (SF)",
     "matchId": 101,
     "ts": 1784065139664
+  },
+  {
+    "key": "sunny55|102|sf_m102",
+    "participantId": "sunny55",
+    "points": 30,
+    "reason": "ARG correct + exact score 1-2 (2×SF)",
+    "matchId": 102,
+    "ts": 1784151707459
+  },
+  {
+    "key": "mathgean|102|sf_m102",
+    "participantId": "mathgean",
+    "points": 30,
+    "reason": "ARG correct + exact score 1-2 (2×SF)",
+    "matchId": 102,
+    "ts": 1784151707459
+  },
+  {
+    "key": "ranjitn15|102|sf_m102",
+    "participantId": "ranjitn15",
+    "points": 15,
+    "reason": "ARG advances (SF)",
+    "matchId": 102,
+    "ts": 1784151707459
+  },
+  {
+    "key": "shanu_chamathundil|102|sf_m102",
+    "participantId": "shanu_chamathundil",
+    "points": 15,
+    "reason": "ARG advances (SF)",
+    "matchId": 102,
+    "ts": 1784151707461
   }
 ]

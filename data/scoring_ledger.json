@@ -2894,5 +2894,69 @@
     "reason": "ESP advances (SF)",
     "matchId": 101,
     "ts": 1784065135939
+  },
+  {
+    "key": "avdhut_pure|102|sf_m102",
+    "participantId": "avdhut_pure",
+    "points": 15,
+    "reason": "ARG advances (SF)",
+    "matchId": 102,
+    "ts": 1784151704631
+  },
+  {
+    "key": "dhruv_shah|102|sf_m102",
+    "participantId": "dhruv_shah",
+    "points": 15,
+    "reason": "ARG advances (SF)",
+    "matchId": 102,
+    "ts": 1784151704632
+  },
+  {
+    "key": "sagar_vatkar|102|sf_m102",
+    "participantId": "sagar_vatkar",
+    "points": 15,
+    "reason": "ARG advances (SF)",
+    "matchId": 102,
+    "ts": 1784151704632
+  },
+  {
+    "key": "ranjit_nambiar|102|sf_m102",
+    "participantId": "ranjit_nambiar",
+    "points": 30,
+    "reason": "ARG correct + exact score 1-2 (2×SF)",
+    "matchId": 102,
+    "ts": 1784151704632
+  },
+  {
+    "key": "renu_verma|102|sf_m102",
+    "participantId": "renu_verma",
+    "points": 30,
+    "reason": "ARG correct + exact score 1-2 (2×SF)",
+    "matchId": 102,
+    "ts": 1784151704632
+  },
+  {
+    "key": "nived|102|sf_m102",
+    "participantId": "nived",
+    "points": 15,
+    "reason": "ARG advances (SF)",
+    "matchId": 102,
+    "ts": 1784151704632
+  },
+  {
+    "key": "fananio|102|sf_m102",
+    "participantId": "fananio",
+    "points": 15,
+    "reason": "ARG advances (SF)",
+    "matchId": 102,
+    "ts": 1784151704633
+  },
+  {
+    "key": "neerav_tipnis|102|sf_m102",
+    "participantId": "neerav_tipnis",
+    "points": 15,
+    "reason": "ARG advances (SF)",
+    "matchId": 102,
+    "ts": 1784151704633
   }
 ]
