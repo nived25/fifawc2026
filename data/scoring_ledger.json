@@ -2877,23 +2877,7 @@
     "points": 15,
     "reason": "ESP advances (SF)",
     "matchId": 101,
-    "ts": 1784065135938
-  },
-  {
-    "key": "dhruv_shah|101|sf_m101",
-    "participantId": "dhruv_shah",
-    "points": 15,
-    "reason": "ESP advances (SF)",
-    "matchId": 101,
-    "ts": 1784065135938
-  },
-  {
-    "key": "nived|101|sf_m101",
-    "participantId": "nived",
-    "points": 15,
-    "reason": "ESP advances (SF)",
-    "matchId": 101,
-    "ts": 1784065135939
+    "ts": 1784224362329
   },
   {
     "key": "avdhut_pure|102|sf_m102",
@@ -2901,7 +2885,15 @@
     "points": 15,
     "reason": "ARG advances (SF)",
     "matchId": 102,
-    "ts": 1784151704631
+    "ts": 1784224362329
+  },
+  {
+    "key": "dhruv_shah|101|sf_m101",
+    "participantId": "dhruv_shah",
+    "points": 15,
+    "reason": "ESP advances (SF)",
+    "matchId": 101,
+    "ts": 1784224362329
   },
   {
     "key": "dhruv_shah|102|sf_m102",
@@ -2909,7 +2901,7 @@
     "points": 15,
     "reason": "ARG advances (SF)",
     "matchId": 102,
-    "ts": 1784151704632
+    "ts": 1784224362329
   },
   {
     "key": "sagar_vatkar|102|sf_m102",
@@ -2917,7 +2909,7 @@
     "points": 15,
     "reason": "ARG advances (SF)",
     "matchId": 102,
-    "ts": 1784151704632
+    "ts": 1784224362329
   },
   {
     "key": "ranjit_nambiar|102|sf_m102",
@@ -2925,7 +2917,7 @@
     "points": 30,
     "reason": "ARG correct + exact score 1-2 (2×SF)",
     "matchId": 102,
-    "ts": 1784151704632
+    "ts": 1784224362329
   },
   {
     "key": "renu_verma|102|sf_m102",
@@ -2933,7 +2925,15 @@
     "points": 30,
     "reason": "ARG correct + exact score 1-2 (2×SF)",
     "matchId": 102,
-    "ts": 1784151704632
+    "ts": 1784224362329
+  },
+  {
+    "key": "nived|101|sf_m101",
+    "participantId": "nived",
+    "points": 15,
+    "reason": "ESP advances (SF)",
+    "matchId": 101,
+    "ts": 1784224362329
   },
   {
     "key": "nived|102|sf_m102",
@@ -2941,7 +2941,7 @@
     "points": 15,
     "reason": "ARG advances (SF)",
     "matchId": 102,
-    "ts": 1784151704632
+    "ts": 1784224362329
   },
   {
     "key": "fananio|102|sf_m102",
@@ -2949,7 +2949,7 @@
     "points": 15,
     "reason": "ARG advances (SF)",
     "matchId": 102,
-    "ts": 1784151704633
+    "ts": 1784224362329
   },
   {
     "key": "neerav_tipnis|102|sf_m102",
@@ -2957,6 +2957,6 @@
     "points": 15,
     "reason": "ARG advances (SF)",
     "matchId": 102,
-    "ts": 1784151704633
+    "ts": 1784224362330
   }
 ]

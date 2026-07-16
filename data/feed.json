@@ -2,7 +2,7 @@
   "days": [
     {
       "dateKey": "2026-07-16",
-      "generatedAtMs": 1784183957385,
+      "generatedAtMs": 1784224362333,
       "snapshot": [
         {
           "id": "ranjit_nambiar",
@@ -438,13 +438,13 @@
         "fananio|100|qf_m100",
         "neerav_tipnis|100|qf_m100",
         "avdhut_pure|101|sf_m101",
-        "dhruv_shah|101|sf_m101",
-        "nived|101|sf_m101",
         "avdhut_pure|102|sf_m102",
+        "dhruv_shah|101|sf_m101",
         "dhruv_shah|102|sf_m102",
         "sagar_vatkar|102|sf_m102",
         "ranjit_nambiar|102|sf_m102",
         "renu_verma|102|sf_m102",
+        "nived|101|sf_m101",
         "nived|102|sf_m102",
         "fananio|102|sf_m102",
         "neerav_tipnis|102|sf_m102"
@@ -453,72 +453,78 @@
         {
           "id": "2026-07-16-wrap",
           "kind": "wrap",
-          "ts": 1784183957385,
-          "text": "Morning. **150 points** got handed out over **1 match** and the gap between the sharks and the tourists is getting embarrassing."
+          "ts": 1784224362333,
+          "text": "Morning. **195 points** got handed out over **2 matches** and the gap between the sharks and the tourists is getting embarrassing."
         },
         {
           "id": "2026-07-16-climber",
           "kind": "climber",
-          "ts": 1784183477385,
-          "text": "**Ranjit** is climbing like the office AC bill in May — **#2 → #1**. Respect.",
+          "ts": 1784224122333,
+          "text": "**Nived** is climbing like the office AC bill in May — **#9 → #6**. Respect.",
           "card": {
             "type": "movement",
-            "name": "Ranjit Nambiar",
-            "first": "Ranjit",
-            "delta": 1,
-            "fromRank": 2,
-            "toRank": 1
+            "name": "Nived",
+            "first": "Nived",
+            "delta": 3,
+            "fromRank": 9,
+            "toRank": 6
           }
         },
         {
           "id": "2026-07-16-faller",
           "kind": "faller",
-          "ts": 1784183237385,
-          "text": "**Rushabh** falling **3 spots** — smooth, controlled, absolutely avoidable.",
+          "ts": 1784223882333,
+          "text": "**Rushabh** falling **4 spots** — smooth, controlled, absolutely avoidable.",
           "card": {
             "type": "movement",
             "name": "Rushabh Jha",
             "first": "Rushabh",
-            "delta": -3,
-            "fromRank": 5,
+            "delta": -4,
+            "fromRank": 4,
             "toRank": 8
           }
         },
         {
           "id": "2026-07-16-haul",
           "kind": "haul",
-          "ts": 1784182997385,
-          "text": "Overnight cash-out: **Ranjit** banked **+30**, top earner in the building. Everyone say thank you and also watch your back.",
+          "ts": 1784223642333,
+          "text": "Overnight cash-out: **Avdhut** banked **+30**, top earner in the building. Everyone say thank you and also watch your back.",
           "card": {
             "type": "statline",
             "value": "+30",
             "label": "pts since yesterday",
-            "name": "Ranjit Nambiar"
+            "name": "Avdhut Pure"
           }
         },
         {
           "id": "2026-07-16-sniper",
           "kind": "sniper",
-          "ts": 1784182757385,
+          "ts": 1784223462333,
           "text": "One of you saw **1-2** coming before the players did. Take a bow, **Ranjit**, and maybe a drug test."
         },
         {
           "id": "2026-07-16-blanked",
           "kind": "blanked",
-          "ts": 1784182577385,
+          "ts": 1784223102333,
           "text": "**Praveen** and **Rushabh** came away with **nothing** from yesterday's matches (plus 1 more, you know who you are). The Gaffer isn't angry, just disappointed."
         },
         {
           "id": "2026-07-16-gap",
           "kind": "gap",
-          "ts": 1784182217385,
+          "ts": 1784222862333,
           "text": "**Ranjit** leading by **14**. At this point the trophy engraver is just waiting for confirmation."
+        },
+        {
+          "id": "2026-07-16-upset",
+          "kind": "upset",
+          "ts": 1784222682333,
+          "text": "**Spain** just made **8** brackets cry. **Avdhut** alone stays dry. Iconic behaviour."
         },
         {
           "id": "2026-07-16-boot",
           "kind": "boot",
-          "ts": 1784181977385,
-          "text": "Boot watch: **Lionel Messi** (ARG), **8 goals**. Casual.",
+          "ts": 1784222202333,
+          "text": "Golden Boot check: **Lionel Messi** on **8**. If he keeps this up, buy him something nice.",
           "card": {
             "type": "boot",
             "items": [
@@ -543,44 +549,44 @@
         {
           "id": "2026-07-16-funfact",
           "kind": "funfact",
-          "ts": 1784181797385,
-          "text": "Stat of the day: **Renu** averages **6.4 points** every time they score at all — the most ruthless conversion rate in the league."
+          "ts": 1784221722333,
+          "text": "**11 of 12** of you have **ARG** in your fantasy squad. Original thinkers, every one of you."
         }
       ]
     },
     {
-      "dateKey": "2026-07-15",
-      "generatedAtMs": 1784101976023,
+      "dateKey": "2026-07-14",
+      "generatedAtMs": 1784014201506,
       "snapshot": [
-        {
-          "id": "avdhut_pure",
-          "name": "Avdhut Pure",
-          "rank": 1,
-          "total": 190
-        },
         {
           "id": "ranjit_nambiar",
           "name": "Ranjit Nambiar",
-          "rank": 2,
+          "rank": 1,
           "total": 189
-        },
-        {
-          "id": "dhruv_shah",
-          "name": "Dhruv Shah",
-          "rank": 3,
-          "total": 184
         },
         {
           "id": "praveen_kumar",
           "name": "Praveen Kumar",
-          "rank": 4,
+          "rank": 2,
           "total": 181
+        },
+        {
+          "id": "avdhut_pure",
+          "name": "Avdhut Pure",
+          "rank": 3,
+          "total": 175
         },
         {
           "id": "rushabh_jha",
           "name": "Rushabh Jha",
-          "rank": 5,
+          "rank": 4,
           "total": 170
+        },
+        {
+          "id": "dhruv_shah",
+          "name": "Dhruv Shah",
+          "rank": 5,
+          "total": 169
         },
         {
           "id": "sagar_vatkar",
@@ -589,22 +595,22 @@
           "total": 161
         },
         {
-          "id": "nived",
-          "name": "Nived",
-          "rank": 7,
-          "total": 159
-        },
-        {
           "id": "fananio",
           "name": "Fananio",
-          "rank": 8,
+          "rank": 7,
           "total": 159
         },
         {
           "id": "neerav_tipnis",
           "name": "Neerav Tipnis",
-          "rank": 9,
+          "rank": 8,
           "total": 155
+        },
+        {
+          "id": "nived",
+          "name": "Nived",
+          "rank": 9,
+          "total": 144
         },
         {
           "id": "renu_verma",
@@ -984,203 +990,7 @@
         "renu_verma|100|qf_m100",
         "nived|100|qf_m100",
         "fananio|100|qf_m100",
-        "neerav_tipnis|100|qf_m100",
-        "avdhut_pure|101|sf_m101",
-        "dhruv_shah|101|sf_m101",
-        "nived|101|sf_m101"
-      ],
-      "posts": [
-        {
-          "id": "2026-07-15-wrap",
-          "kind": "wrap",
-          "ts": 1784101976023,
-          "text": "Damage report: **1 match** done, **45 points** on the board. The Gaffer watched every minute so you lot could pretend you did too."
-        },
-        {
-          "id": "2026-07-15-climber",
-          "kind": "climber",
-          "ts": 1784101796023,
-          "text": "Sound the sirens — **Avdhut** just climbed **2 spots** to **#1**. Somebody's been doing homework instead of vibes.",
-          "card": {
-            "type": "movement",
-            "name": "Avdhut Pure",
-            "first": "Avdhut",
-            "delta": 2,
-            "fromRank": 3,
-            "toRank": 1
-          }
-        },
-        {
-          "id": "2026-07-15-faller",
-          "kind": "faller",
-          "ts": 1784101616023,
-          "text": "Gravity check: **Praveen**, **#2 → #4**. Even the office plant saw that scoreline coming.",
-          "card": {
-            "type": "movement",
-            "name": "Praveen Kumar",
-            "first": "Praveen",
-            "delta": -2,
-            "fromRank": 2,
-            "toRank": 4
-          }
-        },
-        {
-          "id": "2026-07-15-haul",
-          "kind": "haul",
-          "ts": 1784101376023,
-          "text": "Overnight cash-out: **Avdhut** banked **+15**, top earner in the building. Everyone say thank you and also watch your back.",
-          "card": {
-            "type": "statline",
-            "value": "+15",
-            "label": "pts since yesterday",
-            "name": "Avdhut Pure"
-          }
-        },
-        {
-          "id": "2026-07-15-blanked",
-          "kind": "blanked",
-          "ts": 1784100896023,
-          "text": "**Ranjit** and **Praveen** came away with **nothing** from yesterday's matches (plus 6 more, you know who you are). The Gaffer isn't angry, just disappointed."
-        },
-        {
-          "id": "2026-07-15-gap",
-          "kind": "gap",
-          "ts": 1784100716023,
-          "text": "**1 point** between **Avdhut** and **Ranjit**. One good night flips this league on its head."
-        },
-        {
-          "id": "2026-07-15-upset",
-          "kind": "upset",
-          "ts": 1784100476023,
-          "text": "The crowd went **France**, the football went **Spain**, and **Avdhut** is the only one allowed to talk today."
-        },
-        {
-          "id": "2026-07-15-boot",
-          "kind": "boot",
-          "ts": 1784100116023,
-          "text": "**Lionel Messi** leads the Boot with **8**. The man is a cheat code with shin pads.",
-          "card": {
-            "type": "boot",
-            "items": [
-              {
-                "name": "Lionel Messi",
-                "team": "ARG",
-                "goals": 8
-              },
-              {
-                "name": "Kylian Mbappé",
-                "team": "FRA",
-                "goals": 7
-              },
-              {
-                "name": "Erling Haaland",
-                "team": "NOR",
-                "goals": 7
-              }
-            ]
-          }
-        },
-        {
-          "id": "2026-07-15-fixtures",
-          "kind": "fixtures",
-          "ts": 1784099816023,
-          "text": "Tonight's menu: **1 match**. The lock waits for no one — **30 minutes** before kickoff, sharp.",
-          "card": {
-            "type": "fixtures",
-            "items": [
-              {
-                "home": "ENG",
-                "away": "ARG",
-                "round": "Semi-final",
-                "kickoffMs": 1784142000000
-              }
-            ]
-          }
-        },
-        {
-          "id": "2026-07-15-funfact",
-          "kind": "funfact",
-          "ts": 1784099456023,
-          "text": "Group obsession alert: **2-1**, picked **35 times**. Somebody try a different number, I'm begging."
-        }
-      ]
-    },
-    {
-      "dateKey": "2026-07-14",
-      "generatedAtMs": 1784014201506,
-      "snapshot": [
-        {
-          "id": "ranjit_nambiar",
-          "name": "Ranjit Nambiar",
-          "rank": 1,
-          "total": 189
-        },
-        {
-          "id": "praveen_kumar",
-          "name": "Praveen Kumar",
-          "rank": 2,
-          "total": 181
-        },
-        {
-          "id": "avdhut_pure",
-          "name": "Avdhut Pure",
-          "rank": 3,
-          "total": 175
-        },
-        {
-          "id": "rushabh_jha",
-          "name": "Rushabh Jha",
-          "rank": 4,
-          "total": 170
-        },
-        {
-          "id": "dhruv_shah",
-          "name": "Dhruv Shah",
-          "rank": 5,
-          "total": 169
-        },
-        {
-          "id": "sagar_vatkar",
-          "name": "Sagar Vatkar",
-          "rank": 6,
-          "total": 161
-        },
-        {
-          "id": "fananio",
-          "name": "Fananio",
-          "rank": 7,
-          "total": 159
-        },
-        {
-          "id": "neerav_tipnis",
-          "name": "Neerav Tipnis",
-          "rank": 8,
-          "total": 155
-        },
-        {
-          "id": "nived",
-          "name": "Nived",
-          "rank": 9,
-          "total": 144
-        },
-        {
-          "id": "renu_verma",
-          "name": "Renu Verma",
-          "rank": 10,
-          "total": 136
-        },
-        {
-          "id": "neelkanth_vyas",
-          "name": "Neelkanth Vyas",
-          "rank": 11,
-          "total": 119
-        },
-        {
-          "id": "anurag_saxena",
-          "name": "Anurag Saxena",
-          "rank": 12,
-          "total": 28
-        }
+        "neerav_tipnis|100|qf_m100"
       ],
       "posts": [
         {
@@ -1923,6 +1733,147 @@
           "kind": "funfact",
           "ts": 1783663900356,
           "text": "**ARG** appears in **11** squads out of **12**. When they lose, this office goes silent. The Gaffer lives for it."
+        }
+      ]
+    },
+    {
+      "dateKey": "2026-07-09",
+      "generatedAtMs": 1783586349339,
+      "snapshot": [
+        {
+          "id": "praveen_kumar",
+          "name": "Praveen Kumar",
+          "rank": 1,
+          "total": 131
+        },
+        {
+          "id": "rushabh_jha",
+          "name": "Rushabh Jha",
+          "rank": 2,
+          "total": 130
+        },
+        {
+          "id": "ranjit_nambiar",
+          "name": "Ranjit Nambiar",
+          "rank": 3,
+          "total": 129
+        },
+        {
+          "id": "avdhut_pure",
+          "name": "Avdhut Pure",
+          "rank": 4,
+          "total": 125
+        },
+        {
+          "id": "neerav_tipnis",
+          "name": "Neerav Tipnis",
+          "rank": 5,
+          "total": 125
+        },
+        {
+          "id": "sagar_vatkar",
+          "name": "Sagar Vatkar",
+          "rank": 6,
+          "total": 121
+        },
+        {
+          "id": "dhruv_shah",
+          "name": "Dhruv Shah",
+          "rank": 7,
+          "total": 119
+        },
+        {
+          "id": "fananio",
+          "name": "Fananio",
+          "rank": 8,
+          "total": 119
+        },
+        {
+          "id": "neelkanth_vyas",
+          "name": "Neelkanth Vyas",
+          "rank": 9,
+          "total": 99
+        },
+        {
+          "id": "nived",
+          "name": "Nived",
+          "rank": 10,
+          "total": 94
+        },
+        {
+          "id": "renu_verma",
+          "name": "Renu Verma",
+          "rank": 11,
+          "total": 76
+        },
+        {
+          "id": "anurag_saxena",
+          "name": "Anurag Saxena",
+          "rank": 12,
+          "total": 28
+        }
+      ],
+      "posts": [
+        {
+          "id": "2026-07-09-restday",
+          "kind": "restday",
+          "ts": 1783586349339,
+          "text": "Quiet day at the office — zero matches settled. The table is frozen, the excuses are thawing."
+        },
+        {
+          "id": "2026-07-09-gap",
+          "kind": "gap",
+          "ts": 1783585929339,
+          "text": "**1 point** between **Praveen** and **Rushabh**. One good night flips this league on its head."
+        },
+        {
+          "id": "2026-07-09-boot",
+          "kind": "boot",
+          "ts": 1783585749339,
+          "text": "Boot watch: **Lionel Messi** (ARG), **8 goals**. Casual.",
+          "card": {
+            "type": "boot",
+            "items": [
+              {
+                "name": "Lionel Messi",
+                "team": "ARG",
+                "goals": 8
+              },
+              {
+                "name": "Erling Haaland",
+                "team": "NOR",
+                "goals": 7
+              },
+              {
+                "name": "Kylian Mbappé",
+                "team": "FRA",
+                "goals": 6
+              }
+            ]
+          }
+        },
+        {
+          "id": "2026-07-09-fixtures",
+          "kind": "fixtures",
+          "ts": 1783585449339,
+          "text": "Tonight's menu: **1 match**. The lock waits for no one — **30 minutes** before kickoff, sharp.",
+          "card": {
+            "type": "fixtures",
+            "items": [
+              {
+                "home": "FRA",
+                "away": "MAR",
+                "round": "Quarter-final",
+                "kickoffMs": 1783627200000
+              }
+            ]
+          }
+        },
+        {
+          "id": "2026-07-09-funfact",
+          "kind": "funfact",
+          "ts": 1783584969339,
+          "text": "Group obsession alert: **2-1**, picked **19 times**. Somebody try a different number, I'm begging."
         }
       ]
     }
