@@ -22,7 +22,7 @@ export function buildAppData() {
   const scoringLedger = readOr('scoring_ledger.json', []);
   const feedRaw = readOr('feed.json', { days: [] });
 
-  const KO_ROUNDS = ['r32', 'r16', 'qf', 'sf', 'final'];
+  const KO_ROUNDS = ['r32', 'r16', 'qf', 'sf', 'third', 'final'];
 
   // Match-level locking (r16 onward): a pick becomes public once its match is within
   // matchLockMins of kickoff. Locks are derived from time, never stored.

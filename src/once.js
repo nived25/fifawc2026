@@ -44,6 +44,29 @@ function parseScorers(raw, teamCode) {
   });
 }
 
+// Final / 3rd-place pairings: upstream keeps team ids "0" on those two games
+// until it fills them, which would drop the fixtures entirely. Once both
+// semi-finals are finished the pairings are fully determined — derive them.
+// Returns { final:{home,away}, third:{home,away} } (codes) or {}.
+function deriveLatePairings(gameList, codeOf) {
+  const sfs = gameList
+    .filter(g => g.type === 'sf' && g.finished === 'TRUE')
+    .sort((a, b) => a.local_date.localeCompare(b.local_date));
+  if (sfs.length !== 2) return {};
+  const wl = sfs.map(g => {
+    const h = parseInt(g.home_score), a = parseInt(g.away_score);
+    const ph = parseInt(g.home_penalty_score || '0'), pa = parseInt(g.away_penalty_score || '0');
+    const homeWins = h > a || (h === a && ph > pa);
+    const home = codeOf(g.home_team_id), away = codeOf(g.away_team_id);
+    return homeWins ? { w: home, l: away } : { w: away, l: home };
+  });
+  if (wl.some(x => !x.w || !x.l)) return {};
+  return {
+    final: { home: wl[0].w, away: wl[1].w },
+    third: { home: wl[0].l, away: wl[1].l }
+  };
+}
+
 async function pollFixtures() {
   console.log('[once] Fetching latest games from worldcup26.ir...');
   try {
@@ -54,6 +77,8 @@ async function pollFixtures() {
 
     const teamIdMap = readOr('team_id_map.json', {});
     const stadiumIdMap = readOr('stadium_id_map.json', {});
+    const teamsByCode = readOr('teams.json', {});
+    const late = deriveLatePairings(gameList, id => teamIdMap[String(id)] || null);
 
     const fixtures = [];
     const r32tbd = [];
@@ -65,14 +90,21 @@ async function pollFixtures() {
       const homeResolved = g.home_team_id && g.home_team_id !== '0';
       const awayResolved = g.away_team_id && g.away_team_id !== '0';
       const finished = g.finished === 'TRUE';
-      const homeCode = homeResolved ? (teamIdMap[String(g.home_team_id)] || null) : null;
-      const awayCode = awayResolved ? (teamIdMap[String(g.away_team_id)] || null) : null;
-      const homeName = homeResolved
+      let homeCode = homeResolved ? (teamIdMap[String(g.home_team_id)] || null) : null;
+      let awayCode = awayResolved ? (teamIdMap[String(g.away_team_id)] || null) : null;
+      let homeName = homeResolved
         ? (g.home_team_name_en || homeCode)
         : (g.home_team_label || 'TBD');
-      const awayName = awayResolved
+      let awayName = awayResolved
         ? (g.away_team_name_en || awayCode)
         : (g.away_team_label || 'TBD');
+      // fill Final/3rd-place from derived SF results while upstream ids are "0"
+      if ((g.type === 'final' || g.type === 'third') && (!homeCode || !awayCode) && late[g.type]) {
+        homeCode = homeCode || late[g.type].home;
+        awayCode = awayCode || late[g.type].away;
+        homeName = teamsByCode[homeCode]?.name || homeCode;
+        awayName = teamsByCode[awayCode]?.name || awayCode;
+      }
       const homeGoals = finished ? parseInt(g.home_score) : null;
       const awayGoals = finished ? parseInt(g.away_score) : null;
       const venue = stadiumIdMap[String(g.stadium_id)] || null;

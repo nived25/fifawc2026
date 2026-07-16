@@ -2958,5 +2958,77 @@
     "reason": "ARG advances (SF)",
     "matchId": 102,
     "ts": 1784224362330
+  },
+  {
+    "key": "praveen_kumar|null|finalist_ARG",
+    "participantId": "praveen_kumar",
+    "points": 25,
+    "reason": "Correct finalist: ARG",
+    "matchId": null,
+    "ts": 1784224982941
+  },
+  {
+    "key": "rushabh_jha|null|finalist_ARG",
+    "participantId": "rushabh_jha",
+    "points": 25,
+    "reason": "Correct finalist: ARG",
+    "matchId": null,
+    "ts": 1784224982941
+  },
+  {
+    "key": "avdhut_pure|null|finalist_ESP",
+    "participantId": "avdhut_pure",
+    "points": 25,
+    "reason": "Correct finalist: ESP",
+    "matchId": null,
+    "ts": 1784224982941
+  },
+  {
+    "key": "dhruv_shah|null|finalist_ARG",
+    "participantId": "dhruv_shah",
+    "points": 25,
+    "reason": "Correct finalist: ARG",
+    "matchId": null,
+    "ts": 1784224982942
+  },
+  {
+    "key": "ranjit_nambiar|null|finalist_ARG",
+    "participantId": "ranjit_nambiar",
+    "points": 25,
+    "reason": "Correct finalist: ARG",
+    "matchId": null,
+    "ts": 1784224982942
+  },
+  {
+    "key": "renu_verma|null|finalist_ARG",
+    "participantId": "renu_verma",
+    "points": 25,
+    "reason": "Correct finalist: ARG",
+    "matchId": null,
+    "ts": 1784224982942
+  },
+  {
+    "key": "renu_verma|null|finalist_ESP",
+    "participantId": "renu_verma",
+    "points": 25,
+    "reason": "Correct finalist: ESP",
+    "matchId": null,
+    "ts": 1784224982942
+  },
+  {
+    "key": "fananio|null|finalist_ARG",
+    "participantId": "fananio",
+    "points": 25,
+    "reason": "Correct finalist: ARG",
+    "matchId": null,
+    "ts": 1784224982942
+  },
+  {
+    "key": "neerav_tipnis|null|finalist_ARG",
+    "participantId": "neerav_tipnis",
+    "points": 25,
+    "reason": "Correct finalist: ARG",
+    "matchId": null,
+    "ts": 1784224982942
   }
 ]

@@ -40,6 +40,7 @@ function koRound(id) {
   if (id >= 89 && id <= 96) return 'Round of 16';
   if (id >= 97 && id <= 100) return 'Quarter-final';
   if (id >= 101 && id <= 102) return 'Semi-final';
+  if (id === 103) return '3rd Place playoff';
   if (id === 104) return 'the Final';
   return null;
 }
@@ -210,7 +211,7 @@ function genBlanked(ctx) {
     const pr = ctx.predictions[r.id];
     if (!pr) return false;
     return ctx.finishedInWindow.some(f => {
-      const rk = { 'Round of 32': 'r32', 'Round of 16': 'r16', 'Quarter-final': 'qf', 'Semi-final': 'sf', 'the Final': 'final' }[koRound(f.id)];
+      const rk = { 'Round of 32': 'r32', 'Round of 16': 'r16', 'Quarter-final': 'qf', 'Semi-final': 'sf', '3rd Place playoff': 'third', 'the Final': 'final' }[koRound(f.id)];
       if (!rk) return false;
       if (rk === 'r32') {
         const idx = ctx.r32tbd.findIndex(t => t.apiId === f.id);
@@ -269,7 +270,7 @@ function genUpset(ctx) {
         const idx = ctx.r32tbd.findIndex(t => t.apiId === f.id);
         p = idx >= 0 && pr.r32 ? pr.r32[idx] : null;
       } else {
-        const rk = { 'Round of 16': 'r16', 'Quarter-final': 'qf', 'Semi-final': 'sf', 'the Final': 'final' }[round];
+        const rk = { 'Round of 16': 'r16', 'Quarter-final': 'qf', 'Semi-final': 'sf', '3rd Place playoff': 'third', 'the Final': 'final' }[round];
         p = rk && pr[rk] ? pr[rk][f.id] : null;
       }
       const side = pickWinner(p);

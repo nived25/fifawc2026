@@ -1,6 +1,6 @@
 import { read, write } from './store.js';
 
-const KO_ROUNDS = ['Round of 32', 'Round of 16', 'Quarter-finals', 'Semi-finals', 'Final'];
+const KO_ROUNDS = ['Round of 32', 'Round of 16', 'Quarter-finals', 'Semi-finals', '3rd Place', 'Final'];
 
 export function updateBracket() {
   const fixtures = read('fixtures.json') || [];

@@ -8,6 +8,7 @@ const KO_ROUND_CONFIG = [
   { key: 'r16', name: 'Round of 16',   configKey: 'R16'   },
   { key: 'qf',  name: 'Quarter-finals', configKey: 'QF'   },
   { key: 'sf',  name: 'Semi-finals',   configKey: 'SF'    },
+  { key: 'third', name: '3rd Place',   configKey: 'THIRD' },
   { key: 'final', name: 'Final',       configKey: 'FINAL' }
 ];
 
