@@ -290,6 +290,7 @@
         <div style="display:flex;align-items:center;gap:10px;padding:9px 16px 7px;justify-content:flex-end">
           <span style="width:30px;text-align:center;font-size:9.5px;font-weight:600;letter-spacing:.6px;color:#30D158;cursor:help" title="Correct picks">✓</span>
           <span style="width:44px;text-align:center;font-size:9.5px;font-weight:600;letter-spacing:.6px;color:#FFD60A;cursor:help" title="Exact scores">EXACT</span>
+          <span style="width:38px;text-align:center;font-size:9.5px;font-weight:600;letter-spacing:.6px;color:#E8A93D;cursor:help" title="Bonus points — correct finalists (+25 each) and champion (+50)">BON</span>
           <span style="width:36px;text-align:right;font-size:9.5px;font-weight:600;letter-spacing:.6px;color:#7C7C82;cursor:help" title="Total KO prediction points">PTS</span>
         </div>
         <sc-for list="{{ koLeaderboard }}" as="kp" hint-placeholder-count="12">
@@ -309,6 +310,7 @@
             <div style="display:flex;align-items:center;gap:5px;flex:none">
               <div style="width:32px;text-align:center"><span style="display:inline-block;min-width:26px;padding:3px 5px;border-radius:7px;background:{{ kp.cpBg }};color:{{ kp.cpC }};font-size:14px;font-weight:700;font-variant-numeric:tabular-nums;text-align:center">{{ kp.correctPicks }}</span></div>
               <div style="width:40px;text-align:center"><span style="display:inline-block;min-width:26px;padding:3px 5px;border-radius:7px;background:{{ kp.exBg }};color:{{ kp.exC }};font-size:14px;font-weight:700;font-variant-numeric:tabular-nums;text-align:center">{{ kp.exactScores }}</span></div>
+              <div style="width:34px;text-align:center"><span style="display:inline-block;min-width:26px;padding:3px 5px;border-radius:7px;background:{{ kp.bonBg }};color:{{ kp.bonC }};font-size:14px;font-weight:700;font-variant-numeric:tabular-nums;text-align:center">{{ kp.bonPts }}</span></div>
               <div style="width:38px;text-align:right"><span style="display:inline-block;min-width:30px;padding:3px 6px;border-radius:7px;background:{{ kp.ptsBg }};color:{{ kp.ptsC }};font-size:15px;font-weight:700;font-variant-numeric:tabular-nums;text-align:center">{{ kp.koPts }}</span></div>
             </div>
           </div>
@@ -1507,7 +1509,7 @@ class Component extends DCLogic {
     this.state = {
       tab:'fantasy', fantSeg:'group', matchSub:'standings', dateTab:'today',
       detailIdx:null, matchObj:null, profile:false,
-      heroPts:0, champ:null, finalists:[], r32:{}, r16:{}, qf:{}, sf:{}, final:{},
+      heroPts:0, champ:null, finalists:[], r32:{}, r16:{}, qf:{}, sf:{}, third:{}, final:{},
       submitted:false, koRoundOpen:0, koFilter:'remaining',
       loggedIn:false, loginError:'', loginLoading:false,
       expandedPick:{}, rulesOpen:false,
@@ -1870,7 +1872,7 @@ class Component extends DCLogic {
   }
   getRoundMatchList(roundKey){
     if(roundKey==='r32') return this.R32LIST();
-    const roundNames={r16:'Round of 16',qf:'Quarter-finals',sf:'Semi-finals',final:'Final'};
+    const roundNames={r16:'Round of 16',qf:'Quarter-finals',sf:'Semi-finals',third:'3rd Place',final:'Final'};
     const roundName=roundNames[roundKey];
     const bracketMatches=this._apiData?.bracket?.[roundName]||[];
     return bracketMatches.map(m=>{
@@ -1882,12 +1884,12 @@ class Component extends DCLogic {
   }
   getRoundKickoffs(roundKey){
     if(roundKey==='r32') return this._apiData?._r32tbd||[];
-    const roundNames={r16:'Round of 16',qf:'Quarter-finals',sf:'Semi-finals',final:'Final'};
+    const roundNames={r16:'Round of 16',qf:'Quarter-finals',sf:'Semi-finals',third:'3rd Place',final:'Final'};
     return this._apiData?.bracket?.[roundNames[roundKey]]||[];
   }
   // Client-side mirror of scoring.js scoreKoRound — single source for correctness UI.
   koPickResult(roundKey,pick,resultMatch){
-    const KO_BASE={r32:4,r16:5,qf:10,sf:15,final:20};
+    const KO_BASE={r32:4,r16:5,qf:10,sf:15,third:10,final:20};
     const base=KO_BASE[roundKey]||4;
     if(!pick||!resultMatch) return {finished:false,winnerCorrect:false,exact:false,points:0,base,predScore:null,actScore:null};
     const hG=resultMatch.homeGoals!=null?resultMatch.homeGoals:resultMatch.home?.goals;
@@ -1912,7 +1914,7 @@ class Component extends DCLogic {
   // All locked-round KO matches with every participant's pick — privacy-safe (predictions are
   // only ever present here for rounds buildAppData.js has already locked).
   picksMatchesData(openKey){
-    const KO_ROUNDS=[['r32','Round of 32'],['r16','Round of 16'],['qf','Quarter-finals'],['sf','Semi-finals'],['final','Final']];
+    const KO_ROUNDS=[['r32','Round of 32'],['r16','Round of 16'],['qf','Quarter-finals'],['sf','Semi-finals'],['third','3rd Place'],['final','Final']];
     const preds=this._apiData?.predictions||{};
     const parts=this._apiData?.participants||[];
     const uid=this._userParticipantId;
@@ -2102,7 +2104,7 @@ class Component extends DCLogic {
     const r32v=(tier1&&(tier1.r32||tier1.ko))||(tier2&&tier2.r32)||(tier3&&tier3.r32);
     if(r32v&&Object.keys(r32v).length) ns.r32=r32v;
     // r16+: per-key merge (id-keyed)
-    for(const rk of ['r16','qf','sf','final']){
+    for(const rk of ['r16','qf','sf','third','final']){
       const merged={...((tier3&&tier3[rk])||{}),...((tier2&&tier2[rk])||{}),...((tier1&&tier1[rk])||{})};
       if(Object.keys(merged).length) ns[rk]=merged;
     }
@@ -2266,7 +2268,7 @@ class Component extends DCLogic {
     if(!this._userParticipantId) return;
     const s=this.state;
     try{ localStorage.setItem(this._ns+'fifa_preds_'+this._userParticipantId,
-      JSON.stringify({r32:s.r32,r16:s.r16,qf:s.qf,sf:s.sf,final:s.final,finalists:s.finalists,champ:s.champ,savedAt:Date.now()})); }catch(e){}
+      JSON.stringify({r32:s.r32,r16:s.r16,qf:s.qf,sf:s.sf,third:s.third,final:s.final,finalists:s.finalists,champ:s.champ,savedAt:Date.now()})); }catch(e){}
   }
   _loadPredictionsFromLocal(){
     if(!this._userParticipantId) return null;
@@ -2421,7 +2423,7 @@ class Component extends DCLogic {
       penH:m.penHome,penA:m.penAway}));
     const r32raw=(this._apiData?._r32tbd||[]).map(m=>({id:m.apiId,h:m.home&&m.home.code,a:m.away&&m.away.code}));
     const LBL={89:[74,77],90:[73,75],91:[76,78],92:[79,80],93:[83,84],94:[81,82],95:[86,88],96:[85,87],
-               97:[89,90],98:[93,94],99:[91,92],100:[95,96],101:[97,98],102:[99,100],104:[101,102]};
+               97:[89,90],98:[93,94],99:[91,92],100:[95,96],101:[97,98],102:[99,100],103:[101,102],104:[101,102]};
     const feederPair=(m,prev)=>{
       const byCode={}; prev.forEach(pv=>{ if(pv.h) byCode[pv.h]=pv.id; if(pv.a) byCode[pv.a]=pv.id; });
       const lbl=LBL[m&&m.id]||[];
@@ -2430,15 +2432,15 @@ class Component extends DCLogic {
       return [x,y];
     };
     const idx=arr=>{const o={};arr.forEach(m=>{o[m.id]=m;});return o;};
-    const r16=norm('Round of 16'), qf=norm('Quarter-finals'), sf=norm('Semi-finals'), fin=norm('Final');
-    const r16ById=idx(r16), qfById=idx(qf), sfById=idx(sf), finById=idx(fin);
-    const qfOrder=[97,98,99,100], sfOrder=[101,102], fOrder=[104];
+    const r16=norm('Round of 16'), qf=norm('Quarter-finals'), sf=norm('Semi-finals'), third=norm('3rd Place'), fin=norm('Final');
+    const r16ById=idx(r16), qfById=idx(qf), sfById=idx(sf), thirdById=idx(third), finById=idx(fin);
+    const qfOrder=[97,98,99,100], sfOrder=[101,102], tOrder=[103], fOrder=[104];
     let r16Order=[]; qfOrder.forEach(id=>{ const [x,y]=feederPair(qfById[id]||{id},r16); r16Order.push(x,y); });
     let r32Order=[]; r16Order.forEach(id=>{ const [x,y]=feederPair(r16ById[id]||{id},r32raw); r32Order.push(x,y); });
     if(r16Order.some(x=>!x)||new Set(r16Order).size!==8) r16Order=[89,90,93,94,91,92,95,96];
     if(r32Order.some(x=>!x)||new Set(r32Order).size!==16) r32Order=[74,77,73,75,83,84,81,82,76,78,79,80,86,88,85,87];
     // feeder display label: teams of the feeder match when known, else "Match N"
-    const prevMap={r16:idx(r32raw),qf:r16ById,sf:qfById,final:sfById};
+    const prevMap={r16:idx(r32raw),qf:r16ById,sf:qfById,third:sfById,final:sfById};
     const label=(fid,rk)=>{
       const fm=prevMap[rk]&&prevMap[rk][fid];
       if(fm&&fm.h&&fm.a) return fm.h+'\u2013'+fm.a;
@@ -2462,6 +2464,7 @@ class Component extends DCLogic {
         r16:mk('r16',r16Order,r16ById),
         qf:mk('qf',qfOrder,qfById),
         sf:mk('sf',sfOrder,sfById),
+        third:mk('third',tOrder,thirdById),
         final:mk('final',fOrder,finById)
       }
     };
@@ -2542,7 +2545,7 @@ class Component extends DCLogic {
       })};
       // Locked-round KO predictions for this participant (privacy-safe: only present once locked).
       const pr=this._apiData?.predictions?.[base.pid]||{};
-      const KO_ROUNDS=[['r32','Round of 32'],['r16','Round of 16'],['qf','Quarter-finals'],['sf','Semi-finals'],['final','Final']];
+      const KO_ROUNDS=[['r32','Round of 32'],['r16','Round of 16'],['qf','Quarter-finals'],['sf','Semi-finals'],['third','3rd Place'],['final','Final']];
       const koRows=[];
       for(const [rk,rlabel] of KO_ROUNDS){
         const locked=typeof pr.locked==='object'?pr.locked[rk]:(rk==='r32'&&pr.locked);
@@ -2611,10 +2614,10 @@ class Component extends DCLogic {
       pick:()=>{this.setState({champ:c, submitted:false}); this._savePredictionsToLocal();}};}));
     const finalCountStr = fin.length+'/2';
     const activeKey = 'r32'; // legacy round-level view is permanently the R32 archive; r16+ uses match-level cards
-    const ROUND_LABELS = {r32:'Round of 32',r16:'Round of 16',qf:'Quarter-finals',sf:'Semi-finals',final:'Final'};
-    const ROUND_DISPLAY = {r32:'R32',r16:'R16',qf:'QF',sf:'SF',final:'Final'};
-    const ROUND_PTS = {r32:4,r16:5,qf:10,sf:15,final:20};
-    const NEXT_ROUND_MSG = {r32:'R16 predictions open when all R32 matches finish',r16:'QF predictions open when all R16 matches finish',qf:'SF predictions open when all QF matches finish',sf:'Final predictions open when both SF matches finish',final:'Tournament complete!'};
+    const ROUND_LABELS = {r32:'Round of 32',r16:'Round of 16',qf:'Quarter-finals',sf:'Semi-finals',third:'3rd Place',final:'Final'};
+    const ROUND_DISPLAY = {r32:'R32',r16:'R16',qf:'QF',sf:'SF',third:'3rd',final:'Final'};
+    const ROUND_PTS = {r32:4,r16:5,qf:10,sf:15,third:10,final:20};
+    const NEXT_ROUND_MSG = {r32:'R16 predictions open when all R32 matches finish',r16:'QF predictions open when all R16 matches finish',qf:'SF predictions open when all QF matches finish',sf:'Final predictions open when both SF matches finish',third:'One match left — the Final!',final:'Tournament complete!'};
     const koRoundName = ROUND_LABELS[activeKey]||'Round of 32';
     const koNextRoundMsg = NEXT_ROUND_MSG[activeKey]||'';
     const activeLockMs = this._apiData?.meta?.koLockTimes?.[activeKey]||this._apiData?.meta?.lockAtMs;
@@ -2730,7 +2733,7 @@ class Component extends DCLogic {
 
     // ===== Match-level prediction cards (r16 onward) =====
     const KO_TREE=this.koSlots();
-    const ML_LABEL={r16:'Round of 16',qf:'Quarter-finals',sf:'Semi-finals',final:'Final'};
+    const ML_LABEL={r16:'Round of 16',qf:'Quarter-finals',sf:'Semi-finals',third:'3rd Place',final:'Final'};
     const lockMins=this._apiData?.meta?.matchLockMins??30;
     const nowMs=Date.now();
     const mkCards=(rk)=>KO_TREE.rounds[rk].map(m=>{
@@ -2779,7 +2782,7 @@ class Component extends DCLogic {
         advBBg:pick.adv==='b'?'rgba(52,199,89,.16)':'#1A1A1E', advBBd:pick.adv==='b'?'#34C759':'rgba(255,255,255,.06)', advBC:pick.adv==='b'?'#5BE584':'#F5F5F7'
       };
     });
-    const ML_ORDER=['r16','qf','sf','final'];
+    const ML_ORDER=['r16','qf','sf','third','final'];
     const cardsByRound={}; ML_ORDER.forEach(rk=>{cardsByRound[rk]=mkCards(rk).sort((a,b)=>((a.kickoffMs||Infinity)-(b.kickoffMs||Infinity)));});
     const defRound=ML_ORDER.find(rk=>cardsByRound[rk].some(c=>c.isOpen))
       ||ML_ORDER.find(rk=>cardsByRound[rk].some(c=>!c.isGhost))||'r16';
@@ -2790,7 +2793,7 @@ class Component extends DCLogic {
     const mlDone=mlOpenCards.filter(c=>c.done).length, mlTotal=mlOpenCards.length;
     const mlGhosts=mlCardsRaw.filter(c=>c.isGhost).length;
 
-    const rounds=[['R32','r32',4],['R16','r16',5],['QF','qf',10],['SF','sf',15],['Final','final',20]].map(([name,key,pts])=>({
+    const rounds=[['R32','r32',4],['R16','r16',5],['QF','qf',10],['SF','sf',15],['3rd','third',10],['Final','final',20]].map(([name,key,pts])=>({
       name,pts,op:'1',
       pick:()=>this.setState({predRound:key}),
       bg:key===selRound?'rgba(122,60,255,.16)':'#1A1A1E',
@@ -2871,7 +2874,7 @@ class Component extends DCLogic {
     const head=t=>({isHead:true,isRow:false,label:t});
     // Fresh KO log incl. 0-point finished matches (backend ledger omits zeros).
     const userPred=this._apiData?.predictions?.[userId]||{};
-    const KO_ROUNDS=[['r32','Round of 32'],['r16','Round of 16'],['qf','Quarter-finals'],['sf','Semi-finals'],['final','Final']];
+    const KO_ROUNDS=[['r32','Round of 32'],['r16','Round of 16'],['qf','Quarter-finals'],['sf','Semi-finals'],['third','3rd Place'],['final','Final']];
     const koLog=[];
     for(const [rk,rlabel] of KO_ROUNDS){
       const locked=(typeof userPred.locked==='object'?userPred.locked[rk]:(rk==='r32'&&userPred.locked));
@@ -2950,8 +2953,12 @@ class Component extends DCLogic {
             const fin=preds[p.id]?.finalists||[];
             const champ=preds[p.id]?.champion||null;
             const KM={0:{bg:'linear-gradient(135deg,#FFE28A,#E8A93D)',glow:'0 0 10px rgba(255,211,80,.45)',c:'#3A2A05'},1:{bg:'linear-gradient(135deg,#E8E8EE,#9FA2AD)',glow:'0 0 8px rgba(220,220,230,.3)',c:'#26262B'},2:{bg:'linear-gradient(135deg,#E7A776,#A96A3B)',glow:'0 0 8px rgba(216,146,86,.32)',c:'#33190A'}}[i];
+            const bonPts=(p.breakdown?.finalist||0)+(p.breakdown?.champion||0);
             return {
               koRank:i+1, name:p.name, you:p.id===uid, koPts, correctPicks, exactScores,
+              bonPts,
+              bonBg:bonPts?'rgba(255,214,10,.13)':'rgba(255,255,255,.09)',
+              bonC:bonPts?'rgba(255,217,61,.9)':'#AEAEB2',
               koPtsBreakdown: sub,
               delay: Math.min(i*32,360)+'ms',
               medalBg: KM?KM.bg:'rgba(255,255,255,.05)',
@@ -3007,7 +3014,7 @@ class Component extends DCLogic {
       ...(()=>{
         const allPicks=this.picksMatchesData(s.pickOpen);
         const bucketed=allPicks.filter(m=>m.bucket===s.pickDate);
-        const ORDER=['r32','r16','qf','sf','final'];
+        const ORDER=['r32','r16','qf','sf','third','final'];
         const byRound={};
         for(const m of bucketed){ (byRound[m.roundKey]=byRound[m.roundKey]||[]).push(m); }
         let keys=Object.keys(byRound).sort((a,b)=>ORDER.indexOf(a)-ORDER.indexOf(b));
@@ -3160,7 +3167,7 @@ class Component extends DCLogic {
         try{ localStorage.removeItem(this._ns+'fifa_auth'); }catch(e){}
         this._clearPredictionsLocal();
         this._userParticipantId=null; this._userPin=null; this._userName=null;
-        this.setState({profile:false,loggedIn:false,r32:{},r16:{},qf:{},sf:{},final:{},submitted:false,champ:null,finalists:[]});
+        this.setState({profile:false,loggedIn:false,r32:{},r16:{},qf:{},sf:{},third:{},final:{},submitted:false,champ:null,finalists:[]});
         this.showToast('Signed out','ok');
       }
     };

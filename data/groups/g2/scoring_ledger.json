@@ -3558,5 +3558,69 @@
     "reason": "ARG correct + exact score 1-2 (2×SF)",
     "matchId": 102,
     "ts": 1784151710933
+  },
+  {
+    "key": "sanjarj|null|finalist_ARG",
+    "participantId": "sanjarj",
+    "points": 25,
+    "reason": "Correct finalist: ARG",
+    "matchId": null,
+    "ts": 1784230505095
+  },
+  {
+    "key": "ranjitn15|null|finalist_ARG",
+    "participantId": "ranjitn15",
+    "points": 25,
+    "reason": "Correct finalist: ARG",
+    "matchId": null,
+    "ts": 1784230505096
+  },
+  {
+    "key": "kumarsudhish5|null|finalist_ARG",
+    "participantId": "kumarsudhish5",
+    "points": 25,
+    "reason": "Correct finalist: ARG",
+    "matchId": null,
+    "ts": 1784230505096
+  },
+  {
+    "key": "sreehari_nair|null|finalist_ARG",
+    "participantId": "sreehari_nair",
+    "points": 25,
+    "reason": "Correct finalist: ARG",
+    "matchId": null,
+    "ts": 1784230505096
+  },
+  {
+    "key": "nambiarnvg|null|finalist_ARG",
+    "participantId": "nambiarnvg",
+    "points": 25,
+    "reason": "Correct finalist: ARG",
+    "matchId": null,
+    "ts": 1784230505096
+  },
+  {
+    "key": "rohitsnair2002|null|finalist_ARG",
+    "participantId": "rohitsnair2002",
+    "points": 25,
+    "reason": "Correct finalist: ARG",
+    "matchId": null,
+    "ts": 1784230505097
+  },
+  {
+    "key": "arjsanj214|null|finalist_ARG",
+    "participantId": "arjsanj214",
+    "points": 25,
+    "reason": "Correct finalist: ARG",
+    "matchId": null,
+    "ts": 1784230505097
+  },
+  {
+    "key": "kiransas|null|finalist_ARG",
+    "participantId": "kiransas",
+    "points": 25,
+    "reason": "Correct finalist: ARG",
+    "matchId": null,
+    "ts": 1784230505097
   }
 ]

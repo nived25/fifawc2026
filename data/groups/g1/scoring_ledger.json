@@ -2054,5 +2054,61 @@
     "reason": "ARG advances (SF)",
     "matchId": 102,
     "ts": 1784151707461
+  },
+  {
+    "key": "sunny55|null|finalist_ARG",
+    "participantId": "sunny55",
+    "points": 25,
+    "reason": "Correct finalist: ARG",
+    "matchId": null,
+    "ts": 1784230501814
+  },
+  {
+    "key": "unairgmail|null|finalist_ARG",
+    "participantId": "unairgmail",
+    "points": 25,
+    "reason": "Correct finalist: ARG",
+    "matchId": null,
+    "ts": 1784230501815
+  },
+  {
+    "key": "mathgean|null|finalist_ARG",
+    "participantId": "mathgean",
+    "points": 25,
+    "reason": "Correct finalist: ARG",
+    "matchId": null,
+    "ts": 1784230501815
+  },
+  {
+    "key": "mathgean|null|finalist_ESP",
+    "participantId": "mathgean",
+    "points": 25,
+    "reason": "Correct finalist: ESP",
+    "matchId": null,
+    "ts": 1784230501815
+  },
+  {
+    "key": "ranjitn15|null|finalist_ARG",
+    "participantId": "ranjitn15",
+    "points": 25,
+    "reason": "Correct finalist: ARG",
+    "matchId": null,
+    "ts": 1784230501815
+  },
+  {
+    "key": "shanu_chamathundil|null|finalist_ARG",
+    "participantId": "shanu_chamathundil",
+    "points": 25,
+    "reason": "Correct finalist: ARG",
+    "matchId": null,
+    "ts": 1784230501816
+  },
+  {
+    "key": "rejathnair|null|finalist_ARG",
+    "participantId": "rejathnair",
+    "points": 25,
+    "reason": "Correct finalist: ARG",
+    "matchId": null,
+    "ts": 1784230501816
   }
 ]
