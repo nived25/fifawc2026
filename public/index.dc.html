@@ -698,9 +698,9 @@
             <span style="color:#A98BFF;font-size:11.5px;font-weight:600">Points rules</span>
           </div>
         </div>
-        <div style="display:flex;gap:8px;margin-top:11px;overflow-x:auto;padding:2px 2px 6px">
+        <div ref="{{ roundChipsRef }}" style="display:flex;gap:8px;margin-top:11px;overflow-x:auto;padding:2px 2px 6px">
           <sc-for list="{{ rounds }}" as="r" hint-placeholder-count="6">
-            <div onClick="{{ r.pick }}" style-active="transform:scale(.94)" style="flex:none;min-width:78px;text-align:center;padding:11px 12px;border-radius:14px;background:{{ r.bg }};border:1px solid {{ r.bd }};opacity:{{ r.op }};cursor:pointer;transition:background var(--dur-fast) var(--ease-out),border-color var(--dur-fast) var(--ease-out),transform var(--dur-press) var(--ease-out)">
+            <div onClick="{{ r.pick }}" data-selchip="{{ r.sel }}" style-active="transform:scale(.94)" style="flex:none;min-width:78px;text-align:center;padding:11px 12px;border-radius:14px;background:{{ r.bg }};border:1px solid {{ r.bd }};opacity:{{ r.op }};cursor:pointer;transition:background var(--dur-fast) var(--ease-out),border-color var(--dur-fast) var(--ease-out),transform var(--dur-press) var(--ease-out)">
               <div style="color:{{ r.tc }};font-size:14px;font-weight:600">{{ r.name }}</div>
               <div style="color:#8E8E93;font-size:11px;font-weight:600;margin-top:2px">{{ r.pts }} pts</div>
             </div>
@@ -1524,6 +1524,16 @@ class Component extends DCLogic {
     this.scrollTop=()=>{ requestAnimationFrame(()=>{ if(this.mainScroll) this.mainScroll.scrollTop=0; }); };
   }
   get mainScroll(){ return this._panes[this.state.tab]||null; }
+  // Center the selected round chip in the Predict strip (later rounds overflow
+  // right; without this the live rounds hide off-screen). Runs after the tab's
+  // enter animation so layout is final.
+  _scrollRoundChips(){
+    setTimeout(()=>{
+      const sel=document.querySelector('[data-pane="predict"] [data-selchip="1"]');
+      const el=sel&&sel.parentElement;
+      if(el) el.scrollLeft=Math.max(0,sel.offsetLeft-(el.clientWidth-sel.offsetWidth)/2);
+    },400);
+  }
   _panePos(name,s){
     if(name===s.tab) return '0px';
     const O=['fantasy','matches','picks','predict','feed'];
@@ -1534,6 +1544,7 @@ class Component extends DCLogic {
     const from=order.indexOf(this.state.tab), to=order.indexOf(t);
     try{ document.documentElement.dataset.tabdir = opts.fromSwipe?'':(to>from?'r':(to<from?'l':'')); }catch(_){}
     this.setState({tab:t, gExtra:null}); this.scrollTop();
+    if(t==='predict') this._scrollRoundChips();
     try{
       const order=['fantasy','matches','picks','predict','feed'];
       const nav=document.querySelectorAll('body [onclick]');
@@ -2799,6 +2810,7 @@ class Component extends DCLogic {
 
     const rounds=[['R32','r32',4],['R16','r16',5],['QF','qf',10],['SF','sf',15],['3rd','third',15],['Final','final',20]].map(([name,key,pts])=>({
       name,pts,op:'1',
+      sel:key===selRound?'1':'0',
       pick:()=>this.setState({predRound:key}),
       bg:key===selRound?'rgba(122,60,255,.16)':'#1A1A1E',
       bd:key===selRound?'#7A3CFF':'rgba(255,255,255,.05)',
@@ -3159,6 +3171,15 @@ class Component extends DCLogic {
       profileOpen:s.profile, userPicks, userMatchLog, hasMatchLog, noMatchLog,
       rulesOpen:s.rulesOpen, openRules:()=>this.setState({rulesOpen:true}), closeRules:()=>this.animClose('[data-sheet="y"]',()=>this.setState({rulesOpen:false})),
       mainHostRef:el=>{this._host=el;},
+      // Round-chip strip: on mount, scroll the selected round into view (later
+      // rounds overflow right; without this the live rounds hide off-screen).
+      // Once-per-element guard — re-renders re-call refs but must not fight the
+      // user's own scrolling.
+      roundChipsRef:el=>{ if(el&&!el._chipScrolled){ el._chipScrolled=true;
+        let tries=0; const go=()=>{ const sel=el.querySelector('[data-selchip="1"]');
+          if((!sel||!el.clientWidth)&&tries++<20) return requestAnimationFrame(go);
+          if(sel) el.scrollLeft=Math.max(0,sel.offsetLeft-(el.clientWidth-sel.offsetWidth)/2); };
+        requestAnimationFrame(go); } },
       paneRefFantasy:el=>{ if(el)this._panes.fantasy=el; else delete this._panes.fantasy; },
       paneRefMatches:el=>{ if(el)this._panes.matches=el; else delete this._panes.matches; },
       paneRefPicks:el=>{ if(el)this._panes.picks=el; else delete this._panes.picks; },
