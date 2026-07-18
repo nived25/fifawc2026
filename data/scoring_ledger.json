@@ -3030,5 +3030,13 @@
     "reason": "Correct finalist: ARG",
     "matchId": null,
     "ts": 1784224982942
+  },
+  {
+    "key": "dhruv_shah|103|third_m103",
+    "participantId": "dhruv_shah",
+    "points": 15,
+    "reason": "ENG advances (THIRD)",
+    "matchId": 103,
+    "ts": 1784418078863
   }
 ]
