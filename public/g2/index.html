@@ -2548,12 +2548,16 @@ class Component extends DCLogic {
       const KO_ROUNDS=[['r32','Round of 32'],['r16','Round of 16'],['qf','Quarter-finals'],['sf','Semi-finals'],['third','3rd Place'],['final','Final']];
       const koRows=[];
       for(const [rk,rlabel] of KO_ROUNDS){
-        const locked=typeof pr.locked==='object'?pr.locked[rk]:(rk==='r32'&&pr.locked);
+        // r32 is round-locked via the stored flag; r16+ picks are only present in
+        // app-data once their match is time-locked, so presence itself is the gate.
+        const locked=rk==='r32'?(typeof pr.locked==='object'?pr.locked.r32:pr.locked):true;
         const picks=pr[rk]; if(!locked||!picks) continue;
         const defs=this.getRoundMatchList(rk), results=this.getRoundKickoffs(rk);
         const rows=[];
         Object.keys(picks).forEach(k=>{
-          const i=parseInt(k); const def=defs[i]; if(!def) return; const pick=picks[k];
+          // r32 picks are index-keyed; r16+ are fixture-id-keyed — resolve to the array slot
+          const i=rk==='r32'?parseInt(k):results.findIndex(m=>String(m.apiId??m.id)===String(k));
+          if(i<0) return; const def=defs[i]; if(!def) return; const pick=picks[k];
           const r=this.koPickResult(rk,pick,results[i]); const st=this.koOutcomeStyle(r);
           rows.push({head:false,headNot:true,finished:r.finished,label:def[0]+' '+pick.h+' – '+pick.a+' '+def[2],
             sub:r.finished?('Actual '+r.actScore+' · '+st.label):'Awaiting result',
@@ -2877,12 +2881,16 @@ class Component extends DCLogic {
     const KO_ROUNDS=[['r32','Round of 32'],['r16','Round of 16'],['qf','Quarter-finals'],['sf','Semi-finals'],['third','3rd Place'],['final','Final']];
     const koLog=[];
     for(const [rk,rlabel] of KO_ROUNDS){
-      const locked=(typeof userPred.locked==='object'?userPred.locked[rk]:(rk==='r32'&&userPred.locked));
+      // r32 is round-locked via the stored flag; r16+ picks are only present in
+      // app-data once their match is time-locked, so presence itself is the gate.
+      const locked=rk==='r32'?(typeof userPred.locked==='object'?userPred.locked.r32:userPred.locked):true;
       const picks=userPred[rk]; if(!locked||!picks) continue;
       const defs=this.getRoundMatchList(rk), results=this.getRoundKickoffs(rk);
       const rows=[];
       Object.keys(picks).forEach(k=>{
-        const i=parseInt(k); const def=defs[i]; if(!def) return; const tie=picks[k];
+        // r32 picks are index-keyed; r16+ are fixture-id-keyed — resolve to the array slot
+        const i=rk==='r32'?parseInt(k):results.findIndex(m=>String(m.apiId??m.id)===String(k));
+        if(i<0) return; const def=defs[i]; if(!def) return; const tie=picks[k];
         const r=this.koPickResult(rk,tie,results[i]); if(!r.finished) return;
         const st=this.koOutcomeStyle(r);
         rows.push(mkRow((def[0]||'?')+' '+(r.predScore||'?')+' '+(def[2]||'?'),
