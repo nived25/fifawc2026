@@ -1889,7 +1889,7 @@ class Component extends DCLogic {
   }
   // Client-side mirror of scoring.js scoreKoRound — single source for correctness UI.
   koPickResult(roundKey,pick,resultMatch){
-    const KO_BASE={r32:4,r16:5,qf:10,sf:15,third:10,final:20};
+    const KO_BASE={r32:4,r16:5,qf:10,sf:15,third:15,final:20};
     const base=KO_BASE[roundKey]||4;
     if(!pick||!resultMatch) return {finished:false,winnerCorrect:false,exact:false,points:0,base,predScore:null,actScore:null};
     const hG=resultMatch.homeGoals!=null?resultMatch.homeGoals:resultMatch.home?.goals;
@@ -2616,7 +2616,7 @@ class Component extends DCLogic {
     const activeKey = 'r32'; // legacy round-level view is permanently the R32 archive; r16+ uses match-level cards
     const ROUND_LABELS = {r32:'Round of 32',r16:'Round of 16',qf:'Quarter-finals',sf:'Semi-finals',third:'3rd Place',final:'Final'};
     const ROUND_DISPLAY = {r32:'R32',r16:'R16',qf:'QF',sf:'SF',third:'3rd',final:'Final'};
-    const ROUND_PTS = {r32:4,r16:5,qf:10,sf:15,third:10,final:20};
+    const ROUND_PTS = {r32:4,r16:5,qf:10,sf:15,third:15,final:20};
     const NEXT_ROUND_MSG = {r32:'R16 predictions open when all R32 matches finish',r16:'QF predictions open when all R16 matches finish',qf:'SF predictions open when all QF matches finish',sf:'Final predictions open when both SF matches finish',third:'One match left — the Final!',final:'Tournament complete!'};
     const koRoundName = ROUND_LABELS[activeKey]||'Round of 32';
     const koNextRoundMsg = NEXT_ROUND_MSG[activeKey]||'';
@@ -2793,7 +2793,7 @@ class Component extends DCLogic {
     const mlDone=mlOpenCards.filter(c=>c.done).length, mlTotal=mlOpenCards.length;
     const mlGhosts=mlCardsRaw.filter(c=>c.isGhost).length;
 
-    const rounds=[['R32','r32',4],['R16','r16',5],['QF','qf',10],['SF','sf',15],['3rd','third',10],['Final','final',20]].map(([name,key,pts])=>({
+    const rounds=[['R32','r32',4],['R16','r16',5],['QF','qf',10],['SF','sf',15],['3rd','third',15],['Final','final',20]].map(([name,key,pts])=>({
       name,pts,op:'1',
       pick:()=>this.setState({predRound:key}),
       bg:key===selRound?'rgba(122,60,255,.16)':'#1A1A1E',

@@ -2110,5 +2110,21 @@
     "reason": "Correct finalist: ARG",
     "matchId": null,
     "ts": 1784230501816
+  },
+  {
+    "key": "mathgean|82|r32_match_8",
+    "participantId": "mathgean",
+    "points": 4,
+    "reason": "BEL advances (R32)",
+    "matchId": 82,
+    "ts": 1784396529981
+  },
+  {
+    "key": "mathgean|81|r32_match_9",
+    "participantId": "mathgean",
+    "points": 4,
+    "reason": "USA advances (R32)",
+    "matchId": 81,
+    "ts": 1784396529981
   }
 ]
