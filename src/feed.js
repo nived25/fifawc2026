@@ -34,6 +34,11 @@ export const istHour = ms => {
   return d.getUTCHours() + d.getUTCMinutes() / 60;
 };
 
+// Members the Gaffer never mentions, per group (inactive members etc.) —
+// they're dropped from the feed's whole view: no stars, no roasts, and
+// aggregate counts ("X of N") exclude them too.
+const FEED_EXCLUDE = { lr: ['anurag_saxena'] };
+
 // Fixture id → KO round label (id ranges are the tournament's fixed numbering)
 function koRound(id) {
   if (id >= 73 && id <= 88) return 'Round of 32';
@@ -633,11 +638,12 @@ export function generateFeed({ groupId = 'lr', now, force } = {}) {
   const baselineKeys = prevDay ? new Set(prevDay.keysAtGen || []) : null;
   const prevSnapshot = prevDay?.snapshot || null;
 
-  const ledger = readOr('scoring_ledger.json', []);
-  const lb = readOr('leaderboard.json', []);
+  const excluded = new Set(FEED_EXCLUDE[groupId] || []);
+  const ledger = readOr('scoring_ledger.json', []).filter(e => !excluded.has(e.participantId));
+  const lb = readOr('leaderboard.json', []).filter(r => !excluded.has(r.id));
   const fixtures = readOr('fixtures.json', []);
-  const predictions = readOr('predictions.json', {});
-  const participants = readOr('participants.json', []);
+  const predictions = Object.fromEntries(Object.entries(readOr('predictions.json', {})).filter(([pid]) => !excluded.has(pid)));
+  const participants = readOr('participants.json', []).filter(p => !excluded.has(p.id));
   const meta = readOr('meta.json', {});
   const r32tbd = readOr('r32_tbd.json', []);
 

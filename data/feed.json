@@ -2,7 +2,7 @@
   "days": [
     {
       "dateKey": "2026-07-18",
-      "generatedAtMs": 1784397038276,
+      "generatedAtMs": 1784397237557,
       "snapshot": [
         {
           "id": "ranjit_nambiar",
@@ -69,12 +69,6 @@
           "name": "Neelkanth Vyas",
           "rank": 11,
           "total": 119
-        },
-        {
-          "id": "anurag_saxena",
-          "name": "Anurag Saxena",
-          "rank": 12,
-          "total": 28
         }
       ],
       "keysAtGen": [
@@ -135,16 +129,6 @@
         "ranjit_nambiar|15|group_draw_BEL",
         "ranjit_nambiar|37|group_draw_BEL",
         "ranjit_nambiar|64|group_win_BEL",
-        "anurag_saxena|21|group_draw_POR",
-        "anurag_saxena|45|group_win_POR",
-        "anurag_saxena|7|group_draw_BRA",
-        "anurag_saxena|29|group_win_BRA",
-        "anurag_saxena|49|group_win_BRA",
-        "anurag_saxena|19|group_win_ARG",
-        "anurag_saxena|43|group_win_ARG",
-        "anurag_saxena|14|group_draw_ESP",
-        "anurag_saxena|39|group_win_ESP",
-        "anurag_saxena|66|group_win_ESP",
         "renu_verma|14|group_draw_ESP",
         "renu_verma|39|group_win_ESP",
         "renu_verma|66|group_win_ESP",
@@ -202,7 +186,6 @@
         "avdhut_pure|71|group_draw_POR",
         "sagar_vatkar|71|group_draw_POR",
         "ranjit_nambiar|71|group_draw_POR",
-        "anurag_saxena|71|group_draw_POR",
         "nived|71|group_draw_POR",
         "fananio|71|group_draw_POR",
         "neelkanth_vyas|71|group_draw_POR",
@@ -212,7 +195,6 @@
         "dhruv_shah|70|group_win_ARG",
         "sagar_vatkar|70|group_win_ARG",
         "ranjit_nambiar|70|group_win_ARG",
-        "anurag_saxena|70|group_win_ARG",
         "renu_verma|70|group_win_ARG",
         "nived|70|group_win_ARG",
         "fananio|70|group_win_ARG",
@@ -462,49 +444,49 @@
         {
           "id": "2026-07-18-restday",
           "kind": "restday",
-          "ts": 1784397038276,
+          "ts": 1784397237557,
           "text": "No matches, no points, no drama since yesterday. A rest day. Use it to apologise to whoever you trash-talked last week."
         },
         {
           "id": "2026-07-18-bottomwatch",
           "kind": "bottomwatch",
-          "ts": 1784396558276,
-          "text": "Wooden spoon watch: **Anurag** trails even **Neelkanth** by **91**. At this point it's not a slump, it's a residency."
+          "ts": 1784396757557,
+          "text": "Wooden spoon watch: **Neelkanth** trails even **Nived** by **55**. At this point it's not a slump, it's a residency."
         },
         {
           "id": "2026-07-18-champwatch",
           "kind": "champwatch",
-          "ts": 1784396318276,
+          "ts": 1784396517557,
           "text": "Champion picks still alive: 4 of 11 — **Ranjit**, **Dhruv**, **Renu**. Everyone else is emotionally invested in nothing. Beautiful."
         },
         {
           "id": "2026-07-18-streak",
           "kind": "streak",
-          "ts": 1784396018276,
+          "ts": 1784396217557,
           "text": "Streak alert: **6 matches**, **6 paydays** for **Dhruv**. At some point it stops being luck and starts being annoying."
         },
         {
           "id": "2026-07-18-funfact",
           "kind": "funfact",
-          "ts": 1784395718276,
+          "ts": 1784395917557,
           "text": "Group obsession alert: **2-1**, picked **36 times**. Somebody try a different number, I'm begging."
         },
         {
           "id": "2026-07-18-trend",
           "kind": "trend",
-          "ts": 1784395538276,
+          "ts": 1784395737557,
           "text": "Trend department: **Renu** has climbed **every single day this week** — **#11 → #4**. That's not form, that's a personality type."
         },
         {
           "id": "2026-07-18-rivalry",
           "kind": "rivalry",
-          "ts": 1784395358276,
+          "ts": 1784395557557,
           "text": "**Rushabh** and **Neerav** tied in the middle of the table. The Gaffer suggests settling it over chai. Or arm wrestling."
         },
         {
           "id": "2026-07-18-boot",
           "kind": "boot",
-          "ts": 1784395058276,
+          "ts": 1784395257557,
           "text": "Boot watch: **Lionel Messi** (ARG), **8 goals**. Casual.",
           "card": {
             "type": "boot",
@@ -530,7 +512,7 @@
         {
           "id": "2026-07-18-fixtures",
           "kind": "fixtures",
-          "ts": 1784394578276,
+          "ts": 1784394777557,
           "text": "Coming up: **2 matches** in the next 24 hours. Predictions lock **30 minutes** before kickoff — don't come crying to me after.",
           "card": {
             "type": "fixtures",
