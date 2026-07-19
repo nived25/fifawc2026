@@ -3038,5 +3038,53 @@
     "reason": "ENG advances (THIRD)",
     "matchId": 103,
     "ts": 1784418078863
+  },
+  {
+    "key": "rushabh_jha|104|final_m104",
+    "participantId": "rushabh_jha",
+    "points": 20,
+    "reason": "ESP advances (FINAL)",
+    "matchId": 104,
+    "ts": 1784502180725
+  },
+  {
+    "key": "avdhut_pure|104|final_m104",
+    "participantId": "avdhut_pure",
+    "points": 20,
+    "reason": "ESP advances (FINAL)",
+    "matchId": 104,
+    "ts": 1784502180725
+  },
+  {
+    "key": "sagar_vatkar|104|final_m104",
+    "participantId": "sagar_vatkar",
+    "points": 40,
+    "reason": "ESP correct + exact score 1-0 (2×FINAL)",
+    "matchId": 104,
+    "ts": 1784502180725
+  },
+  {
+    "key": "renu_verma|null|champion_ESP",
+    "participantId": "renu_verma",
+    "points": 50,
+    "reason": "Correct champion: ESP",
+    "matchId": null,
+    "ts": 1784502180725
+  },
+  {
+    "key": "fananio|104|final_m104",
+    "participantId": "fananio",
+    "points": 20,
+    "reason": "ESP advances (FINAL)",
+    "matchId": 104,
+    "ts": 1784502180726
+  },
+  {
+    "key": "neelkanth_vyas|104|final_m104",
+    "participantId": "neelkanth_vyas",
+    "points": 20,
+    "reason": "ESP advances (FINAL)",
+    "matchId": 104,
+    "ts": 1784502180726
   }
 ]
