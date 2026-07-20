@@ -2756,9 +2756,13 @@ class Component extends DCLogic {
       const pick=stR[m.id]||{h:0,a:0,adv:null};
       const has=!!stR[m.id];
       const ready=!!(m.h&&m.a);
-      const lockMs=(ready&&m.kickoffMs)?m.kickoffMs-lockMins*60000:0;
-      const isFinished=!!m.finished;
-      const isLocked=ready&&!isFinished&&lockMs&&nowMs>=lockMs;
+      // Demo showcase: the Final card stays permanently open so visitors can try
+      // the prediction UX. Demo mode is URL-gated (/demo) and read-only (saves
+      // are blocked), so real LR/G1/G2 users and data are never affected.
+      const demoOpen=this._demo&&rk==='final'&&ready;
+      const lockMs=demoOpen?nowMs+6*3600000:((ready&&m.kickoffMs)?m.kickoffMs-lockMins*60000:0);
+      const isFinished=!demoOpen&&!!m.finished;
+      const isLocked=!demoOpen&&ready&&!isFinished&&lockMs&&nowMs>=lockMs;
       const isOpen=ready&&!isFinished&&!isLocked;
       const isGhost=!ready;
       const ht=this.teams[m.h]||{n:m.h||'',f:''}, at=this.teams[m.a]||{n:m.a||'',f:''};
